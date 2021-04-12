@@ -1,0 +1,38 @@
+{
+	"skeletonType": "CohortDiagnosticsStudy",
+	"skeletonVersion": "v0.0.1",
+	"requiredHydraVersion": "v0.0.1",
+	"actions":[{
+		"type": "fileNameFindAndReplace",
+		"input": "packageName",
+		"find": "SkeletonCohortDiagnosticsStudy"
+	},{
+		"type": "stringFindAndReplace",
+		"input": "packageName",
+		"find": "SkeletonCohortDiagnosticsStudy"
+	},{
+		"type": "jsonArrayToCsv",
+		"input": "cohortDefinitions",
+		"mapping": [{"source": "id", "target": "atlasId"},
+		      {"source": "id", "target": "cohortId"},
+					{"source": "id", "target": "id", "modifiers": ["convertToFileName"]},
+					{"source": "name", "target": "cohortName"}],
+		"output": "inst/settings/CohortsToCreate.csv"
+	},{
+		"type": "jsonArrayToJson",
+		"input": "cohortDefinitions",
+		"fileName": "id",
+		"payload": "expression",
+		"output": "inst/cohorts"
+	},{
+		"type": "jsonArrayToSql",
+		"input": "cohortDefinitions",
+		"fileName": "id",
+		"payload": "expression",
+		"output": "inst/sql/sql_server"
+	},{
+		"type": "jsonToJson",
+		"input": "",
+		"output": "inst/settings/StudySpecification.json"
+	}]
+}
