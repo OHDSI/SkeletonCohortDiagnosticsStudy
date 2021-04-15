@@ -7,9 +7,10 @@
 runCohortDiagnostics(
   connectionDetails,
   cdmDatabaseSchema,
+  vocabularyDatabaseSchema = cdmDatabaseSchema,
   cohortDatabaseSchema = cdmDatabaseSchema,
   cohortTable = "cohort",
-  oracleTempSchema = cohortDatabaseSchema,
+  tempEmulationSchema = cohortDatabaseSchema,
   outputFolder,
   incrementalFolder = file.path(outputFolder, "incrementalFolder"),
   databaseId = "Unknown",
@@ -41,6 +42,11 @@ format resides. Note that for SQL Server, this should
 include both the database and schema name, for example
 'cdm_data.dbo'.}
 
+\item{vocabularyDatabaseSchema}{Schema name where your OMOP vocabulary data resides. This
+is commonly the same as cdmDatabaseSchema. Note that for
+SQL Server, this should include both the database and
+schema name, for example 'vocabulary.dbo'.}
+
 \item{cohortDatabaseSchema}{Schema name where intermediate data can be stored. You
 will need to have write privileges in this schema. Note
 that for SQL Server, this should include both the
@@ -50,16 +56,18 @@ database and schema name, for example 'cdm_data.dbo'.}
 database schema. This table will hold the exposure and
 outcome cohorts used in this study.}
 
-\item{oracleTempSchema}{Should be used in Oracle to specify a schema where the
-user has write privileges for storing temporary tables.}
+\item{tempEmulationSchema}{Some database platforms like Oracle and Impala do not truly support temp 
+tables. To emulate temp tables, provide a schema with write privileges 
+where temp tables can be created.}
 
 \item{outputFolder}{Name of local folder to place results; make sure to use
 forward slashes (/). Do not use a folder on a network
 drive since this greatly impacts performance.}
 
-\item{incrementalFolder}{Name of local folder to hold the logs for incremental run; 
-make sure to use forward slashes (/). Do not use a folder on a network
-drive since this greatly impacts performance.}
+\item{incrementalFolder}{Name of local folder to hold the logs for incremental
+run; make sure to use forward slashes (/). Do not use a
+folder on a network drive since this greatly impacts
+performance.}
 
 \item{databaseId}{A short string for identifying the database (e.g.
 'Synpuf').}
@@ -90,7 +98,8 @@ cohorts?}
 
 \item{runVisitContext}{Generate and export the visit context?}
 
-\item{cohortIds}{Optionally, provide a subset of cohort IDs to restrict the diagnostics to.}
+\item{cohortIds}{Optionally, provide a subset of cohort IDs to restrict
+the diagnostics to.}
 
 \item{runCohortCharacterization}{Generate and export the cohort characterization?}
 

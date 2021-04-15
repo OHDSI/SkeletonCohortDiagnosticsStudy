@@ -3,6 +3,7 @@ packages <- c("DatabaseConnector",
               "CohortDiagnostics",
               "SqlRender",
               "FeatureExtraction",
+              "OhdsiRTools",
               "OhdsiSharing",
               "ParallelLogger",
               "magrittr",
@@ -27,11 +28,7 @@ ensure_installed <- function(pkg) {
     if (interactive()) {
       message(msg, "\nWould you like to install it?")
       if (utils::menu(c("Yes", "No")) == 1) {
-        if (pkg %in% c("ROhdsiWebApi",
-                       "DatabaseConnector",
-                       "SqlRender",
-                       "OhdsiSharing",
-                       "ParallelLogger")) {
+        if (pkg %in% c("ROhdsiWebApi", "SqlRender", "OhdsiRTools", "OhdsiSharing")) {
           devtools::install_github(paste0("OHDSI/", pkg))
         } else {
           utils::install.packages(pkg)

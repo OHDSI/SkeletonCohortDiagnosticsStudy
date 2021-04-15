@@ -1,6 +1,6 @@
 # Copyright 2021 Observational Health Data Sciences and Informatics
 #
-# This file is part of epi808CohortDiagnostics
+# This file is part of SkeletonCohortDiagnosticsStudy
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -31,15 +31,17 @@
 #'                                            will need to have write privileges in this schema. Note
 #'                                            that for SQL Server, this should include both the
 #'                                            database and schema name, for example 'cdm_data.dbo'.
-#' @param vocabularyDatabaseSchema            Schema name where your OMOP vocabulary data resides. This is 
-#'                                            commonly the same as cdmDatabaseSchema. Note that for 
+#' @param vocabularyDatabaseSchema            Schema name where your OMOP vocabulary data resides. This
+#'                                            is commonly the same as cdmDatabaseSchema. Note that for
 #'                                            SQL Server, this should include both the database and
 #'                                            schema name, for example 'vocabulary.dbo'.
 #' @param cohortTable                         The name of the table that will be created in the work
 #'                                            database schema. This table will hold the exposure and
 #'                                            outcome cohorts used in this study.
-#' @param oracleTempSchema                    Should be used in Oracle to specify a schema where the
-#'                                            user has write privileges for storing temporary tables.
+#' @param tempEmulationSchema                 Some database platforms like Oracle and Impala do not
+#'                                            truly support temp tables. To emulate temp tables,
+#'                                            provide a schema with write privileges where temp tables
+#'                                            can be created.
 #' @param outputFolder                        Name of local folder to place results; make sure to use
 #'                                            forward slashes (/). Do not use a folder on a network
 #'                                            drive since this greatly impacts performance.
@@ -77,7 +79,7 @@ runCohortDiagnostics <- function(connectionDetails,
                                  vocabularyDatabaseSchema = cdmDatabaseSchema,
                                  cohortDatabaseSchema = cdmDatabaseSchema,
                                  cohortTable = "cohort",
-                                 oracleTempSchema = cohortDatabaseSchema,
+                                 tempEmulationSchema = cohortDatabaseSchema,
                                  outputFolder,
                                  incrementalFolder = file.path(outputFolder, "incrementalFolder"),
                                  databaseId = "Unknown",
@@ -96,6 +98,9 @@ runCohortDiagnostics <- function(connectionDetails,
                                  runCohortCharacterization = TRUE,
                                  runTemporalCohortCharacterization = TRUE,
                                  minCellCount = 5) {
+
+  packageName <- "SkeletonCohortDiagnosticsStudy"
+
   if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)
 
@@ -111,8 +116,8 @@ runCohortDiagnostics <- function(connectionDetails,
                                             cohortDatabaseSchema = cohortDatabaseSchema,
                                             vocabularyDatabaseSchema = vocabularyDatabaseSchema,
                                             cohortTable = cohortTable,
-                                            oracleTempSchema = oracleTempSchema,
-                                            packageName = "SkeletonCohortDiagnosticsStudy",
+                                            tempEmulationSchema = tempEmulationSchema,
+                                            packageName = packageName,
                                             cohortToCreateFile = "settings/CohortsToCreate.csv",
                                             createCohortTable = TRUE,
                                             generateInclusionStats = TRUE,
@@ -123,11 +128,11 @@ runCohortDiagnostics <- function(connectionDetails,
   }
 
   ParallelLogger::logInfo("Running study diagnostics")
-  CohortDiagnostics::runCohortDiagnostics(packageName = "SkeletonCohortDiagnosticsStudy",
+  CohortDiagnostics::runCohortDiagnostics(packageName = packageName,
                                           connectionDetails = connectionDetails,
                                           cdmDatabaseSchema = cdmDatabaseSchema,
                                           vocabularyDatabaseSchema = vocabularyDatabaseSchema,
-                                          oracleTempSchema = oracleTempSchema,
+                                          tempEmulationSchema = tempEmulationSchema,
                                           cohortDatabaseSchema = cohortDatabaseSchema,
                                           cohortTable = cohortTable,
                                           inclusionStatisticsFolder = outputFolder,
