@@ -29,7 +29,7 @@
 		},
 		"cli" : {
 			"Package" : "cli",
-			"Version" : "2.4.0",
+			"Version" : "2.5.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -77,7 +77,7 @@
 		},
 		"pillar" : {
 			"Package" : "pillar",
-			"Version" : "1.5.1",
+			"Version" : "1.6.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -131,7 +131,7 @@
 		},
 		"tibble" : {
 			"Package" : "tibble",
-			"Version" : "3.1.0",
+			"Version" : "3.1.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -215,7 +215,7 @@
 		},
 		"withr" : {
 			"Package" : "withr",
-			"Version" : "2.4.1",
+			"Version" : "2.4.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -305,7 +305,7 @@
 		},
 		"RSQLite" : {
 			"Package" : "RSQLite",
-			"Version" : "2.2.6",
+			"Version" : "2.2.7",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -335,7 +335,7 @@
 		},
 		"viridisLite" : {
 			"Package" : "viridisLite",
-			"Version" : "0.3.0",
+			"Version" : "0.4.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -345,15 +345,11 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"zip": {
-			"Package": "zip",
-			"Version": "2.0.4",
-			"Source": "GitHub",
-			"RemoteType": "github",
-			"RemoteHost": "api.github.com",
-			"RemoteRepo": "zip",
-			"RemoteUsername": "r-lib",
-			"RemoteRef": "v2.0.4",
+		"zip" : {
+			"Package" : "zip",
+			"Version" : "2.1.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
 		},
 		"Andromeda" : {
 			"Package" : "Andromeda",
@@ -376,6 +372,12 @@
 		"httr" : {
 			"Package" : "httr",
 			"Version" : "1.4.2",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"later" : {
+			"Package" : "later",
+			"Version" : "1.2.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -427,6 +429,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"pool" : {
+			"Package" : "pool",
+			"Version" : "0.1.6",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"renv" : {
 			"Package" : "renv",
 			"Version" : "0.13.2",
@@ -471,7 +479,17 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "develop"
+			"RemoteRef" : "v2.1.0"
+		},
+		"SkeletonCohortDiagnosticsStudy" : {
+			"Package" : "SkeletonCohortDiagnosticsStudy",
+			"Version" : "0.0.1",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "SkeletonCohortDiagnosticsStudy",
+			"RemoteUsername" : "ohdsi-studies",
+			"RemoteRef" : "master"
 		}
 	}
 }
