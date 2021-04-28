@@ -10,12 +10,10 @@ Imports:
 	ParallelLogger (>= 2.0.1),
 	DatabaseConnector (>= 4.0.2)
 Suggests:
-    keyring,
     knitr,
     rmarkdown,
     ROhdsiWebApi,
-    OhdsiSharing,
-    usethis
+    OhdsiSharing
 License: Apache License (>= 2)
 VignetteBuilder: knitr
 LazyData: TRUE
