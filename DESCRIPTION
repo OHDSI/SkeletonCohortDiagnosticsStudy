@@ -1,20 +1,18 @@
 Package: SkeletonCohortDiagnosticsStudy
 Type: Package
-Title: A tudy package that generates cohort diagnostics output based on Skeleton data set
+Title: A Study Package for Generating Cohort Diagnostics
 Version: 0.0.1
 Author: Gowtham Rao [aut, cre]
 Maintainer: Gowtham Rao <rao@ohdsi.org>
-Description: A package that generates cohort diagnostics output based on Skeleton data set.
-Depends:
+Description: A package that generates cohort diagnostics for cohort definitions included in the package.
 Imports:
 	CohortDiagnostics (>= 2.1.0),
-	ParallelLogger (>= 2.0.0),
+	ParallelLogger (>= 2.0.1),
 	DatabaseConnector (>= 4.0.2)
 Suggests:
     knitr,
     rmarkdown,
     ROhdsiWebApi,
-    OhdsiRTools,
     OhdsiSharing
 License: Apache License (>= 2)
 VignetteBuilder: knitr

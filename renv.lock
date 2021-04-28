@@ -345,11 +345,15 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"zip" : {
-			"Package" : "zip",
-			"Version" : "2.1.1",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
+		"zip": {
+			"Package": "zip",
+			"Version": "2.0.4",
+			"Source": "GitHub",
+			"RemoteType": "github",
+			"RemoteHost": "api.github.com",
+			"RemoteRepo": "zip",
+			"RemoteUsername": "r-lib",
+			"RemoteRef": "v2.0.4",
 		},
 		"Andromeda" : {
 			"Package" : "Andromeda",
@@ -441,13 +445,13 @@
 		},
 		"FeatureExtraction" : {
 			"Package" : "FeatureExtraction",
-			"Version" : "3.1.0",
+			"Version" : "3.1.1",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "FeatureExtraction",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v3.1.0"
+			"RemoteRef" : "v3.1.1"
 		},
 		"ROhdsiWebApi" : {
 			"Package" : "ROhdsiWebApi",
@@ -467,17 +471,7 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.1.0"
-		},
-		"SkeletonCohortDiagnosticsStudy" : {
-			"Package" : "SkeletonCohortDiagnosticsStudy",
-			"Version" : "0.0.1",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "SkeletonCohortDiagnosticsStudy",
-			"RemoteUsername" : "ohdsi-studies",
-			"RemoteRef" : "master"
+			"RemoteRef" : "develop"
 		}
 	}
 }
