@@ -49,7 +49,7 @@ runCohortDiagnostics(packageName = "SkeletonCohortDiagnosticsStudy",
                      runInclusionStatistics = TRUE,
                      runIncidenceRates = TRUE,
                      createCohorts = TRUE,
-                     minCellCount = 0)
+                     minCellCount = 5)
 
 CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = outputFolder)
 
