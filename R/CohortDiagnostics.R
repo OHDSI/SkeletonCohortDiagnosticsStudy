@@ -74,59 +74,44 @@
 #'                                            the diagnostics to.
 #'
 #' @export
-runCohortDiagnostics <- function(connectionDetails,
-                                 cdmDatabaseSchema,
-                                 vocabularyDatabaseSchema = cdmDatabaseSchema,
-                                 cohortDatabaseSchema = cdmDatabaseSchema,
-                                 cohortTable = "cohort",
-                                 tempEmulationSchema = cohortDatabaseSchema,
-                                 outputFolder,
-                                 incrementalFolder = file.path(outputFolder, "incrementalFolder"),
-                                 databaseId = "Unknown",
-                                 databaseName = databaseId,
-                                 databaseDescription = databaseId,
-                                 createCohorts = TRUE,
-                                 runInclusionStatistics = TRUE,
-                                 runIncludedSourceConcepts = FALSE,
-                                 runOrphanConcepts = FALSE,
-                                 runTimeDistributions = TRUE,
-                                 runBreakdownIndexEvents = TRUE,
-                                 runIncidenceRates = TRUE,
-                                 runCohortOverlap = TRUE,
-                                 runVisitContext = TRUE,
-                                 cohortIds = NULL,
-                                 runCohortCharacterization = TRUE,
-                                 runTemporalCohortCharacterization = TRUE,
-                                 minCellCount = 5) {
-
+execute <- function(connectionDetails,
+                    cdmDatabaseSchema,
+                    vocabularyDatabaseSchema = cdmDatabaseSchema,
+                    cohortDatabaseSchema = cdmDatabaseSchema,
+                    cohortTable = "cohort",
+                    tempEmulationSchema = cohortDatabaseSchema,
+                    outputFolder,
+                    incrementalFolder = file.path(outputFolder, "incrementalFolder"),
+                    databaseId = "Unknown",
+                    databaseName = databaseId,
+                    databaseDescription = databaseId,
+                    minCellCount = 5) {
+  
   packageName <- "SkeletonCohortDiagnosticsStudy"
-
+  
   if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)
-
+  
   ParallelLogger::addDefaultFileLogger(file.path(outputFolder, "log.txt"))
   ParallelLogger::addDefaultErrorReportLogger(file.path(outputFolder, "errorReportR.txt"))
   on.exit(ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE))
   on.exit(ParallelLogger::unregisterLogger("DEFAULT_ERRORREPORT_LOGGER", silent = TRUE), add = TRUE)
-
-  if (createCohorts) {
-    ParallelLogger::logInfo("Creating cohorts")
-    CohortDiagnostics::instantiateCohortSet(connectionDetails = connectionDetails,
-                                            cdmDatabaseSchema = cdmDatabaseSchema,
-                                            cohortDatabaseSchema = cohortDatabaseSchema,
-                                            vocabularyDatabaseSchema = vocabularyDatabaseSchema,
-                                            cohortTable = cohortTable,
-                                            tempEmulationSchema = tempEmulationSchema,
-                                            packageName = packageName,
-                                            cohortToCreateFile = "settings/CohortsToCreate.csv",
-                                            createCohortTable = TRUE,
-                                            generateInclusionStats = TRUE,
-                                            inclusionStatisticsFolder = outputFolder,
-                                            cohortIds = cohortIds,
-                                            incremental = TRUE,
-                                            incrementalFolder = incrementalFolder)
-  }
-
+  
+  ParallelLogger::logInfo("Creating cohorts")
+  CohortDiagnostics::instantiateCohortSet(connectionDetails = connectionDetails,
+                                          cdmDatabaseSchema = cdmDatabaseSchema,
+                                          cohortDatabaseSchema = cohortDatabaseSchema,
+                                          vocabularyDatabaseSchema = vocabularyDatabaseSchema,
+                                          cohortTable = cohortTable,
+                                          tempEmulationSchema = tempEmulationSchema,
+                                          packageName = packageName,
+                                          cohortToCreateFile = "settings/CohortsToCreate.csv",
+                                          createCohortTable = TRUE,
+                                          generateInclusionStats = TRUE,
+                                          inclusionStatisticsFolder = outputFolder,
+                                          incremental = TRUE,
+                                          incrementalFolder = incrementalFolder)
+  
   ParallelLogger::logInfo("Running study diagnostics")
   CohortDiagnostics::runCohortDiagnostics(packageName = packageName,
                                           connectionDetails = connectionDetails,
@@ -138,21 +123,21 @@ runCohortDiagnostics <- function(connectionDetails,
                                           inclusionStatisticsFolder = outputFolder,
                                           exportFolder = file.path(outputFolder,
                                                                    "diagnosticsExport"),
-                                          cohortIds = cohortIds,
                                           databaseId = databaseId,
                                           databaseName = databaseName,
                                           databaseDescription = databaseDescription,
-                                          runInclusionStatistics = runInclusionStatistics,
-                                          runIncludedSourceConcepts = runIncludedSourceConcepts,
-                                          runOrphanConcepts = runOrphanConcepts,
-                                          runTimeDistributions = runTimeDistributions,
-                                          runBreakdownIndexEvents = runBreakdownIndexEvents,
-                                          runIncidenceRate = runIncidenceRates,
-                                          runCohortOverlap = runCohortOverlap,
-                                          runVisitContext = runVisitContext,
-                                          runCohortCharacterization = runCohortCharacterization,
-                                          runTemporalCohortCharacterization = runTemporalCohortCharacterization,
-                                          minCellCount = minCellCount,
+                                          runInclusionStatistics = TRUE,
+                                          runIncludedSourceConcepts = TRUE,
+                                          runOrphanConcepts = TRUE,
+                                          runTimeDistributions = TRUE,
+                                          runBreakdownIndexEvents = TRUE,
+                                          runIncidenceRate = TRUE,
+                                          runCohortOverlap = TRUE,
+                                          runVisitContext = TRUE,
+                                          runCohortCharacterization = TRUE,
+                                          runTemporalCohortCharacterization = TRUE,
+                                          runCohortAsFeatures = TRUE,
+                                          minCellCount = 5,
                                           incremental = TRUE,
                                           incrementalFolder = incrementalFolder)
 }
