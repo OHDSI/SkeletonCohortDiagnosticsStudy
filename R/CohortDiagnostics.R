@@ -50,28 +50,10 @@
 #' @param databaseName                        The full name of the database (e.g. 'Medicare Claims
 #'                                            Synthetic Public Use Files (SynPUFs)').
 #' @param databaseDescription                 A short description (several sentences) of the database.
-#' @param createCohorts                       Create the cohortTable table with the exposure and
-#'                                            outcome cohorts?
-#' @param runInclusionStatistics              Generate and export statistic on the cohort inclusion
-#'                                            rules?
-#' @param runIncludedSourceConcepts           Generate and export the source concepts included in the
-#'                                            cohorts?
-#' @param runOrphanConcepts                   Generate and export potential orphan concepts?
-#' @param runTimeDistributions                Generate and export cohort time distributions?
-#' @param runBreakdownIndexEvents             Generate and export the breakdown of index events?
-#' @param runIncidenceRates                   Generate and export the cohort incidence rates?
-#' @param runCohortOverlap                    Generate and export the cohort overlap?
-#' @param runCohortCharacterization           Generate and export the cohort characterization?
-#' @param runTemporalCohortCharacterization   Generate and export the temporal cohort characterization?
-#' @param runVisitContext                     Generate and export the visit context?
-#' @param minCellCount                        The minimum number of subjects contributing to a count
-#'                                            before it can be included in packaged results.
 #' @param incrementalFolder                   Name of local folder to hold the logs for incremental
 #'                                            run; make sure to use forward slashes (/). Do not use a
 #'                                            folder on a network drive since this greatly impacts
 #'                                            performance.
-#' @param cohortIds                           Optionally, provide a subset of cohort IDs to restrict
-#'                                            the diagnostics to.
 #'
 #' @export
 execute <- function(connectionDetails,
@@ -86,8 +68,6 @@ execute <- function(connectionDetails,
                     databaseName = databaseId,
                     databaseDescription = databaseId,
                     minCellCount = 5) {
-  
-  packageName <- "SkeletonCohortDiagnosticsStudy"
   
   if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)
@@ -104,7 +84,7 @@ execute <- function(connectionDetails,
                                           vocabularyDatabaseSchema = vocabularyDatabaseSchema,
                                           cohortTable = cohortTable,
                                           tempEmulationSchema = tempEmulationSchema,
-                                          packageName = packageName,
+                                          packageName = "SkeletonCohortDiagnosticsStudy",
                                           cohortToCreateFile = "settings/CohortsToCreate.csv",
                                           createCohortTable = TRUE,
                                           generateInclusionStats = TRUE,
@@ -113,7 +93,7 @@ execute <- function(connectionDetails,
                                           incrementalFolder = incrementalFolder)
   
   ParallelLogger::logInfo("Running study diagnostics")
-  CohortDiagnostics::runCohortDiagnostics(packageName = packageName,
+  CohortDiagnostics::runCohortDiagnostics(packageName = "SkeletonCohortDiagnosticsStudy",
                                           connectionDetails = connectionDetails,
                                           cdmDatabaseSchema = cdmDatabaseSchema,
                                           vocabularyDatabaseSchema = vocabularyDatabaseSchema,

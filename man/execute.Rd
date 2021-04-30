@@ -65,37 +65,6 @@ performance.}
 Synthetic Public Use Files (SynPUFs)').}
 
 \item{databaseDescription}{A short description (several sentences) of the database.}
-
-\item{minCellCount}{The minimum number of subjects contributing to a count
-before it can be included in packaged results.}
-
-\item{createCohorts}{Create the cohortTable table with the exposure and
-outcome cohorts?}
-
-\item{runInclusionStatistics}{Generate and export statistic on the cohort inclusion
-rules?}
-
-\item{runIncludedSourceConcepts}{Generate and export the source concepts included in the
-cohorts?}
-
-\item{runOrphanConcepts}{Generate and export potential orphan concepts?}
-
-\item{runTimeDistributions}{Generate and export cohort time distributions?}
-
-\item{runBreakdownIndexEvents}{Generate and export the breakdown of index events?}
-
-\item{runIncidenceRates}{Generate and export the cohort incidence rates?}
-
-\item{runCohortOverlap}{Generate and export the cohort overlap?}
-
-\item{runCohortCharacterization}{Generate and export the cohort characterization?}
-
-\item{runTemporalCohortCharacterization}{Generate and export the temporal cohort characterization?}
-
-\item{runVisitContext}{Generate and export the visit context?}
-
-\item{cohortIds}{Optionally, provide a subset of cohort IDs to restrict
-the diagnostics to.}
 }
 \description{
 Execute the cohort diagnostics
