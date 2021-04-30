@@ -2,11 +2,10 @@
 # connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
 #                                                                                             "truven_ccae")
 
-
 library(SkeletonCohortDiagnosticsStudy)
 
 # The folder where the study intermediate and result files will be written:
-outputFolder <- file.path("D:/temp/", connectionSpecifications$databaseId)
+outputFolder <- file.path("D:/temp/", connectionSpecifications$database)
 # unlink(x = outputFolder, recursive = TRUE, force = TRUE)
 # dir.create(path = outputFolder, showWarnings = FALSE, recursive = TRUE)
 
