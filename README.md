@@ -13,7 +13,7 @@ Requirements
 
 How to run
 ==========
-1. Follow [these instructions](https://ohdsi.github.io/Hades/rSetup.html) for seting up your R environment, including RTools and Java. 
+1. Follow [these instructions](https://ohdsi.github.io/Hades/rSetup.html) for setting up your R environment, including RTools and Java. 
 
 2. Open your study package in RStudio. Use the following code to install all the dependencies:
 
@@ -28,14 +28,8 @@ How to run
 	```r
 	library(SkeletonCohortDiagnosticsStudy)
 	
-  # Optional: specify where the temporary files (used by the Andromeda package) will be created:
-  options(andromedaTempFolder = "c:/andromedaTemp")
-	
 	# Maximum number of cores to be used:
 	maxCores <- parallel::detectCores()
-	
-	# Minimum cell count when exporting data:
-	minCellCount <- 5
 	
 	# The folder where the study intermediate and result files will be written:
 	outputFolder <- "c:/SkeletonCohortDiagnosticsStudy"

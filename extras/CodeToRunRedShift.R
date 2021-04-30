@@ -5,7 +5,8 @@
 library(SkeletonCohortDiagnosticsStudy)
 
 # The folder where the study intermediate and result files will be written:
-outputFolder <- file.path("D:/temp/", connectionSpecifications$database)
+outputFolder <-
+        file.path("D:/temp/", connectionSpecifications$database)
 # unlink(x = outputFolder, recursive = TRUE, force = TRUE)
 # dir.create(path = outputFolder, showWarnings = FALSE, recursive = TRUE)
 
@@ -21,20 +22,29 @@ databaseId <- connectionSpecifications$database
 userNameService <- "OHDSI_USER"
 passwordService <- "OHDSI_PASSWORD"
 
-cohortDatabaseSchema <- paste0("scratch_", keyring::key_get(service = userNameService))
-connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
-                                                                user = keyring::key_get(service = userNameService),
-                                                                password = keyring::key_get(service = passwordService),
-                                                                port = port,
-                                                                server = server)
+cohortDatabaseSchema <-
+        paste0("scratch_", keyring::key_get(service = userNameService))
+connectionDetails <-
+        DatabaseConnector::createConnectionDetails(
+                dbms = dbms,
+                user = keyring::key_get(service = userNameService),
+                password = keyring::key_get(service = passwordService),
+                port = port,
+                server = server
+        )
 
-cohortTable <- paste0("s", connectionSpecifications$sourceId, "_", "SkeletonCohortDiagnosticsStudy")
+cohortTable <-
+        paste0("s",
+               connectionSpecifications$sourceId,
+               "_",
+               "SkeletonCohortDiagnosticsStudy")
 
 # dataSouceInformation <- getDataSourceInformation(connectionDetails = connectionDetails,
 #                                                  cdmDatabaseSchema = cdmDatabaseSchema,
-#                                                  vocabDatabaseSchema = vocabDatabaseSchema) 
+#                                                  vocabDatabaseSchema = vocabDatabaseSchema)
 
-execute(connectionDetails = connectionDetails,
+execute(
+        connectionDetails = connectionDetails,
         cdmDatabaseSchema = cdmDatabaseSchema,
         vocabularyDatabaseSchema = vocabDatabaseSchema,
         cohortDatabaseSchema = cohortDatabaseSchema,
@@ -42,7 +52,8 @@ execute(connectionDetails = connectionDetails,
         outputFolder = outputFolder,
         databaseId = databaseId,
         databaseName = dataSouceInformation$cdmSourceName,
-        databaseDescription = dataSouceInformation$sourceDescription)
+        databaseDescription = dataSouceInformation$sourceDescription
+)
 
 CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = outputFolder)
 CohortDiagnostics::launchDiagnosticsExplorer(dataFolder = outputFolder)
@@ -55,17 +66,36 @@ userName <- ""
 SkeletonCohortDiagnosticsStudy::uploadResults(outputFolder, privateKeyFileName, userName)
 
 
-# connectionDetailsToUpload <- createConnectionDetails(dbms = 'postgresql', server =
-#                                                        paste(Sys.getenv('shinydbServer'), Sys.getenv('shinydbDatabase'), sep = '/'), port =
-#                                                        Sys.getenv('shinydbPort'), user = Sys.getenv('shinyDbUserGowtham'), password =
-#                                                        Sys.getenv('shinyDbPasswordGowtham')) resultsSchema <- 'examplePackageCdTruven'
-# 
-# createResultsDataModel(connectionDetails = connectionDetailsToUpload, schema = resultsSchema) 
-# path = outputFolder 
-# zipFilesToUpload <- list.files(path = path, pattern = '.zip', recursive = TRUE,
-#                                full.names = TRUE) 
-# for (i in (1:length(zipFilesToUpload))) { 
-#   uploadResults(connectionDetails =
-#                   connectionDetailsToUpload, 
-#                 schema = resultsSchema, 
-#                 zipFileName = zipFilesToUpload[[i]]) }
+# connectionDetailsToUpload <-
+#         createConnectionDetails(
+#                 dbms = 'postgresql',
+#                 server = paste(
+#                         Sys.getenv('shinydbServer'),
+#                         Sys.getenv('shinydbDatabase'),
+#                         sep = '/'
+#                 ),
+#                 port = Sys.getenv('shinydbPort'),
+#                 user = Sys.getenv('shinyDbUserGowtham'),
+#                 password = Sys.getenv('shinyDbPasswordGowtham')
+#         )
+#
+# resultsSchema <- 'examplePackageCdTruven'
+#
+# createResultsDataModel(connectionDetails = connectionDetailsToUpload, schema = resultsSchema)
+#
+# path = outputFolder
+#
+# zipFilesToUpload <- list.files(
+#         path = path,
+#         pattern = '.zip',
+#         recursive = TRUE,
+#         full.names = TRUE
+# )
+#
+# for (i in (1:length(zipFilesToUpload))) {
+#         CohortDiagnostics::uploadResults(
+#                 connectionDetails = connectionDetailsToUpload,
+#                 schema = resultsSchema,
+#                 zipFileName = zipFilesToUpload[[i]]
+#         )
+# }
