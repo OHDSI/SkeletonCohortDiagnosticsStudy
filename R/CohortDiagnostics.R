@@ -66,8 +66,7 @@ execute <- function(connectionDetails,
                     incrementalFolder = file.path(outputFolder, "incrementalFolder"),
                     databaseId = "Unknown",
                     databaseName = databaseId,
-                    databaseDescription = databaseId,
-                    minCellCount = 5) {
+                    databaseDescription = databaseId) {
   
   if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)

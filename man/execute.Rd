@@ -15,8 +15,7 @@ execute(
   incrementalFolder = file.path(outputFolder, "incrementalFolder"),
   databaseId = "Unknown",
   databaseName = databaseId,
-  databaseDescription = databaseId,
-  minCellCount = 5
+  databaseDescription = databaseId
 )
 }
 \arguments{
