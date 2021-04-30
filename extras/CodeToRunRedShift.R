@@ -1,11 +1,19 @@
-source(Sys.getenv("startUpScriptLocation"))
+# source(Sys.getenv("startUpScriptLocation"))
+# connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database == "truven_ccae")
 
 library(CohortDiagnostics)
 library("SkeletonCohortDiagnosticsStudy")
 packageName <- "SkeletonCohortDiagnosticsStudy"
 
-connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
-  "truven_ccae")
+library(SkeletonCohortDiagnosticsStudy)
+
+# The folder where the study intermediate and result files will be written:
+outputFolder <- file.path("D:/temp/", connectionSpecifications$database)
+# unlink(x = outputFolder, recursive = TRUE, force = TRUE)
+# dir.create(path = outputFolder, showWarnings = FALSE, recursive = TRUE)
+
+# Maximum number of cores to be used:
+maxCores <- parallel::detectCores()
 
 dbms <- connectionSpecifications$dbms
 port <- connectionSpecifications$port
@@ -24,7 +32,7 @@ connectionDetails <- DatabaseConnector::createConnectionDetails(dbms = dbms,
                                                                 port = port,
                                                                 server = server)
 
-cohortTable <- paste0("s", connectionSpecifications$sourceId, "_", packageName)
+cohortTable <- paste0("s", connectionSpecifications$sourceId, "_", "SkeletonCohortDiagnosticsStudy")
 
 outputFolder <- file.path(rstudioapi::getActiveProject(), "outputFolder", databaseId)
 unlink(x = outputFolder, recursive = TRUE, force = TRUE)
