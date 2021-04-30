@@ -28,28 +28,16 @@ databaseDescription <- "Medicare Claims Synthetic Public Use Files (SynPUFs) wer
 # For Oracle: define a schema that can be used to emulate temp tables:
 tempEmulationSchema <- NULL
 
-runCohortDiagnostics(packageName = "SkeletonCohortDiagnosticsStudy",
-                     connectionDetails = connectionDetails,
-                     cdmDatabaseSchema = cdmDatabaseSchema,
-                     cohortDatabaseSchema = cohortDatabaseSchema,
-                     cohortTable = cohortTable,
-                     tempEmulationSchema = tempEmulationSchema,
-                     outputFolder = outputFolder,
-                     databaseId = databaseId,
-                     databaseName = databaseName,
-                     databaseDescription = databaseDescription,
-                     runCohortCharacterization = TRUE,
-                     runCohortOverlap = TRUE,
-                     runOrphanConcepts = TRUE,
-                     runVisitContext = TRUE,
-                     runIncludedSourceConcepts = TRUE,
-                     runTimeDistributions = TRUE,
-                     runTemporalCohortCharacterization = TRUE,
-                     runBreakdownIndexEvents = TRUE,
-                     runInclusionStatistics = TRUE,
-                     runIncidenceRates = TRUE,
-                     createCohorts = TRUE,
-                     minCellCount = 5)
+execute(packageName = "SkeletonCohortDiagnosticsStudy",
+        connectionDetails = connectionDetails,
+        cdmDatabaseSchema = cdmDatabaseSchema,
+        cohortDatabaseSchema = cohortDatabaseSchema,
+        cohortTable = cohortTable,
+        tempEmulationSchema = tempEmulationSchema,
+        outputFolder = outputFolder,
+        databaseId = databaseId,
+        databaseName = databaseName,
+        databaseDescription = databaseDescription)
 
 CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = outputFolder)
 
