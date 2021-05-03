@@ -433,6 +433,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"keyring" : {
+			"Package" : "keyring",
+			"Version" : "1.2.0",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"CirceR" : {
 			"Package" : "CirceR",
 			"Version" : "1.0.0",
@@ -472,6 +478,16 @@
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "develop"
+		},
+		"OhdsiSharing" : {
+			"Package" : "OhdsiSharing",
+			"Version" : "0.2.2",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "OhdsiSharing",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v0.2.2"
 		}
 	}
 }
