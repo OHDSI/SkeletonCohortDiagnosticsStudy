@@ -1,3 +1,6 @@
+############### Note this is a custom script, a version of CodeToRun.R that may not work for everyone ##############
+############### Please use CodeToRun.R ############################################################################
+
 # source(Sys.getenv("startUpScriptLocation"))
 # connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
 #                                                                                             "truven_ccae")
@@ -39,9 +42,9 @@ cohortTable <-
                "_",
                "SkeletonCohortDiagnosticsStudy")
 
-# dataSouceInformation <- getDataSourceInformation(connectionDetails = connectionDetails,
-#                                                  cdmDatabaseSchema = cdmDatabaseSchema,
-#                                                  vocabDatabaseSchema = vocabDatabaseSchema)
+dataSouceInformation <- getDataSourceInformation(connectionDetails = connectionDetails,
+                                                 cdmDatabaseSchema = cdmDatabaseSchema,
+                                                 vocabDatabaseSchema = vocabDatabaseSchema)
 
 execute(
         connectionDetails = connectionDetails,
