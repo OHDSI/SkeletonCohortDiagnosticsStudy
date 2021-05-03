@@ -353,7 +353,7 @@
 			"RemoteHost": "api.github.com",
 			"RemoteRepo": "zip",
 			"RemoteUsername": "r-lib",
-			"RemoteRef": "v2.0.4",
+			"RemoteRef": "v2.0.4"
 		},
 		"Andromeda" : {
 			"Package" : "Andromeda",
