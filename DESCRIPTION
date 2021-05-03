@@ -8,12 +8,12 @@ Description: A package that generates cohort diagnostics for cohort definitions 
 Imports:
 	CohortDiagnostics (>= 2.1.0),
 	ParallelLogger (>= 2.0.1),
-	DatabaseConnector (>= 4.0.2)
+	DatabaseConnector (>= 4.0.2),
+  OhdsiSharing
 Suggests:
     knitr,
     rmarkdown,
-    ROhdsiWebApi,
-    OhdsiSharing
+    ROhdsiWebApi
 License: Apache License (>= 2)
 VignetteBuilder: knitr
 LazyData: TRUE
