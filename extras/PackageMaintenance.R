@@ -24,21 +24,5 @@ devtools::spell_check()
 unlink("extras/UsingSkeletonPackage.pdf")
 shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 
-# Create vignettes ---------------------------------------------------------
-# rmarkdown::render("vignettes/UsingSkeletonPackage.Rmd",
-#                   output_file = "../inst/doc/UsingSkeletonPackage.pdf",
-#                   rmarkdown::pdf_document(latex_engine = "pdflatex",
-#                                           toc = TRUE,
-#                                           number_sections = TRUE))
-
-# Insert cohort definitions from ATLAS into package -----------------------
-ROhdsiWebApi::insertCohortDefinitionSetInPackage(fileName = "CohortsToCreate.csv",
-                                                 baseUrl = Sys.getenv("baseUrl"),
-                                                 insertTableSql = TRUE,
-                                                 insertCohortCreationR = TRUE,
-                                                 generateStats = TRUE,
-                                                 packageName = "SkeletonCohortDiagnosticsStudy")
-
-
 # Store environment in which the study was executed -----------------------
 OhdsiRTools::createRenvLockFile("SkeletonCohortDiagnosticsStudy")
