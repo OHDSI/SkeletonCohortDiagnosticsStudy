@@ -1,9 +1,9 @@
 ############### Note this is a custom script, a version of CodeToRun.R that may not work for everyone ##############
-############### Please use CodeToRun.R ############################################################################
+############### Please use CodeToRun.R as it a more generic version  ###############################################
 
-# source(Sys.getenv("startUpScriptLocation"))
-# connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
-#                                                                                             "truven_ccae")
+source(Sys.getenv("startUpScriptLocation"))
+connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
+                                                                                            "truven_ccae")
 
 library(SkeletonCohortDiagnosticsStudy)
 
@@ -11,7 +11,7 @@ library(SkeletonCohortDiagnosticsStudy)
 outputFolder <-
         file.path("D:/temp/", connectionSpecifications$database)
 # unlink(x = outputFolder, recursive = TRUE, force = TRUE)
-# dir.create(path = outputFolder, showWarnings = FALSE, recursive = TRUE)
+dir.create(path = outputFolder, showWarnings = TRUE, recursive = TRUE)
 
 # Maximum number of cores to be used:
 maxCores <- parallel::detectCores()
