@@ -18,11 +18,10 @@
 # OhdsiRTools::formatRFolder()
 OhdsiRTools::checkUsagePackage("SkeletonCohortDiagnosticsStudy")
 OhdsiRTools::updateCopyrightYearFolder()
-devtools::spell_check()
 
 # Create manual -----------------------------------------------------------
 unlink("extras/UsingSkeletonPackage.pdf")
 shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 
 # Store environment in which the study was executed -----------------------
-OhdsiRTools::createRenvLockFile("SkeletonCohortDiagnosticsStudy")
+# OhdsiRTools::createRenvLockFile("SkeletonCohortDiagnosticsStudy")
