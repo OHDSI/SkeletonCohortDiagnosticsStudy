@@ -465,6 +465,18 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"tzdb" : {
+			"Package" : "tzdb",
+			"Version" : "0.1.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"clock" : {
+			"Package" : "clock",
+			"Version" : "0.3.0",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"base64enc" : {
 			"Package" : "base64enc",
 			"Version" : "0.1-3",
