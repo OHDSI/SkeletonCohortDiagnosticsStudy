@@ -120,7 +120,7 @@ execute <- function(connectionDetails,
     runVisitContext = TRUE,
     runCohortCharacterization = TRUE,
     runTemporalCohortCharacterization = TRUE,
-    runPrevalenceRate = TRUE,
+    runTimeSeries = TRUE,
     minCellCount = 5,
     incremental = TRUE,
     incrementalFolder = incrementalFolder
