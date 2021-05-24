@@ -263,7 +263,7 @@
 		},
 		"hms" : {
 			"Package" : "hms",
-			"Version" : "1.0.0",
+			"Version" : "1.1.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -423,6 +423,18 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"tzdb" : {
+			"Package" : "tzdb",
+			"Version" : "0.1.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"clock" : {
+			"Package" : "clock",
+			"Version" : "0.3.0",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"digest" : {
 			"Package" : "digest",
 			"Version" : "0.6.27",
@@ -462,18 +474,6 @@
 		"keyring" : {
 			"Package" : "keyring",
 			"Version" : "1.2.0",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"tzdb" : {
-			"Package" : "tzdb",
-			"Version" : "0.1.1",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"clock" : {
-			"Package" : "clock",
-			"Version" : "0.3.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -695,7 +695,7 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "develop"
+			"RemoteRef" : "v2.1.0"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
