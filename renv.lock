@@ -77,7 +77,7 @@
 		},
 		"pillar" : {
 			"Package" : "pillar",
-			"Version" : "1.6.0",
+			"Version" : "1.6.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -648,6 +648,12 @@
 		"shinyWidgets" : {
 			"Package" : "shinyWidgets",
 			"Version" : "0.6.0",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"plyr" : {
+			"Package" : "plyr",
+			"Version" : "1.8.6",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},

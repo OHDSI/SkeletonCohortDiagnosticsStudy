@@ -28,7 +28,7 @@ shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 #                                 additionalRequiredPackages = c('keyring', "checkmate","DatabaseConnector","clock","dplyr","DT",
 #                                                                "ggplot2","ggiraph","gtable","htmltools","lubridate",
 #                                                                "pool","purrr","scales","shiny","shinydashboard","shinyWidgets",
-#                                                                "stringr","SqlRender","tidyr"))
+#                                                                "stringr","SqlRender","tidyr", "plyr"))
 
 
 
