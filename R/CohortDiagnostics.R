@@ -42,6 +42,7 @@
 #'                                            truly support temp tables. To emulate temp tables,
 #'                                            provide a schema with write privileges where temp tables
 #'                                            can be created.
+#' @param verifyDependencies                  Check whether correct package versions are installed?
 #' @param outputFolder                        Name of local folder to place results; make sure to use
 #'                                            forward slashes (/). Do not use a folder on a network
 #'                                            drive since this greatly impacts performance.
@@ -62,6 +63,7 @@ execute <- function(connectionDetails,
                     cohortDatabaseSchema = cdmDatabaseSchema,
                     cohortTable = "cohort",
                     tempEmulationSchema = cohortDatabaseSchema,
+                    verifyDependencies = TRUE,
                     outputFolder,
                     incrementalFolder = file.path(outputFolder, "incrementalFolder"),
                     databaseId = "Unknown",
@@ -77,6 +79,11 @@ execute <- function(connectionDetails,
     ParallelLogger::unregisterLogger("DEFAULT_ERRORREPORT_LOGGER", silent = TRUE),
     add = TRUE
   )
+  
+  if (verifyDependencies) {
+    ParallelLogger::logInfo("Checking whether correct package versions are installed")
+    verifyDependencies()
+  }
   
   ParallelLogger::logInfo("Creating cohorts")
   CohortDiagnostics::instantiateCohortSet(

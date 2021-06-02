@@ -52,6 +52,7 @@ execute(
         vocabularyDatabaseSchema = vocabDatabaseSchema,
         cohortDatabaseSchema = cohortDatabaseSchema,
         cohortTable = cohortTable,
+        verifyDependencies = TRUE,
         outputFolder = outputFolder,
         databaseId = databaseId,
         databaseName = dataSouceInformation$cdmSourceName,

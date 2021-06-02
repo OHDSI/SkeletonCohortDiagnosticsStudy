@@ -41,6 +41,7 @@ SkeletonCohortDiagnosticsStudy::execute(
         cdmDatabaseSchema = cdmDatabaseSchema,
         cohortDatabaseSchema = cohortDatabaseSchema,
         cohortTable = cohortTable,
+        verifyDependencies = TRUE,
         outputFolder = outputFolder,
         databaseId = databaseId,
         databaseName = databaseName,
