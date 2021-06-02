@@ -717,16 +717,6 @@
 			"RemoteRepo" : "OhdsiSharing",
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "v0.2.2"
-		},
-		"SkeletonCohortDiagnosticsStudy" : {
-			"Package" : "SkeletonCohortDiagnosticsStudy",
-			"Version" : "0.0.1",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "SkeletonCohortDiagnosticsStudy",
-			"RemoteUsername" : "ohdsi-studies",
-			"RemoteRef" : "master"
 		}
 	}
 }
