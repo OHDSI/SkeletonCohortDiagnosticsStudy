@@ -67,7 +67,7 @@ cdmDatabaseSchema <- connectionSpecifications$cdmDatabaseSchema
 
 # The name of the database schema and table where the study-specific cohorts will be instantiated:
 cohortDatabaseSchema <-
-  paste0("scratch_", keyring::key_get(service = userNameService))
+  paste0("scratch_", keyring::key_get(service = 'OHDSI_USER'))
 # cohortDatabaseSchema <-
 #   paste0("scratch_rao_", connectionSpecifications$database)
 
