@@ -140,7 +140,7 @@ execute(
   cohortDatabaseSchema = cohortDatabaseSchema,
   cohortTable = cohortTable,
   verifyDependencies = TRUE,
-  outputFolder = outputFolder,
+  outputFolder = file.path(outputFolder, databaseId),
   databaseId = databaseId,
   databaseName = databaseName,
   databaseDescription = databaseDescription
