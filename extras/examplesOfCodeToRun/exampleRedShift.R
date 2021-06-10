@@ -81,6 +81,51 @@ cohortTable <-
 databaseId <- connectionSpecifications$database
 
 # this function calls details of the data source.
+
+getDataSourceInformation <-
+  function(connectionDetails,
+           cdmDatabaseSchema,
+           vocabDatabaseSchema) {
+    connection <-
+      DatabaseConnector::connect(connectionDetails = connectionDetails)
+    sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
+    sqlVocabularyVersion <-
+      "select * from @vocabDatabaseSchema.vocabulary where vocabulary_id = 'None';"
+    
+    cdmDataSource <-
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = connection,
+        sql = sqlCdmDataSource,
+        cdmDatabaseSchema = cdmDatabaseSchema,
+        snakeCaseToCamelCase = TRUE
+      ) %>%
+      dplyr::tibble() %>%
+      dplyr::rename(vocabularyVersionCdm = .data$vocabularyVersion)
+    
+    vocabulary <-
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = connection,
+        sql = sqlVocabularyVersion,
+        vocabDatabaseSchema = vocabDatabaseSchema,
+        snakeCaseToCamelCase = TRUE
+      ) %>%
+      dplyr::tibble() %>%
+      dplyr::rename(vocabularyVersion = .data$vocabularyVersion)
+    
+    DatabaseConnector::disconnect(connection = connection)
+    return((
+      if (nrow(cdmDataSource) > 0) {
+        tidyr::crossing(cdmDataSource, vocabulary) %>%
+          dplyr::mutate(
+            databaseDescription =
+              .data$sourceDescription
+          )
+      } else {
+        vocabulary
+      }
+    ))
+  }
+
 dataSourceInformation <- getDataSourceInformation(connectionDetails = connectionDetails,
                                                   cdmDatabaseSchema = cdmDatabaseSchema,
                                                   vocabDatabaseSchema = connectionSpecifications$vocabDatabaseSchema)
