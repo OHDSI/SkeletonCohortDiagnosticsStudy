@@ -1,3 +1,10 @@
+################################################################################
+# VARIABLES - please change
+################################################################################
+# The folder where the study intermediate and result files will be written:
+outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudy"
+databaseToRun <- 'truven_ccae'
+
 ############### Note this is a custom script, a version of CodeToRun.R that may not work for everyone ##############
 ############### Please use CodeToRun.R as it a more generic version  ###############################################
 library(SkeletonCohortDiagnosticsStudy)
@@ -13,11 +20,6 @@ library(magrittr)
 # Maximum number of cores to be used:
 maxCores <- parallel::detectCores()
 
-################################################################################
-# VARIABLES - please change
-################################################################################
-# The folder where the study intermediate and result files will be written:
-outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudy"
 
 # create output directory if it doesnt exist
 if (!dir.exists(outputFolder)) {
@@ -50,7 +52,7 @@ cdmSources <- ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
 # the cdm sources is then used to populate connectionSpecifications object
 connectionSpecifications <- cdmSources %>%
   dplyr::filter(sequence == 1) %>%
-  dplyr::filter(database == 'truven_mdcd')
+  dplyr::filter(database == databaseToRun)
 
 # Details for connecting to the server:
 connectionDetails <-
