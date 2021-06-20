@@ -46,6 +46,15 @@ dataSouceInformation <- getDataSourceInformation(connectionDetails = connectionD
                                                  cdmDatabaseSchema = cdmDatabaseSchema,
                                                  vocabDatabaseSchema = vocabDatabaseSchema)
 
+if (is.null(dataSouceInformation$cdmSourceName)) {
+        dataSouceInformation$cdmSourceName <- "unknown"
+}
+
+
+if (is.null(dataSouceInformation$sourceDescription)) {
+        dataSouceInformation$sourceDescription <- cdmSourceName
+}
+
 execute(
         connectionDetails = connectionDetails,
         cdmDatabaseSchema = cdmDatabaseSchema,
