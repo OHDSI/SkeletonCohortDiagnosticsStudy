@@ -10,7 +10,7 @@ library(magrittr)
 # VARIABLES - please change
 ################################################################################
 # The folder where the study intermediate and result files will be written:
-outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudy"
+outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudyP"
 # create output directory if it does not exist
 if (!dir.exists(outputFolder)) {
   dir.create(outputFolder,
@@ -66,6 +66,6 @@ for (i in (1:length(databaseIds))) {
   )
 }
 
-ParallelLogger::clusterApply(cluster = numberOfNodes,
+ParallelLogger::clusterApply(cluster = ParallelLogger::makeCluster(numberOfThreads = as.integer(trunc(parallel::detectCores()/2))),
                              x = x,
                              fun = execute)
