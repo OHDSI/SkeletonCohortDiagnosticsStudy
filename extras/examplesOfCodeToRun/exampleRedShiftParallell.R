@@ -70,15 +70,20 @@ for (i in (1:length(databaseIds))) {
 
 # use Parallel Logger to run in parallel
 cluster <- ParallelLogger::makeCluster(numberOfThreads = as.integer(trunc(parallel::detectCores()/2)))
+
 ## file logger
 loggerName <- paste0("CDF_", stringr::str_replace_all(string = Sys.time(), pattern = ":|-|EDT| ", replacement = ''))
 loggerTrace <- ParallelLogger::addDefaultFileLogger(fileName = paste0(loggerName, ".txt"))
 ParallelLogger::registerLogger(logger = loggerTrace)
+
 ## email logger
-mailSettings <- Sys.getenv("mailSettings")
+if (!exists('mailSettings')) {
+  mailSettings <- Sys.getenv("mailSettings")
+}
 if (length(mailSettings) > 0) {
   ParallelLogger::addDefaultEmailLogger(mailSettings)
 }
+
 ParallelLogger::clusterApply(cluster = cluster,
                              x = x,
                              fun = execute)
