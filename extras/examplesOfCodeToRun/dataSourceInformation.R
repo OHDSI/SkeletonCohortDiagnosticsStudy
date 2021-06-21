@@ -94,18 +94,18 @@ execute <- function(x) {
     cohortDatabaseSchema = cohortDatabaseSchema,
     cohortTable = cohortTableName,
     verifyDependencies = x$verifyDependencies,
-    outputFolder = file.path(x$outputFolder, x$databaseId),
+    outputFolder = outputFolder,
     databaseId = x$databaseId,
     databaseName = dataSourceDetails$databaseName,
     databaseDescription = dataSourceDetails$databaseDescription
   )
   
   if (x$preMergeDiagnosticsFiles) {
-    CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = file.path(x$outputFolder, x$databaseId))
+    CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = outputFolder)
   }
   
   if (length(x$privateKeyFileName) > 0 && length(x$userName) > 0) {
-    CohortDiagnostics::uploadResults(file.path(x$outputFolder, x$databaseId),
+    CohortDiagnostics::uploadResults(outputFolder,
                                      x$privateKeyFileName,
                                      x$userName)
   }
