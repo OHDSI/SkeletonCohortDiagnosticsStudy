@@ -1,8 +1,9 @@
 ############### Note this is a custom script, a version of CodeToRun.R that may not work for everyone ##############
 ############### Please use CodeToRun.R as it a more generic version  ###############################################
+
 ############### This version of code will loop over each database ids in serial                      ###############
+
 ############### processes to run Cohort Diagnostics ################################################################
-# library(SkeletonCohortDiagnosticsStudy)
 library(magrittr)
 
 ################################################################################
@@ -41,7 +42,6 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
 
-
 ## if uploading to co-ordinator site
 privateKeyFileName <- ""
 siteUserName <- ""
@@ -68,6 +68,6 @@ for (i in (1:length(databaseIds))) {
 
 
 ############ execute #################
-for (i in (1:length(x))) {
+for (i in (1:length(x[1:2]))) {
   execute(x[[i]])
 }

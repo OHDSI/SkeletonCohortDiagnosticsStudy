@@ -1,8 +1,6 @@
 ROhdsiWebApi::authorizeWebApi(Sys.getenv('baseUrl'), "windows") # Windows authentication - if security enabled using windows authentication
 
 
-
-
 cdmSources <- ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
   dplyr::mutate(baseUrl = Sys.getenv('baseUrl'),
                 dbms = 'redshift',
@@ -21,6 +19,41 @@ cdmSources <- ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
   dplyr::filter(sequence == 1)
 
 
+# this function gets details of the data source from cdm source table in omop, if populated.
+# The assumption is the cdm_source.sourceDescription has text description of data source.
+getDataSourceDetails <-
+  function(connection,
+           databaseId,
+           cdmDatabaseSchema) {
+    sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
+    sourceInfo <- list(cdmSourceName = databaseId,
+                       sourceDescription = databaseId)
+    tryCatch(
+      expr = {
+        cdmDataSource <-
+          DatabaseConnector::renderTranslateQuerySql(
+            connection = connection,
+            sql = sqlCdmDataSource,
+            cdmDatabaseSchema = cdmDatabaseSchema,
+            snakeCaseToCamelCase = TRUE
+          )
+        if (nrow(cdmDataSource) == 0) {
+          return(sourceInfo)
+        }
+        if (sourceDescription %in% colnames(cdmDataSource)) {
+          sourceInfo$sourceDescription <- cdmDataSource$sourceDescription
+        }
+        if (cdmSourceName %in% colnames(cdmDataSource)) {
+          sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
+        }
+      },
+      error = function(...) {
+        return(sourceInfo)
+      }
+    )
+    return(sourceInfo)
+  }
+
 
 ######
 execute <- function(x) {
@@ -35,35 +68,7 @@ execute <- function(x) {
       sample(1:10, 1)
     )
   }
-  # this function gets details of the data source from cdm source table in omop, if populated.
-  # The assumption is the cdm_source.sourceDescription has text description of data source.
-  getDataSourceInformation <-
-    function(connection,
-             cdmDatabaseSchema,
-             vocabDatabaseSchema) {
-      sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
-      tryCatch(
-        expr = {
-          cdmDataSource <-
-            DatabaseConnector::renderTranslateQuerySql(
-              connection = connection,
-              sql = sqlCdmDataSource,
-              cdmDatabaseSchema = cdmDatabaseSchema,
-              snakeCaseToCamelCase = TRUE
-            )
-          if (sourceDescription %in% colnames(cdmDataSource)) {
-            sourceDescription <- cdmDataSource$sourceDescription
-          } else {
-            sourceDescription <- databaseId
-          }
-        },
-        error = function(...) {
-          sourceDescription <- databaseId
-        }
-      )
-      return(sourceDescription)
-    }
-  
+
   # Details for connecting to the server:
   connectionDetails <-
     DatabaseConnector::createConnectionDetails(
@@ -77,16 +82,22 @@ execute <- function(x) {
   cdmDatabaseSchema <- cdmSource$cdmDatabaseSchema
   cohortDatabaseSchema <- cdmSource$cohortDatabaseSchema
   
+  connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+  dataSourceDetails <- getDataSourceDetails(connection = connection,
+                                            databaseId = x$databaseId,
+                                            cdmDatabaseSchema = cdmDatabaseSchema)
+  DatabaseConnector::disconnect(connection)
+  
   SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
-    cdmDatabaseSchema = x$cdmDatabaseSchema,
-    cohortDatabaseSchema = x$cohortDatabaseSchema,
-    cohortTable = x$cohortTable,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    cohortDatabaseSchema = cohortDatabaseSchema,
+    cohortTable = cohortTableName,
     verifyDependencies = x$verifyDependencies,
     outputFolder = file.path(x$outputFolder, x$databaseId),
     databaseId = x$databaseId,
-    databaseName = x$databaseName,
-    databaseDescription = x$databaseDescription
+    databaseName = dataSourceDetails$databaseName,
+    databaseDescription = dataSourceDetails$databaseDescription
   )
   
   if (x$preMergeDiagnosticsFiles) {
