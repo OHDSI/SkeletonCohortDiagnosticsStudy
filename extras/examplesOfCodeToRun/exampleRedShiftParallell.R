@@ -66,6 +66,8 @@ for (i in (1:length(databaseIds))) {
   )
 }
 
+# x <- x[8:10]
+
 ParallelLogger::clusterApply(cluster = ParallelLogger::makeCluster(numberOfThreads = as.integer(trunc(parallel::detectCores()/2))),
                              x = x,
                              fun = execute)

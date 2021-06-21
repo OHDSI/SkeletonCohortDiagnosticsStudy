@@ -68,6 +68,8 @@ for (i in (1:length(databaseIds))) {
 
 
 ############ execute #################
-for (i in (1:length(x[1:2]))) {
+# x <- x[9:10]
+
+for (i in (1:length(x))) {
   execute(x[[i]])
 }

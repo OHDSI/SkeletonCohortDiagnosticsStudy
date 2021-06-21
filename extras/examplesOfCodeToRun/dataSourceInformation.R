@@ -19,41 +19,6 @@ cdmSources <- ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
   dplyr::filter(sequence == 1)
 
 
-# this function gets details of the data source from cdm source table in omop, if populated.
-# The assumption is the cdm_source.sourceDescription has text description of data source.
-getDataSourceDetails <-
-  function(connection,
-           databaseId,
-           cdmDatabaseSchema) {
-    sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
-    sourceInfo <- list(cdmSourceName = databaseId,
-                       sourceDescription = databaseId)
-    tryCatch(
-      expr = {
-        cdmDataSource <-
-          DatabaseConnector::renderTranslateQuerySql(
-            connection = connection,
-            sql = sqlCdmDataSource,
-            cdmDatabaseSchema = cdmDatabaseSchema,
-            snakeCaseToCamelCase = TRUE
-          )
-        if (nrow(cdmDataSource) == 0) {
-          return(sourceInfo)
-        }
-        if (sourceDescription %in% colnames(cdmDataSource)) {
-          sourceInfo$sourceDescription <- cdmDataSource$sourceDescription
-        }
-        if (cdmSourceName %in% colnames(cdmDataSource)) {
-          sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
-        }
-      },
-      error = function(...) {
-        return(sourceInfo)
-      }
-    )
-    return(sourceInfo)
-  }
-
 
 ######
 execute <- function(x) {
@@ -68,19 +33,54 @@ execute <- function(x) {
       sample(1:10, 1)
     )
   }
+  
+  # this function gets details of the data source from cdm source table in omop, if populated.
+  # The assumption is the cdm_source.sourceDescription has text description of data source.
+  getDataSourceDetails <-
+    function(connection,
+             databaseId,
+             cdmDatabaseSchema) {
+      sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
+      sourceInfo <- list(cdmSourceName = databaseId,
+                         sourceDescription = databaseId)
+      tryCatch(
+        expr = {
+          cdmDataSource <-
+            DatabaseConnector::renderTranslateQuerySql(
+              connection = connection,
+              sql = sqlCdmDataSource,
+              cdmDatabaseSchema = cdmDatabaseSchema,
+              snakeCaseToCamelCase = TRUE
+            )
+          if (nrow(cdmDataSource) == 0) {
+            return(sourceInfo)
+          }
+          if (sourceDescription %in% colnames(cdmDataSource)) {
+            sourceInfo$sourceDescription <- cdmDataSource$sourceDescription
+          }
+          if (cdmSourceName %in% colnames(cdmDataSource)) {
+            sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
+          }
+        },
+        error = function(...) {
+          return(sourceInfo)
+        }
+      )
+      return(sourceInfo)
+    }
 
   # Details for connecting to the server:
   connectionDetails <-
     DatabaseConnector::createConnectionDetails(
-      dbms = cdmSource$dbms,
-      server = cdmSource$server,
+      dbms = x$cdmSource$dbms,
+      server = x$cdmSource$server,
       user = keyring::key_get(service = x$userService),
       password =  keyring::key_get(service = x$passwordService),
-      port = cdmSource$port
+      port = x$cdmSource$port
     )
   # The name of the database schema where the CDM data can be found:
-  cdmDatabaseSchema <- cdmSource$cdmDatabaseSchema
-  cohortDatabaseSchema <- cdmSource$cohortDatabaseSchema
+  cdmDatabaseSchema <- x$cdmSource$cdmDatabaseSchema
+  cohortDatabaseSchema <- x$cdmSource$cohortDatabaseSchema
   
   connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
   dataSourceDetails <- getDataSourceDetails(connection = connection,
@@ -94,7 +94,7 @@ execute <- function(x) {
     cohortDatabaseSchema = cohortDatabaseSchema,
     cohortTable = cohortTableName,
     verifyDependencies = x$verifyDependencies,
-    outputFolder = outputFolder,
+    outputFolder = x$outputFolder,
     databaseId = x$databaseId,
     databaseName = dataSourceDetails$databaseName,
     databaseDescription = dataSourceDetails$databaseDescription
