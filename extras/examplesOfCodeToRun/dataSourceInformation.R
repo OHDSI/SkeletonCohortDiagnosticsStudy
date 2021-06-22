@@ -30,7 +30,7 @@ execute <- function(x) {
   if (x$generateCohortTableName) {
     cohortTableName <- paste0(
       stringr::str_squish(x$databaseId),
-      stringr::str_squish(skeletonCohortDiagnosticsStudy)
+      stringr::str_squish(SkeletonCohortDiagnosticsStudy)
     )
   }
   
