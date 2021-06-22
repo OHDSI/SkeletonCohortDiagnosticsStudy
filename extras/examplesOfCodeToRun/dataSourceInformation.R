@@ -112,7 +112,10 @@ execute <- function(x) {
     CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = x$outputFolder)
   }
   
-  if (length(x$privateKeyFileName) > 0 && length(x$userName) > 0) {
+  if (length(x$privateKeyFileName) > 0 && 
+      !x$privateKeyFileName == '' &&
+      length(x$userName) > 0 &&
+      !x$userName == '') {
     CohortDiagnostics::uploadResults(x$outputFolder,
                                      x$privateKeyFileName,
                                      x$userName)
@@ -120,6 +123,8 @@ execute <- function(x) {
   
   if (length(uploadToLocalPostGresDatabaseSpecifications) > 1) {
     # Set the POSTGRES_PATH environmental variable to the path to the folder containing the psql executable to enable bulk upload (recommended).
+    
+    connection <- DatabaseConnector::connect(uploadToLocalPostGresDatabaseSpecifications$connectionDetails)
     
     # check if schema was instantiated
     sqlSchemaCheck <-
@@ -130,9 +135,7 @@ execute <- function(x) {
       )
     schemaExists <-
       DatabaseConnector::renderTranslateQuerySql(
-        connection = DatabaseConnector::connect(
-          uploadToLocalPostGresDatabaseSpecifications$connectionDetails
-        ),
+        connection = connection,
         sql = sqlSchemaCheck
       )
     
@@ -150,14 +153,12 @@ execute <- function(x) {
           ");"
         )
       DatabaseConnector::renderTranslateQuerySql(
-        connection = DatabaseConnector::connect(
-          uploadToLocalPostGresDatabaseSpecifications$connectionDetails
-        ),
+        connection = connection,
         sql = createSchemaSql
       )
       ParallelLogger::logInfo("Schema created.")
     }
-    
+    DatabaseConnector::disconnect(connection = connection)
     # note this is a thread safe upload, so its ok to parallelize
     CohortDiagnostics::uploadResults(
       connectionDetails = uploadToLocalPostGresDatabaseSpecifications$connectionDetails,
