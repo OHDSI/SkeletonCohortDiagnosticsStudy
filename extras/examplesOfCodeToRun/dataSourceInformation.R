@@ -30,12 +30,7 @@ execute <- function(x) {
   if (x$generateCohortTableName) {
     cohortTableName <- paste0(
       stringr::str_squish(x$databaseId),
-      stringr::str_replace_all(
-        string = Sys.Date(),
-        pattern = "-",
-        replacement = ""
-      ),
-      sample(1:10, 1)
+      stringr::str_squish(skeletonCohortDiagnosticsStudy)
     )
   }
   
