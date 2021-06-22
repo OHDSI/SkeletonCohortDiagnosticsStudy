@@ -20,6 +20,12 @@ if (!dir.exists(outputFolder)) {
 # Optional: specify a location on your disk drive that has sufficient space.
 # options(andromedaTempFolder = "s:/andromedaTemp")
 
+# set to false if email is not possible
+mailFatal <- TRUE
+
+# do you want to upload the results to a local database
+uploadToLocalPostGresDatabase <- TRUE
+
 ############## databaseIds to run cohort diagnostics on that source  #################
 databaseIds <-
   c(
@@ -52,6 +58,32 @@ for (i in (1:length(databaseIds))) {
   databaseId <- databaseIds[[i]]
   cdmSource <- cdmSources %>%
     dplyr::filter(database == databaseId)
+  
+  if (uploadToLocalPostGresDatabase) {
+    uploadToLocalPostGresDatabaseSpecifications <- list(
+      connectionDetails = DatabaseConnector::createConnectionDetails(
+        dbms = "postgresql",
+        server = paste(
+          Sys.getenv("shinydbServer"),
+          Sys.getenv("shinydbDatabase"),
+          sep = "/"
+        ),
+        port = Sys.getenv("shinydbPort"),
+        user = Sys.getenv("shinydbUser"),
+        password = Sys.getenv("shinydbPW")
+      ),
+      schema = 'SkeletonCohortDiagnosticsStudy',
+      zipFileName = list.files(
+        path = file.path(outputFolder, databaseId),
+        pattern = paste0("Results_", databaseId, ".zip"),
+        full.names = TRUE,
+        recursive = TRUE
+      )
+    )
+  } else {
+    uploadToLocalPostGresDatabaseSpecifications <- ''
+  }
+  
   x[[i]] <- list(
     cdmSource = cdmSource,
     generateCohortTableName = TRUE,
@@ -62,7 +94,8 @@ for (i in (1:length(databaseIds))) {
     passwordService = keyringPasswordService,
     preMergeDiagnosticsFiles = TRUE,
     privateKeyFileName = privateKeyFileName,
-    userName = siteUserName
+    userName = siteUserName,
+    uploadToLocalPostGresDatabaseSpecifications = uploadToLocalPostGresDatabaseSpecifications
   )
 }
 

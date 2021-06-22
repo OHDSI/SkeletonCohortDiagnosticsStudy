@@ -1,20 +1,25 @@
 ROhdsiWebApi::authorizeWebApi(Sys.getenv('baseUrl'), "windows") # Windows authentication - if security enabled using windows authentication
 
 
-cdmSources <- ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
-  dplyr::mutate(baseUrl = Sys.getenv('baseUrl'),
-                dbms = 'redshift',
-                sourceDialect = 'redshift',
-                port = 5439,
-                version = .data$sourceKey %>% substr(., nchar(.) - 3, nchar(.)) %>% as.integer(),
-                database = .data$sourceKey %>% substr(., 5, nchar(.) - 6)) %>%
+cdmSources <-
+  ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
+  dplyr::mutate(
+    baseUrl = Sys.getenv('baseUrl'),
+    dbms = 'redshift',
+    sourceDialect = 'redshift',
+    port = 5439,
+    version = .data$sourceKey %>% substr(., nchar(.) - 3, nchar(.)) %>% as.integer(),
+    database = .data$sourceKey %>% substr(., 5, nchar(.) - 6)
+  ) %>%
   dplyr::group_by(.data$database) %>%
   dplyr::arrange(dplyr::desc(.data$version)) %>%
   dplyr::mutate(sequence = dplyr::row_number()) %>%
   dplyr::ungroup() %>%
   dplyr::arrange(.data$database, .data$sequence) %>%
-  dplyr::mutate(server = tolower(paste0(Sys.getenv("serverRoot"),"/", .data$database))) %>% 
-  dplyr::mutate(cohortDatabaseSchema = paste0("scratch_", keyring::key_get(service = keyringUserService))) %>% 
+  dplyr::mutate(server = tolower(paste0(
+    Sys.getenv("serverRoot"), "/", .data$database
+  ))) %>%
+  dplyr::mutate(cohortDatabaseSchema = paste0("scratch_", keyring::key_get(service = keyringUserService))) %>%
   dplyr::filter(database %in% databaseIds) %>%
   dplyr::filter(sequence == 1)
 
@@ -68,7 +73,7 @@ execute <- function(x) {
       )
       return(sourceInfo)
     }
-
+  
   # Details for connecting to the server:
   connectionDetails <-
     DatabaseConnector::createConnectionDetails(
@@ -82,10 +87,13 @@ execute <- function(x) {
   cdmDatabaseSchema <- x$cdmSource$cdmDatabaseSchema
   cohortDatabaseSchema <- x$cdmSource$cohortDatabaseSchema
   
-  connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
-  dataSourceDetails <- getDataSourceDetails(connection = connection,
-                                            databaseId = x$databaseId,
-                                            cdmDatabaseSchema = cdmDatabaseSchema)
+  connection <-
+    DatabaseConnector::connect(connectionDetails = connectionDetails)
+  dataSourceDetails <- getDataSourceDetails(
+    connection = connection,
+    databaseId = x$databaseId,
+    cdmDatabaseSchema = cdmDatabaseSchema
+  )
   DatabaseConnector::disconnect(connection)
   
   SkeletonCohortDiagnosticsStudy::execute(
@@ -108,5 +116,53 @@ execute <- function(x) {
     CohortDiagnostics::uploadResults(outputFolder,
                                      x$privateKeyFileName,
                                      x$userName)
+  }
+  
+  if (length(uploadToLocalPostGresDatabaseSpecifications) > 1) {
+    # Set the POSTGRES_PATH environmental variable to the path to the folder containing the psql executable to enable bulk upload (recommended).
+    
+    # check if schema was instantiated
+    sqlSchemaCheck <-
+      paste0(
+        "SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name = '",
+        uploadToLocalPostGresDatabaseSpecifications$schema,
+        "');"
+      )
+    schemaExists <-
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = DatabaseConnector::connect(
+          uploadToLocalPostGresDatabaseSpecifications$connectionDetails
+        ),
+        sql = sqlSchemaCheck
+      )
+    
+    if (schemaExists$EXISTS == 'f') {
+      warning(
+        paste0(
+          'While attempting to upload to postgres, found target schema to not exist - attempting to create target schema ',
+          uploadToLocalPostGresDatabaseSpecifications$schema
+        )
+      )
+      createSchemaSql <-
+        paste0(
+          "select create_schema('",
+          uploadToLocalPostGresDatabaseSpecifications$schema,
+          ");"
+        )
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = DatabaseConnector::connect(
+          uploadToLocalPostGresDatabaseSpecifications$connectionDetails
+        ),
+        sql = createSchemaSql
+      )
+      ParallelLogger::logInfo("Schema created.")
+    }
+    
+    # note this is a thread safe upload, so its ok to parallelize
+    CohortDiagnostics::uploadResults(
+      connectionDetails = uploadToLocalPostGresDatabaseSpecifications$connectionDetails,
+      schema = uploadToLocalPostGresDatabaseSpecifications$schema,
+      zipFileName = uploadToLocalPostGresDatabaseSpecifications$zipFileName
+    )
   }
 }
