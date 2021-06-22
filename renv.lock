@@ -345,17 +345,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"zip": {
-      "Package": "zip",
-      "Version": "2.0.4",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "zip",
-      "RemoteUsername": "r-lib",
-      "RemoteRef": "v2.0.4",
-      "Hash": "dbf9bada0b6075e28d61087b8140120f"
-    },
+		"zip" : {
+			"Package" : "zip",
+			"Version" : "2.0.4",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"Andromeda" : {
 			"Package" : "Andromeda",
 			"Version" : "0.4.1",
@@ -377,12 +372,6 @@
 		"httr" : {
 			"Package" : "httr",
 			"Version" : "1.4.2",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"later" : {
-			"Package" : "later",
-			"Version" : "1.2.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -446,12 +435,6 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"pool" : {
-			"Package" : "pool",
-			"Version" : "0.1.6",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
 		"filelock" : {
 			"Package" : "filelock",
 			"Version" : "1.0.2",
@@ -491,6 +474,12 @@
 		"htmltools" : {
 			"Package" : "htmltools",
 			"Version" : "0.5.1.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"later" : {
+			"Package" : "later",
+			"Version" : "1.2.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -590,6 +579,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"pool" : {
+			"Package" : "pool",
+			"Version" : "0.1.6",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"fs" : {
 			"Package" : "fs",
 			"Version" : "1.5.0",
@@ -662,21 +657,35 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"R.methodsS3" : {
+			"Package" : "R.methodsS3",
+			"Version" : "1.8.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"R.oo" : {
+			"Package" : "R.oo",
+			"Version" : "1.24.0",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"R.utils" : {
+			"Package" : "R.utils",
+			"Version" : "2.10.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"mailR" : {
+			"Package" : "mailR",
+			"Version" : "0.4.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"renv" : {
 			"Package" : "renv",
 			"Version" : "0.13.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
-		},
-		"CirceR" : {
-			"Package" : "CirceR",
-			"Version" : "1.1.1",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "CirceR",
-			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v1.1.1"
 		},
 		"FeatureExtraction" : {
 			"Package" : "FeatureExtraction",
@@ -700,13 +709,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.1.0",
+			"Version" : "2.2.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.1.0"
+			"RemoteRef" : "v2.2.0"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
@@ -717,6 +726,16 @@
 			"RemoteRepo" : "OhdsiSharing",
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "v0.2.2"
+		},
+		"SkeletonCohortDiagnosticsStudy" : {
+			"Package" : "SkeletonCohortDiagnosticsStudy",
+			"Version" : "0.0.1",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "SkeletonCohortDiagnosticsStudy",
+			"RemoteUsername" : "ohdsi-studies",
+			"RemoteRef" : "master"
 		}
 	}
 }
