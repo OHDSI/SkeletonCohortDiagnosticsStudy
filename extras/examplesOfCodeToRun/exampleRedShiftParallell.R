@@ -64,13 +64,13 @@ for (i in (1:length(databaseIds))) {
       connectionDetails = DatabaseConnector::createConnectionDetails(
         dbms = "postgresql",
         server = paste(
-          Sys.getenv("shinydbServer"),
-          Sys.getenv("shinydbDatabase"),
+          keyring::key_get("shinydbServer"),
+          keyring::key_get("shinydbDatabase"),
           sep = "/"
         ),
-        port = Sys.getenv("shinydbPort"),
-        user = Sys.getenv("shinydbUser"),
-        password = Sys.getenv("shinydbPW")
+        port = keyring::key_get("shinydbPort"),
+        user = keyring::key_get("shinydbUser"),
+        password = keyring::key_get("shinydbPW")
       ),
       schema = 'SkeletonCohortDiagnosticsStudy',
       zipFileName = list.files(
@@ -100,7 +100,7 @@ for (i in (1:length(databaseIds))) {
   )
 }
 
-# x <- x[1:10]
+# x <- x[9:10]
 
 # use Parallel Logger to run in parallel
 cluster <-

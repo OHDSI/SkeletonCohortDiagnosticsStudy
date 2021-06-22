@@ -125,7 +125,7 @@ execute <- function(x) {
     sqlSchemaCheck <-
       paste0(
         "SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name = '",
-        uploadToLocalPostGresDatabaseSpecifications$schema,
+        tolower(uploadToLocalPostGresDatabaseSpecifications$schema),
         "');"
       )
     schemaExists <-
