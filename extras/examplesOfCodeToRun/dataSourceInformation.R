@@ -109,11 +109,11 @@ execute <- function(x) {
   )
   
   if (x$preMergeDiagnosticsFiles) {
-    CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = outputFolder)
+    CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = x$outputFolder)
   }
   
   if (length(x$privateKeyFileName) > 0 && length(x$userName) > 0) {
-    CohortDiagnostics::uploadResults(outputFolder,
+    CohortDiagnostics::uploadResults(x$outputFolder,
                                      x$privateKeyFileName,
                                      x$userName)
   }
@@ -146,7 +146,7 @@ execute <- function(x) {
       createSchemaSql <-
         paste0(
           "select create_schema('",
-          uploadToLocalPostGresDatabaseSpecifications$schema,
+          tolower(uploadToLocalPostGresDatabaseSpecifications$schema),
           ");"
         )
       DatabaseConnector::renderTranslateQuerySql(
