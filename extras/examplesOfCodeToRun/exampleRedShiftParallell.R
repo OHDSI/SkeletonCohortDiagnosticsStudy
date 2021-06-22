@@ -74,19 +74,27 @@ cluster <- ParallelLogger::makeCluster(numberOfThreads = as.integer(trunc(parall
 ## file logger
 loggerName <- paste0("CDF_", stringr::str_replace_all(string = Sys.time(), pattern = ":|-|EDT| ", replacement = ''))
 loggerTrace <- ParallelLogger::addDefaultFileLogger(fileName = paste0(loggerName, ".txt"))
-ParallelLogger::registerLogger(logger = loggerTrace)
 
 ## email logger
-if (!exists('mailSettings')) {
-  mailSettings <- Sys.getenv("mailSettings")
-}
-if (length(mailSettings) > 0) {
-  ParallelLogger::addDefaultEmailLogger(mailSettings)
-}
+mailSettings <- list(
+  from = keyring::key_get("mailAddress"),
+  to = c(keyring::key_get("mailToAddress")),
+  smtp = list(
+    host.name = keyring::key_get("mailSmtpServer"),
+    port = keyring::key_get("mailSmtpPort"),
+    user.name = keyring::key_get("mailAddress"),
+    passwd = keyring::key_get("mailPassword"),
+    ssl = TRUE
+  ),
+  authenticate = TRUE,
+  send = TRUE
+)
+ParallelLogger::addDefaultEmailLogger(mailSettings = mailSettings, label = Sys.info()["nodename"])
+
 
 ParallelLogger::clusterApply(cluster = cluster,
                              x = x,
                              fun = execute)
+
 writeLines(readChar(paste0(loggerName, ".txt"), file.info(paste0(loggerName, ".txt"))$size))
-ParallelLogger::unregisterLogger(loggerName)  
 ParallelLogger::stopCluster(cluster = cluster)
