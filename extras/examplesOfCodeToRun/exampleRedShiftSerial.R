@@ -41,9 +41,16 @@ databaseIds <-
     'ims_france'
   )
 
-## service name for keyring
+## service name for keyring for db with cdm
 keyringUserService <- 'OHDSI_USER'
 keyringPasswordService <- 'OHDSI_PASSWORD'
+
+## service name for keyring for postgres db to upload results
+keyringUserServicePostGresUpload <- 'shinydbUser'
+keyringPasswordServicePostGresUpload <- 'shinydbUser'
+keyringDatabaseServicePostGresUpload <- 'shinydbDatabase'
+keyringServerServicePostGresUpload <- 'shinydbServer'
+keyringPortServicePostGresUpload <- 'shinydbPort'
 
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
@@ -64,13 +71,13 @@ for (i in (1:length(databaseIds))) {
       connectionDetails = DatabaseConnector::createConnectionDetails(
         dbms = "postgresql",
         server = paste(
-          keyring::key_get("shinydbServer"),
-          keyring::key_get("shinydbDatabase"),
+          keyring::key_get(keyringServerServicePostGresUpload),
+          keyring::key_get(keyringDatabaseServicePostGresUpload),
           sep = "/"
         ),
-        port = keyring::key_get("shinydbPort"),
-        user = keyring::key_get("shinydbUser"),
-        password = keyring::key_get("shinydbPW")
+        port = keyring::key_get(keyringPortServicePostGresUpload),
+        user = keyring::key_get(keyringUserServicePostGresUpload),
+        password = keyring::key_get(keyringPasswordServicePostGresUpload)
       ),
       schema = 'SkeletonCohortDiagnosticsStudy',
       zipFileName = list.files(
