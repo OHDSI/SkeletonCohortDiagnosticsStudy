@@ -47,7 +47,7 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 
 ## service name for keyring for postgres db to upload results
 keyringUserServicePostGresUpload <- 'shinydbUser'
-keyringPasswordServicePostGresUpload <- 'shinydbUser'
+keyringPasswordServicePostGresUpload <- 'shinydbPW'
 keyringDatabaseServicePostGresUpload <- 'shinydbDatabase'
 keyringServerServicePostGresUpload <- 'shinydbServer'
 keyringPortServicePostGresUpload <- 'shinydbPort'

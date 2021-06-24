@@ -116,49 +116,55 @@ execute <- function(x) {
                                      x$userName)
   }
   
-  if (length(uploadToLocalPostGresDatabaseSpecifications) > 1) {
+  if (length(x$uploadToLocalPostGresDatabaseSpecifications) > 1) {
     # Set the POSTGRES_PATH environmental variable to the path to the folder containing the psql executable to enable bulk upload (recommended).
     
-    connection <- DatabaseConnector::connect(uploadToLocalPostGresDatabaseSpecifications$connectionDetails)
+    connectionPostGres <- DatabaseConnector::connect(x$uploadToLocalPostGresDatabaseSpecifications$connectionDetails)
     
     # check if schema was instantiated
     sqlSchemaCheck <-
       paste0(
-        "SELECT EXISTS(SELECT 1 FROM information_schema.schemata WHERE schema_name = '",
-        tolower(uploadToLocalPostGresDatabaseSpecifications$schema),
-        "');"
+        "SELECT * FROM information_schema.schemata WHERE schema_name = '",
+        tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema),
+        "';"
       )
     schemaExists <-
       DatabaseConnector::renderTranslateQuerySql(
-        connection = connection,
+        connection = connectionPostGres,
         sql = sqlSchemaCheck
       )
     
-    if (schemaExists$EXISTS == 'f') {
+    if (nrow(schemaExists) == 0) {
       warning(
         paste0(
           'While attempting to upload to postgres, found target schema to not exist - attempting to create target schema ',
-          uploadToLocalPostGresDatabaseSpecifications$schema
+          x$uploadToLocalPostGresDatabaseSpecifications$schema
         )
       )
       createSchemaSql <-
         paste0(
           "select create_schema('",
-          tolower(uploadToLocalPostGresDatabaseSpecifications$schema),
+          tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema),
           ");"
         )
       DatabaseConnector::renderTranslateQuerySql(
-        connection = connection,
+        connection = connectionPostGres,
         sql = createSchemaSql
       )
       ParallelLogger::logInfo("Schema created.")
+      
     }
-    DatabaseConnector::disconnect(connection = connection)
+    # check if required table exists, else create them
+    if (!DatabaseConnector::dbExistsTable(conn = connectionPostGres, name = 'cohort_count')) {
+      CohortDiagnostics::createResultsDataModel(connection = connectionPostGres, schema = tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema))
+    }
+    
+    DatabaseConnector::disconnect(connection = connectionPostGres)
     # note this is a thread safe upload, so its ok to parallelize
     CohortDiagnostics::uploadResults(
-      connectionDetails = uploadToLocalPostGresDatabaseSpecifications$connectionDetails,
-      schema = uploadToLocalPostGresDatabaseSpecifications$schema,
-      zipFileName = uploadToLocalPostGresDatabaseSpecifications$zipFileName
+      connectionDetails = x$uploadToLocalPostGresDatabaseSpecifications$connectionDetails,
+      schema = x$uploadToLocalPostGresDatabaseSpecifications$schema,
+      zipFileName = x$uploadToLocalPostGresDatabaseSpecifications$zipFileName
     )
   }
 }
