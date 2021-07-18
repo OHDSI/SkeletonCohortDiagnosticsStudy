@@ -239,7 +239,7 @@
 		},
 		"cpp11" : {
 			"Package" : "cpp11",
-			"Version" : "0.2.7",
+			"Version" : "0.3.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -357,6 +357,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"anytime" : {
+			"Package" : "anytime",
+			"Version" : "0.3.9",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"checkmate" : {
 			"Package" : "checkmate",
 			"Version" : "2.0.0",
@@ -389,7 +395,7 @@
 		},
 		"ParallelLogger" : {
 			"Package" : "ParallelLogger",
-			"Version" : "2.0.1",
+			"Version" : "2.0.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -425,13 +431,19 @@
 		},
 		"clock" : {
 			"Package" : "clock",
-			"Version" : "0.3.0",
+			"Version" : "0.3.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"digest" : {
 			"Package" : "digest",
 			"Version" : "0.6.27",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"tsibble" : {
+			"Package" : "tsibble",
+			"Version" : "1.0.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -709,13 +721,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.1.0",
+			"Version" : "2.2.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.1.0"
+			"RemoteRef" : "develop"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
