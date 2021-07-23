@@ -1,7 +1,8 @@
-﻿atlasId,cohortId,cohortName
-17493,17493,[PL 192671001] Gastrointestinal hemorrhage referent concept incident cohort: First occurrence of referent concept + descendants with >=365d prior observation
-17692,17692,[PL 201254002] Type 1 diabetes mellitus referent concept prevalent cohort: First occurrence of referent concept + descendants
-17693,17693,[PL 201254001] Type 1 diabetes mellitus referent concept incident cohort: First occurrence of referent concept + descendants with >=365d prior observation
-18349,18349,[1124300004] Male Diclofenac
-18350,18350,[1124300005] Male Diclofenac with some disorder or body system
-14907,14907,[1124300003] Users of diclofenac with no history of gastrointestinal hemorrhage
+﻿atlasId,cohortName
+17492,Gastrointestinal hemorrhage referent concept prevalent cohort: First occurrence of referent concept + descendants
+17692,Type 1 diabetes mellitus referent concept prevalent cohort: First occurrence of referent concept + descendants
+17694,Type 2 diabetes mellitus referent concept prevalent cohort: First occurrence of referent concept + descendants
+18342,"Gastrointestinal hemorrhage for Eunomia, first time in persons history"
+18346,Celecoxib referent concept incident cohort: First occurrence of referent concept + descendants
+18348,Diclofenac referent concept incident cohort: First occurrence of referent concept + descendants with >=365d prior observation
+18350, Male short acting Diclofenac with some disorder or body system
