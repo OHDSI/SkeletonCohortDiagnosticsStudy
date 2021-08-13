@@ -1,29 +1,4 @@
-ROhdsiWebApi::authorizeWebApi(Sys.getenv('baseUrl'), "windows") # Windows authentication - if security enabled using windows authentication
-
-
-cdmSources <-
-  ROhdsiWebApi::getCdmSources(baseUrl = Sys.getenv('baseUrl')) %>%
-  dplyr::mutate(
-    baseUrl = Sys.getenv('baseUrl'),
-    dbms = 'redshift',
-    sourceDialect = 'redshift',
-    port = 5439,
-    version = .data$sourceKey %>% substr(., nchar(.) - 3, nchar(.)) %>% as.integer(),
-    database = .data$sourceKey %>% substr(., 5, nchar(.) - 6)
-  ) %>%
-  dplyr::group_by(.data$database) %>%
-  dplyr::arrange(dplyr::desc(.data$version)) %>%
-  dplyr::mutate(sequence = dplyr::row_number()) %>%
-  dplyr::ungroup() %>%
-  dplyr::arrange(.data$database, .data$sequence) %>%
-  dplyr::mutate(server = tolower(paste0(
-    Sys.getenv("serverRoot"), "/", .data$database
-  ))) %>%
-  dplyr::mutate(cohortDatabaseSchema = paste0("scratch_", keyring::key_get(service = keyringUserService))) %>%
-  dplyr::filter(database %in% databaseIds) %>%
-  dplyr::filter(sequence == 1)
-
-
+source(Sys.getenv("startUpScriptLocation"))
 
 ######
 execute <- function(x) {
@@ -107,7 +82,7 @@ execute <- function(x) {
     CohortDiagnostics::preMergeDiagnosticsFiles(dataFolder = x$outputFolder)
   }
   
-  if (length(x$privateKeyFileName) > 0 && 
+  if (length(x$privateKeyFileName) > 0 &&
       !x$privateKeyFileName == '' &&
       length(x$userName) > 0 &&
       !x$userName == '') {
@@ -119,7 +94,8 @@ execute <- function(x) {
   if (length(x$uploadToLocalPostGresDatabaseSpecifications) > 1) {
     # Set the POSTGRES_PATH environmental variable to the path to the folder containing the psql executable to enable bulk upload (recommended).
     
-    connectionPostGres <- DatabaseConnector::connect(x$uploadToLocalPostGresDatabaseSpecifications$connectionDetails)
+    connectionPostGres <-
+      DatabaseConnector::connect(x$uploadToLocalPostGresDatabaseSpecifications$connectionDetails)
     
     # check if schema was instantiated
     sqlSchemaCheck <-
@@ -129,10 +105,8 @@ execute <- function(x) {
         "';"
       )
     schemaExists <-
-      DatabaseConnector::renderTranslateQuerySql(
-        connection = connectionPostGres,
-        sql = sqlSchemaCheck
-      )
+      DatabaseConnector::renderTranslateQuerySql(connection = connectionPostGres,
+                                                 sql = sqlSchemaCheck)
     
     if (nrow(schemaExists) == 0) {
       warning(
@@ -147,16 +121,17 @@ execute <- function(x) {
           tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema),
           ");"
         )
-      DatabaseConnector::renderTranslateQuerySql(
-        connection = connectionPostGres,
-        sql = createSchemaSql
-      )
+      DatabaseConnector::renderTranslateQuerySql(connection = connectionPostGres,
+                                                 sql = createSchemaSql)
       ParallelLogger::logInfo("Schema created.")
       
     }
     # check if required table exists, else create them
     if (!DatabaseConnector::dbExistsTable(conn = connectionPostGres, name = 'cohort_count')) {
-      CohortDiagnostics::createResultsDataModel(connection = connectionPostGres, schema = tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema))
+      CohortDiagnostics::createResultsDataModel(
+        connection = connectionPostGres,
+        schema = tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema)
+      )
     }
     
     DatabaseConnector::disconnect(connection = connectionPostGres)

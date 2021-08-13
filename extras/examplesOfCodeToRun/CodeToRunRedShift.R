@@ -2,8 +2,9 @@
 ############### Please use CodeToRun.R as it a more generic version  ###############################################
 
 source(Sys.getenv("startUpScriptLocation"))
-connectionSpecifications <- cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
-                                                                                            "truven_ccae")
+connectionSpecifications <-
+        cdmSources %>% dplyr::filter(sequence == 1) %>% dplyr::filter(database ==
+                                                                              "truven_ccae")
 
 library(SkeletonCohortDiagnosticsStudy)
 
@@ -11,7 +12,9 @@ library(SkeletonCohortDiagnosticsStudy)
 outputFolder <-
         file.path("D:/temp/", connectionSpecifications$database)
 # unlink(x = outputFolder, recursive = TRUE, force = TRUE)
-dir.create(path = outputFolder, showWarnings = TRUE, recursive = TRUE)
+dir.create(path = outputFolder,
+           showWarnings = TRUE,
+           recursive = TRUE)
 
 # Maximum number of cores to be used:
 maxCores <- parallel::detectCores()
@@ -26,7 +29,8 @@ userNameService <- "OHDSI_USER"
 passwordService <- "OHDSI_PASSWORD"
 
 cohortDatabaseSchema <-
-        paste0("scratch_", keyring::key_get(service = userNameService))
+        connectionSpecifications$cohortDatabaseSchema
+
 connectionDetails <-
         DatabaseConnector::createConnectionDetails(
                 dbms = dbms,
@@ -42,9 +46,12 @@ cohortTable <-
                "_",
                "SkeletonCohortDiagnosticsStudy")
 
-dataSouceInformation <- getDataSourceInformation(connectionDetails = connectionDetails,
-                                                 cdmDatabaseSchema = cdmDatabaseSchema,
-                                                 vocabDatabaseSchema = vocabDatabaseSchema)
+dataSouceInformation <-
+        getDataSourceInformation(
+                connectionDetails = connectionDetails,
+                cdmDatabaseSchema = cdmDatabaseSchema,
+                vocabDatabaseSchema = vocabDatabaseSchema
+        )
 
 if (is.null(dataSouceInformation$cdmSourceName)) {
         dataSouceInformation$cdmSourceName <- "unknown"
