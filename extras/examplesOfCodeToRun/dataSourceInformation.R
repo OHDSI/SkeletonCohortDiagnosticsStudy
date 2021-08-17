@@ -120,8 +120,8 @@ execute <- function(x) {
     verifyDependencies = x$verifyDependencies,
     outputFolder = x$outputFolder,
     databaseId = x$databaseId,
-    databaseName = dataSourceDetails$databaseName,
-    databaseDescription = dataSourceDetails$databaseDescription
+    databaseName = dataSourceDetails$cdmSourceName,
+    databaseDescription = dataSourceDetails$sourceDescription
   )
   
   if (x$preMergeDiagnosticsFiles) {
