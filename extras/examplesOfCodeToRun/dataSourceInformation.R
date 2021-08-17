@@ -5,7 +5,7 @@ execute <- function(x) {
   if (x$generateCohortTableName) {
     cohortTableName <- paste0(
       stringr::str_squish(x$databaseId),
-      stringr::str_squish('SkeletonCohortDiagnosticsStudy')
+      stringr::str_squish("SkeletonCohortDiagnosticsStudy")
     )
   }
   
@@ -26,15 +26,61 @@ execute <- function(x) {
               sql = sqlCdmDataSource,
               cdmDatabaseSchema = cdmDatabaseSchema,
               snakeCaseToCamelCase = TRUE
-            )
+            ) %>% dplyr::tibble()
           if (nrow(cdmDataSource) == 0) {
             return(sourceInfo)
           }
+          sourceInfo$sourceDescription <- ""
           if ("sourceDescription" %in% colnames(cdmDataSource)) {
-            sourceInfo$sourceDescription <- cdmDataSource$sourceDescription
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " ",
+                                                   cdmDataSource$sourceDescription) %>% 
+              stringr::str_trim()
           }
           if ("cdmSourceName" %in% colnames(cdmDataSource)) {
             sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
+          }
+          if ("cdmEtlReference" %in% colnames(cdmDataSource)) {
+            if (length(cdmDataSource$cdmEtlReference) > 4) {
+              sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                     " ETL Reference: ",
+                                                     cdmDataSource$cdmEtlReference) %>% 
+                stringr::str_trim()
+            } else {
+              sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                     " ETL Reference: None") %>% 
+                stringr::str_trim()
+            }
+          }
+          if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " CDM release date: ",
+                                                   as.character(cdmDataSource$sourceReleaseDate)) %>% 
+              stringr::str_trim()
+          } else {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " CDM release date: None") %>% 
+              stringr::str_trim()
+          }
+          if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " Source release date: ",
+                                                   as.character(cdmDataSource$sourceReleaseDate)) %>% 
+              stringr::str_trim()
+          } else {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " Source release date: None") %>% 
+              stringr::str_trim()
+          }
+          if ("sourceDocumentationReference" %in% colnames(cdmDataSource)) {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " Source Documentation Reference: ",
+                                                   as.character(cdmDataSource$sourceDocumentationReference)) %>% 
+              stringr::str_trim()
+          } else {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " Source Documentation Reference: None") %>% 
+              stringr::str_trim()
           }
         },
         error = function(...) {
@@ -83,9 +129,9 @@ execute <- function(x) {
   }
   
   if (length(x$privateKeyFileName) > 0 &&
-      !x$privateKeyFileName == '' &&
+      !x$privateKeyFileName == "" &&
       length(x$userName) > 0 &&
-      !x$userName == '') {
+      !x$userName == "") {
     CohortDiagnostics::uploadResults(x$outputFolder,
                                      x$privateKeyFileName,
                                      x$userName)
@@ -100,9 +146,9 @@ execute <- function(x) {
     # check if schema was instantiated
     sqlSchemaCheck <-
       paste0(
-        "SELECT * FROM information_schema.schemata WHERE schema_name = '",
+        "SELECT * FROM information_schema.schemata WHERE schema_name = "",
         tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema),
-        "';"
+        "";"
       )
     schemaExists <-
       DatabaseConnector::renderTranslateQuerySql(connection = connectionPostGres,
@@ -111,7 +157,7 @@ execute <- function(x) {
     if (nrow(schemaExists) == 0) {
       warning(
         paste0(
-          'While attempting to upload to postgres, found target schema to not exist - attempting to create target schema ',
+          "While attempting to upload to postgres, found target schema to not exist - attempting to create target schema ",
           x$uploadToLocalPostGresDatabaseSpecifications$schema
         )
       )
@@ -127,7 +173,7 @@ execute <- function(x) {
       
     }
     # check if required table exists, else create them
-    if (!DatabaseConnector::dbExistsTable(conn = connectionPostGres, name = 'cohort_count')) {
+    if (!DatabaseConnector::dbExistsTable(conn = connectionPostGres, name = "cohort_count")) {
       CohortDiagnostics::createResultsDataModel(
         connection = connectionPostGres,
         schema = tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema)
