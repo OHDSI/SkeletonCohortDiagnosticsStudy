@@ -30,10 +30,10 @@ execute <- function(x) {
           if (nrow(cdmDataSource) == 0) {
             return(sourceInfo)
           }
-          if (sourceDescription %in% colnames(cdmDataSource)) {
+          if ("sourceDescription" %in% colnames(cdmDataSource)) {
             sourceInfo$sourceDescription <- cdmDataSource$sourceDescription
           }
-          if (cdmSourceName %in% colnames(cdmDataSource)) {
+          if ("cdmSourceName" %in% colnames(cdmDataSource)) {
             sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
           }
         },
