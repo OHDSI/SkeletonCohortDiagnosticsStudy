@@ -146,9 +146,9 @@ executeOnMultipleDataSources <- function(x) {
     # check if schema was instantiated
     sqlSchemaCheck <-
       paste0(
-        "SELECT * FROM information_schema.schemata WHERE schema_name = "",
+        "SELECT * FROM information_schema.schemata WHERE schema_name = '",
         tolower(x$uploadToLocalPostGresDatabaseSpecifications$schema),
-        "";"
+        "';"
       )
     schemaExists <-
       DatabaseConnector::renderTranslateQuerySql(connection = connectionPostGres,
