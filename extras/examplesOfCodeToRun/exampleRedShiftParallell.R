@@ -148,7 +148,7 @@ if (mailFatal) {
 
 ParallelLogger::clusterApply(cluster = cluster,
                              x = x,
-                             fun = execute)
+                             fun = executeOnMultipleDataSources)
 
 writeLines(readChar(paste0(loggerName, ".txt"), file.info(paste0(loggerName, ".txt"))$size))
 ParallelLogger::stopCluster(cluster = cluster)

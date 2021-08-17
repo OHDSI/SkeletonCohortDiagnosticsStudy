@@ -108,9 +108,9 @@ for (i in (1:length(databaseIds))) {
 }
 
 
-############ execute #################
+############ executeOnMultipleDataSources #################
 # x <- x[1:2]
 
 for (i in (1:length(x))) {
-  execute(x[[i]])
+  executeOnMultipleDataSources(x[[i]])
 }

@@ -1,7 +1,7 @@
 source(Sys.getenv("startUpScriptLocation"))
 
 ######
-execute <- function(x) {
+executeOnMultipleDataSources <- function(x) {
   if (x$generateCohortTableName) {
     cohortTableName <- paste0(
       stringr::str_squish(x$databaseId),
