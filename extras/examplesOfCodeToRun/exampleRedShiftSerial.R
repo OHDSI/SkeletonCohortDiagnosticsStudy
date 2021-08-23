@@ -54,6 +54,8 @@ keyringPortServicePostGresUpload <- 'shinydbPort'
 
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
+cdmDataSources <- cdmDataSources2
+rm("cdmDataSources2")
 
 ## if uploading to co-ordinator site
 privateKeyFileName <- ""
@@ -114,3 +116,30 @@ for (i in (1:length(databaseIds))) {
 for (i in (1:length(x))) {
   executeOnMultipleDataSources(x[[i]])
 }
+# 
+# # launch cohort explorer
+# for (i in (1:length(x))) {
+#   cohortTableName <- paste0(
+#     stringr::str_squish(x$databaseId),
+#     stringr::str_squish("SkeletonCohortDiagnosticsStudy")
+#   )
+#   # Details for connecting to the server:
+#   connectionDetails <-
+#     DatabaseConnector::createConnectionDetails(
+#       dbms = x$cdmSource$dbms,
+#       server = x$cdmSource$server,
+#       user = keyring::key_get(service = x$userService),
+#       password =  keyring::key_get(service = x$passwordService),
+#       port = x$cdmSource$port
+#     )
+#   cdmDatabaseSchema <- x$cdmSource$cdmDatabaseSchema
+#   cohortDatabaseSchema <- x$cdmSource$cohortDatabaseSchema
+#   CohortDiagnostics::launchCohortExplorer(connectionDetails = connectionDetails,
+#                                           cdmDatabaseSchema = cdmDatabaseSchema,
+#                                           cohortDatabaseSchema = cohortDatabaseSchema,
+#                                           cohortTable = cohortTable, 
+#                                           cohortId = -1
+#   )
+# }
+# 
+# 
