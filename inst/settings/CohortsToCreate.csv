@@ -1,6 +1,7 @@
-﻿atlasId,cohortName
-17492,Gastrointestinal hemorrhage referent concept prevalent cohort: First occurrence of referent concept + descendants
-17692,Type 1 diabetes mellitus referent concept prevalent cohort: First occurrence of referent concept + descendants
-17694,Type 2 diabetes mellitus referent concept prevalent cohort: First occurrence of referent concept + descendants
-18346,Celecoxib referent concept incident cohort: First occurrence of referent concept + descendants
-18348,Diclofenac referent concept incident cohort: First occurrence of referent concept + descendants with >=365d prior observation
+atlasId,cohortName
+17492,Gastrointestinal hemorrhage
+17692,Type 1 diabetes mellitus
+17694,Type 2 diabetes mellitus
+18346,Celecoxib exposure
+18348,Diclofenac exposure
+23024,"Gastritis, esophagitis, peptic ulcer and related conditions of upper gastrointestinal tract"
