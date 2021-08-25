@@ -180,8 +180,8 @@
 						"RestrictVisit" : false,
 						"IgnoreObservationPeriod" : false,
 						"Occurrence" : {
-							"Type" : 2,
-							"Count" : 1,
+							"Type" : 0,
+							"Count" : 0,
 							"IsDistinct" : false
 						}
 					}

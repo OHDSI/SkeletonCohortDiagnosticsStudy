@@ -91,8 +91,10 @@ FROM
   INNER JOIN
   (
     -- Begin Correlated Criteria
-select 0 as index_id, cc.person_id, cc.event_id
-from (SELECT p.person_id, p.event_id 
+select 0 as index_id, p.person_id, p.event_id
+from #qualified_events p
+LEFT JOIN (
+SELECT p.person_id, p.event_id 
 FROM #qualified_events P
 JOIN (
   -- Begin Condition Occurrence Criteria
@@ -108,9 +110,9 @@ FROM
 
 -- End Condition Occurrence Criteria
 
-) A on A.person_id = P.person_id  AND A.START_DATE >= P.OP_START_DATE AND A.START_DATE <= P.OP_END_DATE AND A.START_DATE >= DATEADD(day,-180,P.START_DATE) AND A.START_DATE <= DATEADD(day,-1,P.START_DATE) ) cc 
-GROUP BY cc.person_id, cc.event_id
-HAVING COUNT(cc.event_id) >= 1
+) A on A.person_id = P.person_id  AND A.START_DATE >= P.OP_START_DATE AND A.START_DATE <= P.OP_END_DATE AND A.START_DATE >= DATEADD(day,-180,P.START_DATE) AND A.START_DATE <= DATEADD(day,-1,P.START_DATE) ) cc on p.person_id = cc.person_id and p.event_id = cc.event_id
+GROUP BY p.person_id, p.event_id
+HAVING COUNT(cc.event_id) = 0
 -- End Correlated Criteria
 
   ) CQ on E.person_id = CQ.person_id and E.event_id = CQ.event_id
