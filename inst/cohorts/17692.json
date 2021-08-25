@@ -21,7 +21,7 @@
 	"ConceptSets" : [
 		{
 			"id" : 0,
-			"name" : "Type 1 diabetes mellitus",
+			"name" : "Diabetes mellitus (exclude Type 2)",
 			"expression" : {
 				"items" : [
 					{
@@ -94,13 +94,13 @@
 					},
 					{
 						"concept" : {
-							"CONCEPT_ID" : 201254,
-							"CONCEPT_NAME" : "Type 1 diabetes mellitus",
+							"CONCEPT_ID" : 443732,
+							"CONCEPT_NAME" : "Disorder due to type 2 diabetes mellitus",
 							"STANDARD_CONCEPT" : "S",
 							"STANDARD_CONCEPT_CAPTION" : "Standard",
 							"INVALID_REASON" : "V",
 							"INVALID_REASON_CAPTION" : "Valid",
-							"CONCEPT_CODE" : "46635009",
+							"CONCEPT_CODE" : "422014003",
 							"DOMAIN_ID" : "Condition",
 							"VOCABULARY_ID" : "SNOMED",
 							"CONCEPT_CLASS_ID" : "Clinical Finding"
@@ -111,13 +111,13 @@
 					},
 					{
 						"concept" : {
-							"CONCEPT_ID" : 4128019,
-							"CONCEPT_NAME" : "Brittle type 1 diabetes mellitus",
+							"CONCEPT_ID" : 45757450,
+							"CONCEPT_NAME" : "Neuropathic ulcer of foot due to type 2 diabetes mellitus",
 							"STANDARD_CONCEPT" : "S",
 							"STANDARD_CONCEPT_CAPTION" : "Standard",
 							"INVALID_REASON" : "V",
 							"INVALID_REASON_CAPTION" : "Valid",
-							"CONCEPT_CODE" : "290002008",
+							"CONCEPT_CODE" : "140531000119105",
 							"DOMAIN_ID" : "Condition",
 							"VOCABULARY_ID" : "SNOMED",
 							"CONCEPT_CLASS_ID" : "Clinical Finding"
@@ -128,13 +128,13 @@
 					},
 					{
 						"concept" : {
-							"CONCEPT_ID" : 765650,
-							"CONCEPT_NAME" : "Cranial nerve palsy due to diabetes mellitus type 1",
+							"CONCEPT_ID" : 201826,
+							"CONCEPT_NAME" : "Type 2 diabetes mellitus",
 							"STANDARD_CONCEPT" : "S",
 							"STANDARD_CONCEPT_CAPTION" : "Standard",
 							"INVALID_REASON" : "V",
 							"INVALID_REASON_CAPTION" : "Valid",
-							"CONCEPT_CODE" : "82561000119101",
+							"CONCEPT_CODE" : "44054006",
 							"DOMAIN_ID" : "Condition",
 							"VOCABULARY_ID" : "SNOMED",
 							"CONCEPT_CLASS_ID" : "Clinical Finding"
@@ -145,13 +145,13 @@
 					},
 					{
 						"concept" : {
-							"CONCEPT_ID" : 761050,
-							"CONCEPT_NAME" : "Ketoacidosis due to secondary diabetes mellitus",
+							"CONCEPT_ID" : 40485020,
+							"CONCEPT_NAME" : "Type 2 diabetes mellitus well controlled",
 							"STANDARD_CONCEPT" : "S",
 							"STANDARD_CONCEPT_CAPTION" : "Standard",
 							"INVALID_REASON" : "V",
 							"INVALID_REASON_CAPTION" : "Valid",
-							"CONCEPT_CODE" : "138621000119108",
+							"CONCEPT_CODE" : "444110003",
 							"DOMAIN_ID" : "Condition",
 							"VOCABULARY_ID" : "SNOMED",
 							"CONCEPT_CLASS_ID" : "Clinical Finding"
@@ -162,13 +162,13 @@
 					},
 					{
 						"concept" : {
-							"CONCEPT_ID" : 43531008,
-							"CONCEPT_NAME" : "Pre-existing type 1 diabetes mellitus in pregnancy",
+							"CONCEPT_ID" : 40482801,
+							"CONCEPT_NAME" : "Type II diabetes mellitus uncontrolled",
 							"STANDARD_CONCEPT" : "S",
 							"STANDARD_CONCEPT_CAPTION" : "Standard",
 							"INVALID_REASON" : "V",
 							"INVALID_REASON_CAPTION" : "Valid",
-							"CONCEPT_CODE" : "609564002",
+							"CONCEPT_CODE" : "443694000",
 							"DOMAIN_ID" : "Condition",
 							"VOCABULARY_ID" : "SNOMED",
 							"CONCEPT_CLASS_ID" : "Clinical Finding"

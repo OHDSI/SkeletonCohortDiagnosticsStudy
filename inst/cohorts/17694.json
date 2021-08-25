@@ -21,7 +21,7 @@
 	"ConceptSets" : [
 		{
 			"id" : 0,
-			"name" : "Type 2 diabetes mellitus",
+			"name" : "Diabetes mellitus (exclude Type 1)",
 			"expression" : {
 				"items" : [
 					{
