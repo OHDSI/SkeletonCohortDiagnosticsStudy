@@ -54,8 +54,8 @@ keyringPortServicePostGresUpload <- 'shinydbPort'
 
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
-cdmDataSources <- cdmDataSources2
-rm("cdmDataSources2")
+cdmSources <- cdmSources2
+rm("cdmSources2")
 
 ## if uploading to co-ordinator site
 privateKeyFileName <- ""
