@@ -118,6 +118,7 @@ execute <- function(connectionDetails,
     databaseDescription = databaseDescription,
     minCellCount = 5,
     incremental = TRUE,
-    incrementalFolder = incrementalFolder
+    incrementalFolder = incrementalFolder,
+    runOrphanConcepts = FALSE, runIncludedSourceConcepts = FALSE, runBreakdownIndexEvents = FALSE
   )
 }

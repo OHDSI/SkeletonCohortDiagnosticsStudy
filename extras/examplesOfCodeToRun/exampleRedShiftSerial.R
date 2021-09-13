@@ -97,7 +97,7 @@ for (i in (1:length(databaseIds))) {
   x[[i]] <- list(
     cdmSource = cdmSource,
     generateCohortTableName = TRUE,
-    verifyDependencies = TRUE,
+    verifyDependencies = FALSE,
     databaseId = databaseId,
     outputFolder = file.path(outputFolder, databaseId),
     userService = keyringUserService,
@@ -111,7 +111,7 @@ for (i in (1:length(databaseIds))) {
 
 
 ############ executeOnMultipleDataSources #################
-# x <- x[1:2]
+# x <- x[2]
 
 for (i in (1:length(x))) {
   executeOnMultipleDataSources(x[[i]])
