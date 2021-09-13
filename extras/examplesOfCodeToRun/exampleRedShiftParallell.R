@@ -99,7 +99,7 @@ for (i in (1:length(databaseIds))) {
   x[[i]] <- list(
     cdmSource = cdmSource,
     generateCohortTableName = TRUE,
-    verifyDependencies = FALSE,
+    verifyDependencies = TRUE,
     databaseId = databaseId,
     outputFolder = file.path(outputFolder, databaseId),
     userService = keyringUserService,
@@ -116,7 +116,7 @@ for (i in (1:length(databaseIds))) {
 # use Parallel Logger to run in parallel
 cluster <-
   ParallelLogger::makeCluster(numberOfThreads = as.integer(trunc(parallel::detectCores() /
-                                                                   1)))
+                                                                   2)))
 
 ## file logger
 loggerName <-
