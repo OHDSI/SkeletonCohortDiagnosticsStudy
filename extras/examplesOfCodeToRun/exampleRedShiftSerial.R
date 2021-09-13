@@ -54,8 +54,7 @@ keyringPortServicePostGresUpload <- 'shinydbPort'
 
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
-cdmSources <- cdmSources %>% 
-  dplyr::filter(.data$version == 1676)
+cdmSources <- cdmSources2
 rm("cdmSources2")
 
 ## if uploading to co-ordinator site
@@ -67,6 +66,7 @@ x <- list()
 for (i in (1:length(databaseIds))) {
   databaseId <- databaseIds[[i]]
   cdmSource <- cdmSources %>%
+    dplyr::filter(.data$sequence == 1) %>% 
     dplyr::filter(database == databaseId)
   
   if (uploadToLocalPostGresDatabase) {
