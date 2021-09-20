@@ -9,86 +9,7 @@ executeOnMultipleDataSources <- function(x) {
     )
   }
   
-  # this function gets details of the data source from cdm source table in omop, if populated.
-  # The assumption is the cdm_source.sourceDescription has text description of data source.
-  getDataSourceDetails <-
-    function(connection,
-             databaseId,
-             cdmDatabaseSchema) {
-      sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
-      sourceInfo <- list(cdmSourceName = databaseId,
-                         sourceDescription = databaseId)
-      tryCatch(
-        expr = {
-          cdmDataSource <-
-            DatabaseConnector::renderTranslateQuerySql(
-              connection = connection,
-              sql = sqlCdmDataSource,
-              cdmDatabaseSchema = cdmDatabaseSchema,
-              snakeCaseToCamelCase = TRUE
-            ) %>% dplyr::tibble()
-          if (nrow(cdmDataSource) == 0) {
-            return(sourceInfo)
-          }
-          sourceInfo$sourceDescription <- ""
-          if ("sourceDescription" %in% colnames(cdmDataSource)) {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " ",
-                                                   cdmDataSource$sourceDescription) %>% 
-              stringr::str_trim()
-          }
-          if ("cdmSourceName" %in% colnames(cdmDataSource)) {
-            sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
-          }
-          if ("cdmEtlReference" %in% colnames(cdmDataSource)) {
-            if (length(cdmDataSource$cdmEtlReference) > 4) {
-              sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                     " ETL Reference: ",
-                                                     cdmDataSource$cdmEtlReference) %>% 
-                stringr::str_trim()
-            } else {
-              sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                     " ETL Reference: None") %>% 
-                stringr::str_trim()
-            }
-          }
-          if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " CDM release date: ",
-                                                   as.character(cdmDataSource$sourceReleaseDate)) %>% 
-              stringr::str_trim()
-          } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " CDM release date: None") %>% 
-              stringr::str_trim()
-          }
-          if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source release date: ",
-                                                   as.character(cdmDataSource$sourceReleaseDate)) %>% 
-              stringr::str_trim()
-          } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source release date: None") %>% 
-              stringr::str_trim()
-          }
-          if ("sourceDocumentationReference" %in% colnames(cdmDataSource)) {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source Documentation Reference: ",
-                                                   as.character(cdmDataSource$sourceDocumentationReference)) %>% 
-              stringr::str_trim()
-          } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source Documentation Reference: None") %>% 
-              stringr::str_trim()
-          }
-        },
-        error = function(...) {
-          return(sourceInfo)
-        }
-      )
-      return(sourceInfo)
-    }
+
   
   # Details for connecting to the server:
   connectionDetails <-
@@ -101,16 +22,14 @@ executeOnMultipleDataSources <- function(x) {
     )
   # The name of the database schema where the CDM data can be found:
   cdmDatabaseSchema <- x$cdmSource$cdmDatabaseSchema
+  vocabDatabaseSchema <- x$cdmSource$vocabDatabaseSchema
   cohortDatabaseSchema <- x$cdmSource$cohortDatabaseSchema
-  
-  connection <-
-    DatabaseConnector::connect(connectionDetails = connectionDetails)
-  dataSourceDetails <- getDataSourceDetails(
-    connection = connection,
-    databaseId = x$databaseId,
-    cdmDatabaseSchema = cdmDatabaseSchema
+
+  dataSourceDetails <- getDataSourceInformation(
+    connectionDetails = connectionDetails,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    vocabDatabaseSchema = vocabDatabaseSchema
   )
-  DatabaseConnector::disconnect(connection)
   
   SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
@@ -189,3 +108,162 @@ executeOnMultipleDataSources <- function(x) {
     )
   }
 }
+
+
+
+# this function gets details of the data source from cdm source table in omop, if populated.
+# The assumption is the cdm_source.sourceDescription has text description of data source.
+
+getDataSourceInformation <-
+  function(connectionDetails,
+           cdmDatabaseSchema,
+           vocabDatabaseSchema) {
+    sqlCdmDataSource <- "select * from @cdmDatabaseSchema.cdm_source;"
+    sqlVocabularyVersion <-
+      "select * from @vocabDatabaseSchema.vocabulary where vocabulary_id = 'None';"
+    etlVersionNumber <- "select * from @cdmDatabaseSchema._version;"
+    sourceInfo <- list(cdmSourceName = databaseId,
+                       sourceDescription = databaseId)
+    if (!is.null(connectionDetails)) {
+      connection <- DatabaseConnector::connect(connectionDetails = connectionDetails)
+    } else {
+      return(NULL)
+    }
+    
+    vocabulary <-
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = connection,
+        sql = sqlVocabularyVersion,
+        vocabDatabaseSchema = vocabDatabaseSchema,
+        snakeCaseToCamelCase = TRUE
+      ) %>%
+      dplyr::tibble() %>%
+      dplyr::rename(vocabularyVersion = .data$vocabularyVersion)
+    
+    tryCatch(
+      expr = {
+        cdmDataSource <-
+          DatabaseConnector::renderTranslateQuerySql(
+            connection = connection,
+            sql = sqlCdmDataSource,
+            cdmDatabaseSchema = cdmDatabaseSchema,
+            snakeCaseToCamelCase = TRUE
+          )
+        if (nrow(cdmDataSource) == 0) {
+          return(sourceInfo)
+        } else {
+          cdmDataSource <- cdmDataSource %>%
+            dplyr::tibble() %>%
+            dplyr::rename(vocabularyVersionCdm = .data$vocabularyVersion)
+        }
+        sourceInfo$sourceDescription <- ""
+        if ("sourceDescription" %in% colnames(cdmDataSource)) {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " ",
+                                                 cdmDataSource$sourceDescription) %>% 
+            stringr::str_trim()
+        }
+        if ("cdmSourceName" %in% colnames(cdmDataSource)) {
+          sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
+        }
+        if ("cdmEtlReference" %in% colnames(cdmDataSource)) {
+          if (length(cdmDataSource$cdmEtlReference) > 4) {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " ETL Reference: ",
+                                                   cdmDataSource$cdmEtlReference) %>% 
+              stringr::str_trim()
+          } else {
+            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                   " ETL Reference: None") %>% 
+              stringr::str_trim()
+          }
+        }
+        if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " CDM release date: ",
+                                                 as.character(cdmDataSource$sourceReleaseDate)) %>% 
+            stringr::str_trim()
+        } else {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " CDM release date: None") %>% 
+            stringr::str_trim()
+        }
+        if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " Source release date: ",
+                                                 as.character(cdmDataSource$sourceReleaseDate)) %>% 
+            stringr::str_trim()
+        } else {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " Source release date: None") %>% 
+            stringr::str_trim()
+        }
+        if ("sourceDocumentationReference" %in% colnames(cdmDataSource)) {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " Source Documentation Reference: ",
+                                                 as.character(cdmDataSource$sourceDocumentationReference)) %>% 
+            stringr::str_trim()
+        } else {
+          sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
+                                                 " Source Documentation Reference: None") %>% 
+            stringr::str_trim()
+        }
+      },
+      error = function(...) {
+        return(sourceInfo)
+      }
+    )
+    
+    version <- dplyr::tibble()
+    tryCatch(
+      expr = {
+        version <-
+          DatabaseConnector::renderTranslateQuerySql(
+            connection = connection,
+            sql = etlVersionNumber,
+            cdmDatabaseSchema = cdmDatabaseSchema,
+            snakeCaseToCamelCase = TRUE
+          ) %>%
+          dplyr::tibble() %>% 
+          dplyr::mutate(rn = dplyr::row_number()) %>% 
+          dplyr::filter(.data$rn == 1) %>% 
+          dplyr::select(-.data$rn)
+      },
+      error = function(...) {
+        return(NULL)
+      }
+    )
+    
+    if (nrow(version) == 1) {
+      if (all('versionId' %in% colnames(version),
+              'versionDate' %in% colnames(version))) {
+        cdmDataSource <- cdmDataSource %>%
+          dplyr::mutate(
+            cdmSourceAbbreviation = paste0(
+              .data$cdmSourceAbbreviation,
+              " (v",
+              version$versionId,
+              " ",
+              as.character(version$versionDate)
+            )
+          )
+      }
+    } else {
+      cdmDataSource <- cdmDataSource %>% 
+        dplyr::mutate(paste0(cdmSourceAbbreviation, 
+                             " version unknown"))
+    }
+    
+    DatabaseConnector::disconnect(connection = connection)
+    return(
+      if (nrow(cdmDataSource) > 0) {
+        tidyr::crossing(cdmDataSource, vocabulary, version) %>%
+          dplyr::mutate(
+            databaseDescription =
+              .data$sourceDescription
+          )
+      } else {
+        vocabulary
+      }
+    )
+  }
