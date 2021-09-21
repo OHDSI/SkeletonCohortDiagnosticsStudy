@@ -168,12 +168,28 @@ executeOnMultipleDataSources <- function(x) {
                 as.character(version$versionDate),
                 ")"
               )
+            ) %>%
+            dplyr::mutate(
+              cdmSourceName = paste0(
+                .data$cdmSourceName,
+                " (v",
+                version$versionId,
+                " ",
+                as.character(version$versionDate),
+                ")"
+              )
+            ) %>%
+            dplyr::mutate(
+              sourceDescription = paste0(
+                .data$sourceDescription,
+                " (v",
+                version$versionId,
+                " ",
+                as.character(version$versionDate),
+                ")"
+              )
             )
         }
-      } else {
-        cdmDataSource <- cdmDataSource %>%
-          dplyr::mutate(paste0(cdmSourceAbbreviation,
-                               " version unknown"))
       }
       
       DatabaseConnector::disconnect(connection = connection)
@@ -209,6 +225,14 @@ executeOnMultipleDataSources <- function(x) {
     databaseId = x$databaseId
   )
   
+  if (all(!is.null(dataSourceDetails),
+          nrow(dataSourceDetails) == 1,
+          nchar(dataSourceDetails$versionId) > 0)) {
+    databaseId <- paste0(x$databaseId, " (v",dataSourceDetails$versionId, " ", as.character(dataSourceDetails$versionDate), ")")
+  } else {
+    databaseId <- x$databaseId
+  }
+  
   SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
@@ -216,7 +240,7 @@ executeOnMultipleDataSources <- function(x) {
     cohortTable = cohortTableName,
     verifyDependencies = x$verifyDependencies,
     outputFolder = x$outputFolder,
-    databaseId = x$databaseId,
+    databaseId = databaseId,
     databaseName = dataSourceDetails$cdmSourceName,
     databaseDescription = dataSourceDetails$sourceDescription
   )
