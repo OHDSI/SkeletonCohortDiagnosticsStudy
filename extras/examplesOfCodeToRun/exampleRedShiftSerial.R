@@ -41,8 +41,8 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
-# cdmSources <- cdmSources2
-# rm("cdmSources2")
+cdmSources <- cdmSources2
+rm("cdmSources2")
 
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
@@ -68,6 +68,7 @@ for (i in (1:length(databaseIds))) {
 # x <- x[1:2]
 for (i in (1:length(x))) {
   i = 1
+  debug(executeOnMultipleDataSources)
   executeOnMultipleDataSources(x[[i]])
 }
 #

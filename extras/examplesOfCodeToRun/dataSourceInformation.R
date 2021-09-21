@@ -25,6 +25,7 @@ executeOnMultipleDataSources <- function(x) {
         "select * from @cdmDatabaseSchema._version;"
       sourceInfo <- list(cdmSourceName = databaseId,
                          sourceDescription = databaseId)
+      
       if (!is.null(connectionDetails)) {
         connection <-
           DatabaseConnector::connect(connectionDetails = connectionDetails)
@@ -52,6 +53,7 @@ executeOnMultipleDataSources <- function(x) {
               snakeCaseToCamelCase = TRUE
             )
           if (nrow(cdmDataSource) == 0) {
+            warning("cdmDataSource table has no data")
             return(sourceInfo)
           } else {
             cdmDataSource <- cdmDataSource %>%
@@ -67,31 +69,35 @@ executeOnMultipleDataSources <- function(x) {
           }
           if ("cdmSourceName" %in% colnames(cdmDataSource)) {
             sourceInfo$cdmSourceName <- cdmDataSource$cdmSourceName
+          } else {
+            warning("cdmSourceName column not found in cdmDataSource table")
           }
           if ("cdmEtlReference" %in% colnames(cdmDataSource)) {
-            if (length(cdmDataSource$cdmEtlReference) > 4) {
-              sourceInfo$sourceDescription <- paste0(
-                sourceInfo$sourceDescription,
-                " ETL Reference: ",
-                cdmDataSource$cdmEtlReference
-              ) %>%
-                stringr::str_trim()
-            } else {
-              sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                     " ETL Reference: None") %>%
-                stringr::str_trim()
-            }
-          }
-          if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
             sourceInfo$sourceDescription <- paste0(
               sourceInfo$sourceDescription,
-              " CDM release date: ",
-              as.character(cdmDataSource$sourceReleaseDate)
+              " ETL Reference: ",
+              cdmDataSource$cdmEtlReference
             ) %>%
               stringr::str_trim()
           } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " CDM release date: None") %>%
+            warning("cdmEtlReference column not found in cdmDataSource table")
+            sourceInfo$sourceDescription <-
+              paste0(sourceInfo$sourceDescription,
+                     " ETL Reference: None") %>%
+              stringr::str_trim()
+          }
+          if ("cdmReleaseDate" %in% colnames(cdmDataSource)) {
+            sourceInfo$sourceDescription <- paste0(
+              sourceInfo$sourceDescription,
+              " CDM release date: ",
+              as.character(cdmDataSource$cdmReleaseDate)
+            ) %>%
+              stringr::str_trim()
+          } else {
+            warning("cdmReleaseDate column not found in cdmDataSource table")
+            sourceInfo$sourceDescription <-
+              paste0(sourceInfo$sourceDescription,
+                     " CDM release date: None") %>%
               stringr::str_trim()
           }
           if ("sourceReleaseDate" %in% colnames(cdmDataSource)) {
@@ -102,8 +108,10 @@ executeOnMultipleDataSources <- function(x) {
             ) %>%
               stringr::str_trim()
           } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source release date: None") %>%
+            warning("sourceReleaseDate column not found in cdmDataSource table")
+            sourceInfo$sourceDescription <-
+              paste0(sourceInfo$sourceDescription,
+                     " Source release date: None") %>%
               stringr::str_trim()
           }
           if ("sourceDocumentationReference" %in% colnames(cdmDataSource)) {
@@ -114,8 +122,10 @@ executeOnMultipleDataSources <- function(x) {
             ) %>%
               stringr::str_trim()
           } else {
-            sourceInfo$sourceDescription <- paste0(sourceInfo$sourceDescription,
-                                                   " Source Documentation Reference: None") %>%
+            warning("sourceDocumentationReference column not found in cdmDataSource table")
+            sourceInfo$sourceDescription <-
+              paste0(sourceInfo$sourceDescription,
+                     " Source Documentation Reference: None") %>%
               stringr::str_trim()
           }
         },
@@ -140,6 +150,7 @@ executeOnMultipleDataSources <- function(x) {
             dplyr::select(-.data$rn)
         },
         error = function(...) {
+          warning("_version table not found")
           return(NULL)
         }
       )
@@ -154,7 +165,8 @@ executeOnMultipleDataSources <- function(x) {
                 " (v",
                 version$versionId,
                 " ",
-                as.character(version$versionDate)
+                as.character(version$versionDate),
+                ")"
               )
             )
         }
@@ -170,6 +182,7 @@ executeOnMultipleDataSources <- function(x) {
           dplyr::mutate(databaseDescription =
                           .data$sourceDescription)
       } else {
+        warning("cdmDataSource table has no data")
         vocabulary
       })
     }
