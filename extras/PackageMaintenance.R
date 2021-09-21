@@ -28,7 +28,7 @@ OhdsiRTools::createRenvLockFile(rootPackage = "SkeletonCohortDiagnosticsStudy",
                                 additionalRequiredPackages = c('keyring', "checkmate","DatabaseConnector","clock","dplyr","DT",
                                                                "ggplot2","ggiraph","gtable","htmltools","lubridate",
                                                                "pool","purrr","scales","shiny","shinydashboard","shinyWidgets",
-                                                               "stringr","SqlRender","tidyr", "plyr", "mailR"))
+                                                               "stringr","SqlRender","tidyr", "plyr"))
 
 
 

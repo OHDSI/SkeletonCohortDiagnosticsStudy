@@ -20,12 +20,6 @@ if (!dir.exists(outputFolder)) {
 # Optional: specify a location on your disk drive that has sufficient space.
 # options(andromedaTempFolder = "s:/andromedaTemp")
 
-# set to false if email is not possible
-mailFatal <- FALSE
-
-# do you want to upload the results to a local database
-uploadToLocalPostGresDatabase <- FALSE
-
 ############## databaseIds to run cohort diagnostics on that source  #################
 databaseIds <-
   c(
@@ -45,78 +39,38 @@ databaseIds <-
 keyringUserService <- 'OHDSI_USER'
 keyringPasswordService <- 'OHDSI_PASSWORD'
 
-## service name for keyring for postgres db to upload results
-keyringUserServicePostGresUpload <- 'shinydbUser'
-keyringPasswordServicePostGresUpload <- 'shinydbPW'
-keyringDatabaseServicePostGresUpload <- 'shinydbDatabase'
-keyringServerServicePostGresUpload <- 'shinydbServer'
-keyringPortServicePostGresUpload <- 'shinydbPort'
-
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
-cdmSources <- cdmSources2
-rm("cdmSources2")
-
-## if uploading to co-ordinator site
-privateKeyFileName <- ""
-siteUserName <- ""
+# cdmSources <- cdmSources2
+# rm("cdmSources2")
 
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
 for (i in (1:length(databaseIds))) {
-  databaseId <- databaseIds[[i]]
   cdmSource <- cdmSources %>%
-    dplyr::filter(.data$sequence == 1) %>% 
-    dplyr::filter(database == databaseId)
-  
-  if (uploadToLocalPostGresDatabase) {
-    uploadToLocalPostGresDatabaseSpecifications <- list(
-      connectionDetails = DatabaseConnector::createConnectionDetails(
-        dbms = "postgresql",
-        server = paste(
-          keyring::key_get(keyringServerServicePostGresUpload),
-          keyring::key_get(keyringDatabaseServicePostGresUpload),
-          sep = "/"
-        ),
-        port = keyring::key_get(keyringPortServicePostGresUpload),
-        user = keyring::key_get(keyringUserServicePostGresUpload),
-        password = keyring::key_get(keyringPasswordServicePostGresUpload)
-      ),
-      schema = 'SkeletonCohortDiagnosticsStudy',
-      zipFileName = list.files(
-        path = file.path(outputFolder, databaseId),
-        pattern = paste0("Results_", databaseId, ".zip"),
-        full.names = TRUE,
-        recursive = TRUE
-      )
-    )
-  } else {
-    uploadToLocalPostGresDatabaseSpecifications <- ''
-  }
+    dplyr::filter(.data$sequence == 1) %>%
+    dplyr::filter(database == databaseIds[[i]])
   
   x[[i]] <- list(
     cdmSource = cdmSource,
     generateCohortTableName = TRUE,
-    verifyDependencies = TRUE,
-    databaseId = databaseId,
-    outputFolder = file.path(outputFolder, databaseId),
+    verifyDependencies = FALSE,
+    databaseId = databaseIds[[i]],
+    outputFolder = file.path(outputFolder, databaseIds[[i]]),
     userService = keyringUserService,
     passwordService = keyringPasswordService,
-    preMergeDiagnosticsFiles = TRUE,
-    privateKeyFileName = privateKeyFileName,
-    userName = siteUserName,
-    uploadToLocalPostGresDatabaseSpecifications = uploadToLocalPostGresDatabaseSpecifications
+    preMergeDiagnosticsFiles = TRUE
   )
 }
 
 
 ############ executeOnMultipleDataSources #################
 # x <- x[1:2]
-
 for (i in (1:length(x))) {
+  i = 1
   executeOnMultipleDataSources(x[[i]])
 }
-# 
+#
 # # launch cohort explorer
 # for (i in (1:length(x))) {
 #   cohortTableName <- paste0(
@@ -137,9 +91,9 @@ for (i in (1:length(x))) {
 #   CohortDiagnostics::launchCohortExplorer(connectionDetails = connectionDetails,
 #                                           cdmDatabaseSchema = cdmDatabaseSchema,
 #                                           cohortDatabaseSchema = cohortDatabaseSchema,
-#                                           cohortTable = cohortTable, 
+#                                           cohortTable = cohortTable,
 #                                           cohortId = -1
 #   )
 # }
-# 
-# 
+#
+#
