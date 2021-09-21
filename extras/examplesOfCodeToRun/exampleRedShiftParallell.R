@@ -20,29 +20,32 @@ if (!dir.exists(outputFolder)) {
 # Optional: specify a location on your disk drive that has sufficient space.
 # options(andromedaTempFolder = "s:/andromedaTemp")
 
+# lets get meta information for each of these databaseId. This includes connection information.
+source("extras/examplesOfCodeToRun/dataSourceInformation.R")
+
 ############## databaseIds to run cohort diagnostics on that source  #################
 databaseIds <-
-  c(
-    'truven_ccae',
+  c('truven_ccae',
     'truven_mdcd',
-    'truven_mdcr',
     'cprd',
     'jmdc',
     'optum_extended_dod',
-    'optum_ehr',
-    'ims_australia_lpd',
-    'ims_germany',
-    'ims_france'
-  )
+    'optum_ehr')
+cdmSources <- cdmSources2
+rm("cdmSources2")
+
+
+# databaseIds <-
+#   c('truven_mdcr',
+#     'ims_australia_lpd',
+#     'ims_germany',
+#     'ims_france')
 
 ## service name for keyring for db with cdm
 keyringUserService <- 'OHDSI_USER'
 keyringPasswordService <- 'OHDSI_PASSWORD'
 
-# lets get meta information for each of these databaseId. This includes connection information.
-source("extras/examplesOfCodeToRun/dataSourceInformation.R")
-cdmSources <- cdmSources2
-rm("cdmSources2")
+
 
 
 ###### create a list object that contain connection and meta information for each data source
@@ -63,8 +66,6 @@ for (i in (1:length(databaseIds))) {
     preMergeDiagnosticsFiles = TRUE
   )
 }
-
-# x <- x[9:10]
 
 # use Parallel Logger to run in parallel
 cluster <-
