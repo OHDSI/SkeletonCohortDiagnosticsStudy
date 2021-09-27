@@ -18,6 +18,9 @@ if (!dir.exists(outputFolder)) {
              recursive = TRUE)
 }
 # Optional: specify a location on your disk drive that has sufficient space.
+options(andromedaTempFolder = file.path(outputFolder, "andromedaTemp"))
+
+# lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examplesOfCodeToRun/dataSourceInformation.R")
 
 ############## databaseIds to run cohort diagnostics on that source  #################
