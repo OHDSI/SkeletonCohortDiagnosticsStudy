@@ -69,9 +69,9 @@ execute <- function(connectionDetails,
                     databaseId = "Unknown",
                     databaseName = databaseId,
                     databaseDescription = databaseId) {
-  if (!file.exists(outputFolder)) {
+  if (!file.exists(outputFolder))
     dir.create(outputFolder, recursive = TRUE)
-  }
+  
   ParallelLogger::addDefaultFileLogger(file.path(outputFolder, "log.txt"))
   ParallelLogger::addDefaultErrorReportLogger(file.path(outputFolder, "errorReportR.txt"))
   on.exit(ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE))
@@ -116,6 +116,17 @@ execute <- function(connectionDetails,
     databaseId = databaseId,
     databaseName = databaseName,
     databaseDescription = databaseDescription,
+    runInclusionStatistics = TRUE,
+    runIncludedSourceConcepts = TRUE,
+    runOrphanConcepts = TRUE,
+    runTimeDistributions = TRUE,
+    runBreakdownIndexEvents = TRUE,
+    runIncidenceRate = TRUE,
+    runCohortOverlap = TRUE,
+    runVisitContext = TRUE,
+    runCohortCharacterization = TRUE,
+    runTemporalCohortCharacterization = TRUE,
+    runTimeSeries = TRUE,
     minCellCount = 5,
     incremental = TRUE,
     incrementalFolder = incrementalFolder

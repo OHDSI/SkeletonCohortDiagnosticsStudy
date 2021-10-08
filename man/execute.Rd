@@ -11,7 +11,6 @@ execute(
   cohortDatabaseSchema = cdmDatabaseSchema,
   cohortTable = "cohort",
   tempEmulationSchema = cohortDatabaseSchema,
-  verifyDependencies = TRUE,
   outputFolder,
   incrementalFolder = file.path(outputFolder, "incrementalFolder"),
   databaseId = "Unknown",
@@ -48,8 +47,6 @@ outcome cohorts used in this study.}
 truly support temp tables. To emulate temp tables,
 provide a schema with write privileges where temp tables
 can be created.}
-
-\item{verifyDependencies}{Check whether correct package versions are installed?}
 
 \item{outputFolder}{Name of local folder to place results; make sure to use
 forward slashes (/). Do not use a folder on a network

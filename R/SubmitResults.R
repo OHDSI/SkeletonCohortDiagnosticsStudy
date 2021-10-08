@@ -32,11 +32,7 @@
 uploadResults <- function(outputFolder, privateKeyFileName, userName) {
   fileName <- list.files(outputFolder, "^Results_.*.zip$", full.names = TRUE)
   if (length(fileName) == 0) {
-    writeLines("Looking for diagnosticsExport subfolder")
-    fileName <- list.files(file.path(outputFolder, "diagnosticsExport"), "diagnosticsExport", "^Results_.*.zip$", full.names = TRUE)
-  }
-  if (length(fileName) == 0) {
-    stop("Could not find results file in folder. Did you run (and complete) execute?")
+    stop("Could find results file in folder. Did you run (and complete) execute?")
   }
   if (length(fileName) == 0) {
     stop("Multiple results files found. Don't know which one to upload")

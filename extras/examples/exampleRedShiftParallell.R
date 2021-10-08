@@ -10,7 +10,7 @@ library(magrittr)
 # VARIABLES - please change
 ################################################################################
 # The folder where the study intermediate and result files will be written:
-outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudyP"
+outputFolder <- "D:/studyResults/version21/covidPhenotype"
 # create output directory if it does not exist
 if (!dir.exists(outputFolder)) {
   dir.create(outputFolder,
@@ -21,10 +21,10 @@ if (!dir.exists(outputFolder)) {
 options(andromedaTempFolder = file.path(outputFolder, "andromedaTemp"))
 
 # lets get meta information for each of these databaseId. This includes connection information.
-source("extras/examplesOfCodeToRun/dataSourceInformation.R")
+source("extras/examples/dataSourceInformation.R")
 
-cdmSources <- cdmSources2
-rm("cdmSources2")
+# cdmSources <- cdmSources2
+# rm("cdmSources2")
 ############## databaseIds to run cohort diagnostics on that source  #################
 databaseIds <-
   c(

@@ -1,39 +1,22 @@
+library(SkeletonCohortDiagnosticsStudy)
 
-library(magrittr)
+# Optional: specify where the temporary files (used by the Andromeda package) will be created:
+options(andromedaTempFolder = "s:/andromedaTemp")
 
 # Maximum number of cores to be used:
 maxCores <- parallel::detectCores()
 
-################################################################################
-# VARIABLES - please change below this line
-################################################################################
 # The folder where the study intermediate and result files will be written:
-outputFolder <- "D:\\studyResults\\SkeletonCohortDiagnosticsStudyP"
-
-# Optional: specify where the temporary files (used by the Andromeda package) will be created:
-# This is optional, as andromeda is able to assign temporary location using your Operating Systems (OS) settings, 
-# but sometimes the temporary location specified by your OS may not have sufficient storage space.
-# To avoid such scenarios, it maybe useful to change and uncomment the line below to point to 
-# a location on your disk drive that has sufficient space.
-options(andromedaTempFolder = file.path(outputFolder, "andromedaTemp"))
-
-# create output directory if it doesnt exist
-if (!dir.exists(outputFolder)) {
-        dir.create(outputFolder, showWarnings = FALSE, recursive = TRUE)
-}
-
-################################################################################
-# WORK
-################################################################################
+outputFolder <- "s:/SkeletonCohortDiagnosticsStudy"
 
 # Details for connecting to the server:
 connectionDetails <-
         DatabaseConnector::createConnectionDetails(
-                dbms = "pdw",                       # example: 'redshift'
-                server = Sys.getenv("PDW_SERVER"),  # example: 'fdsfd.yourdatabase.yourserver.com"
+                dbms = "pdw",
+                server = Sys.getenv("PDW_SERVER"),
                 user = NULL,
                 password = NULL,
-                port = Sys.getenv("PDW_PORT")       # example: 2234
+                port = Sys.getenv("PDW_PORT")
         )
 
 # The name of the database schema where the CDM data can be found:
@@ -53,7 +36,7 @@ databaseDescription <-
 # For some database platforms (e.g. Oracle): define a schema that can be used to emulate temp tables:
 options(sqlRenderTempEmulationSchema = NULL)
 
-execute(
+SkeletonCohortDiagnosticsStudy::execute(
         connectionDetails = connectionDetails,
         cdmDatabaseSchema = cdmDatabaseSchema,
         cohortDatabaseSchema = cohortDatabaseSchema,
