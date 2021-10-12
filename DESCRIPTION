@@ -6,8 +6,8 @@ Author: Gowtham Rao [aut, cre]
 Maintainer: Gowtham Rao <rao@ohdsi.org>
 Description: A package that generates cohort diagnostics for cohort definitions included in the package.
 Imports:
-	CohortDiagnostics (>= 2.1.0),
-	ParallelLogger (>= 2.0.1),
+	CohortDiagnostics (>= 2.1.3),
+	ParallelLogger (>= 2.0.2),
 	DatabaseConnector (>= 4.0.2),
   OhdsiSharing,
   jsonlite

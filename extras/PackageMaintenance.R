@@ -24,11 +24,12 @@ unlink("extras/UsingSkeletonPackage.pdf")
 shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 
 # Store environment in which the study was executed -----------------------
-# OhdsiRTools::createRenvLockFile(rootPackage = "SkeletonCohortDiagnosticsStudy",
-#                                 additionalRequiredPackages = c('keyring', "checkmate","DatabaseConnector","clock","dplyr","DT",
-#                                                                "ggplot2","ggiraph","gtable","htmltools","lubridate",
-#                                                                "pool","purrr","scales","shiny","shinydashboard","shinyWidgets",
-#                                                                "stringr","SqlRender","tidyr", "plyr", "CirceR"))
+OhdsiRTools::createRenvLockFile(rootPackage = "SkeletonCohortDiagnosticsStudy",
+                                additionalRequiredPackages = c('keyring', "checkmate","DatabaseConnector","clock","dplyr","DT",
+                                                               "ggplot2","ggiraph","gtable","htmltools","lubridate",
+                                                               "pool","purrr","scales","shiny","shinydashboard","shinyWidgets",
+                                                               "stringr","SqlRender","tidyr", "plyr", "CirceR"),
+                                includeRootPackage = FALSE)
 
 
 
