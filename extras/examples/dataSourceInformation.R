@@ -6,7 +6,7 @@ executeOnMultipleDataSources <- function(x) {
   if (x$generateCohortTableName) {
     cohortTableName <- paste0(
       stringr::str_squish(x$databaseId),
-      stringr::str_squish("covidPhenotypev21")
+      stringr::str_squish("SkeletonCohortDiagnosticsStudy")
     )
   }
   
