@@ -246,7 +246,7 @@ executeOnMultipleDataSources <- function(x) {
     databaseId <- x$databaseId
   }
   
-  covidPhenotype::execute(
+  SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
     cohortDatabaseSchema = cohortDatabaseSchema,
