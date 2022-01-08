@@ -23,7 +23,7 @@
 		},
 		"glue" : {
 			"Package" : "glue",
-			"Version" : "1.5.1",
+			"Version" : "1.6.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -215,7 +215,7 @@
 		},
 		"DBI" : {
 			"Package" : "DBI",
-			"Version" : "1.1.1",
+			"Version" : "1.1.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -239,7 +239,7 @@
 		},
 		"rJava" : {
 			"Package" : "rJava",
-			"Version" : "1.0-5",
+			"Version" : "1.0-6",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -263,7 +263,7 @@
 		},
 		"backports" : {
 			"Package" : "backports",
-			"Version" : "1.3.0",
+			"Version" : "1.4.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -311,7 +311,7 @@
 		},
 		"openssl" : {
 			"Package" : "openssl",
-			"Version" : "1.4.5",
+			"Version" : "1.4.6",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -329,7 +329,7 @@
 		},
 		"RSQLite" : {
 			"Package" : "RSQLite",
-			"Version" : "2.2.8",
+			"Version" : "2.2.9",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -341,7 +341,7 @@
 		},
 		"SqlRender" : {
 			"Package" : "SqlRender",
-			"Version" : "1.8.1",
+			"Version" : "1.8.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -407,7 +407,7 @@
 		},
 		"openxlsx" : {
 			"Package" : "openxlsx",
-			"Version" : "4.2.4",
+			"Version" : "4.2.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -593,7 +593,7 @@
 		},
 		"ggiraph" : {
 			"Package" : "ggiraph",
-			"Version" : "0.7.10",
+			"Version" : "0.8.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -605,7 +605,7 @@
 		},
 		"fs" : {
 			"Package" : "fs",
-			"Version" : "1.5.1",
+			"Version" : "1.5.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -635,7 +635,7 @@
 		},
 		"httpuv" : {
 			"Package" : "httpuv",
-			"Version" : "1.6.3",
+			"Version" : "1.6.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -677,7 +677,7 @@
 		},
 		"renv" : {
 			"Package" : "renv",
-			"Version" : "0.14.0",
+			"Version" : "0.15.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -703,13 +703,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.1.4",
+			"Version" : "2.2.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.1.4"
+			"RemoteRef" : "develop"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
