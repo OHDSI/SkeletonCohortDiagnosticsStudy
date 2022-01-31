@@ -62,7 +62,7 @@ execute <- function(connectionDetails,
                     vocabularyDatabaseSchema = cdmDatabaseSchema,
                     cohortDatabaseSchema = cdmDatabaseSchema,
                     cohortTable = "cohort",
-                    tempEmulationSchema = cohortDatabaseSchema,
+                    tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
                     verifyDependencies = TRUE,
                     outputFolder,
                     incrementalFolder = file.path(outputFolder, "incrementalFolder"),
@@ -86,49 +86,88 @@ execute <- function(connectionDetails,
   }
   
   ParallelLogger::logInfo("Creating cohorts")
-  CohortDiagnostics::instantiateCohortSet(
+  
+  cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = cohortTable)
+  
+  # Next create the tables on the database
+  CohortGenerator::createCohortTables(
     connectionDetails = connectionDetails,
-    cdmDatabaseSchema = cdmDatabaseSchema,
+    cohortTableNames = cohortTableNames,
     cohortDatabaseSchema = cohortDatabaseSchema,
-    vocabularyDatabaseSchema = vocabularyDatabaseSchema,
-    cohortTable = cohortTable,
-    tempEmulationSchema = tempEmulationSchema,
-    packageName = "SkeletonCohortDiagnosticsStudy",
-    cohortToCreateFile = "settings/CohortsToCreate.csv",
-    createCohortTable = TRUE,
-    generateInclusionStats = TRUE,
-    inclusionStatisticsFolder = outputFolder,
-    incremental = TRUE,
-    incrementalFolder = incrementalFolder
+    incremental = TRUE
   )
   
-  ParallelLogger::logInfo("Running study diagnostics")
-  CohortDiagnostics::runCohortDiagnostics(
-    packageName = "SkeletonCohortDiagnosticsStudy",
+  # Generate the cohort set
+  CohortGenerator::generateCohortSet(
     connectionDetails = connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
-    vocabularyDatabaseSchema = vocabularyDatabaseSchema,
-    tempEmulationSchema = getOption("sqlRenderTempEmulationSchema"),
+    cohortDatabaseSchema = cohortDatabaseSchema,
+    cohortTableNames = cohortTableNames,
+    cohortDefinitionSet = cohortDefinitionSet,
+    incremental = TRUE
+  )
+  
+  CohortGenerator::exportCohortStatsTables(
+    connectionDetails = connectionDetails,
+    connection = NULL,
+    cohortDatabaseSchema = cohortDatabaseSchema,
+    cohortTableNames = cohortTableNames,
+    cohortStatisticsFolder = outputFolder,
+    incremental = TRUE
+  )
+  
+  cohortDefinitionSet <-
+    loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
+                           cohortToCreateFile = "settings/CohortsToCreateForTesting.csv")
+  
+  
+  executeDiagnostics(
+    cohortDefinitionSet = cohortDefinitionSet,
+    exportFolder = outputFolder,
+    databaseId = databaseId,
+    connectionDetails = connectionDetails,
+    connection = NULL,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    tempEmulationSchema = tempEmulationSchema,
     cohortDatabaseSchema = cohortDatabaseSchema,
     cohortTable = cohortTable,
+    cohortTableNames = cohortTableNames,
+    vocabularyDatabaseSchema = vocabularyDatabaseSchema,
+    cohortIds = NULL,
     inclusionStatisticsFolder = outputFolder,
-    exportFolder = file.path(outputFolder, "diagnosticsExport"),
-    databaseId = databaseId,
     databaseName = databaseName,
     databaseDescription = databaseDescription,
+    cdmVersion = 5,
     runInclusionStatistics = TRUE,
     runIncludedSourceConcepts = TRUE,
     runOrphanConcepts = TRUE,
     runTimeDistributions = TRUE,
+    runVisitContext = TRUE,
     runBreakdownIndexEvents = TRUE,
     runIncidenceRate = TRUE,
+    runTimeSeries = FALSE,
     runCohortOverlap = TRUE,
-    runVisitContext = TRUE,
     runCohortCharacterization = TRUE,
+    covariateSettings = createDefaultCovariateSettings(),
     runTemporalCohortCharacterization = TRUE,
-    runTimeSeries = TRUE,
+    temporalCovariateSettings = createTemporalCovariateSettings(
+      useConditionOccurrence =
+        TRUE,
+      useDrugEraStart = TRUE,
+      useProcedureOccurrence = TRUE,
+      useMeasurement = TRUE,
+      temporalStartDays = c(-365,-30, 0, 1, 31),
+      temporalEndDays = c(-31,-1, 0, 30, 365)
+    ),
     minCellCount = 5,
     incremental = TRUE,
     incrementalFolder = incrementalFolder
+  )
+  
+  CohortGenerator::dropCohortStatsTables(
+    connectionDetails = connectionDetails,
+    cohortDatabaseSchema = cohortDatabaseSchema,
+    cohortTableNames = cohortTableNames,
+    connection = NULL
   )
 }
