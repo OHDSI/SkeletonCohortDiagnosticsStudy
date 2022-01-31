@@ -117,11 +117,11 @@ execute <- function(connectionDetails,
   )
   
   cohortDefinitionSet <-
-    loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
-                           cohortToCreateFile = "settings/CohortsToCreateForTesting.csv")
+    CohortDiagnostics::loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
+                                              cohortToCreateFile = "settings/CohortsToCreateForTesting.csv")
+
   
-  
-  executeDiagnostics(
+  CohortDiagnostics::executeDiagnostics(
     cohortDefinitionSet = cohortDefinitionSet,
     exportFolder = outputFolder,
     databaseId = databaseId,
@@ -148,16 +148,16 @@ execute <- function(connectionDetails,
     runTimeSeries = FALSE,
     runCohortOverlap = TRUE,
     runCohortCharacterization = TRUE,
-    covariateSettings = createDefaultCovariateSettings(),
+    covariateSettings = FeatureExtraction::createDefaultCovariateSettings(),
     runTemporalCohortCharacterization = TRUE,
-    temporalCovariateSettings = createTemporalCovariateSettings(
+    temporalCovariateSettings = FeatureExtraction::createTemporalCovariateSettings(
       useConditionOccurrence =
         TRUE,
       useDrugEraStart = TRUE,
       useProcedureOccurrence = TRUE,
       useMeasurement = TRUE,
-      temporalStartDays = c(-365,-30, 0, 1, 31),
-      temporalEndDays = c(-31,-1, 0, 30, 365)
+      temporalStartDays = c(-365, -30, 0, 1, 31),
+      temporalEndDays = c(-31, -1, 0, 30, 365)
     ),
     minCellCount = 5,
     incremental = TRUE,
