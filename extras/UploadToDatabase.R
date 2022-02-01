@@ -20,7 +20,7 @@ resultsSchema <- 'phenotype_phebruary'
 
 Sys.setenv("POSTGRES_PATH" = Sys.getenv('POSTGRES_PATH'))
 
-folderWithZipFilesToUpload <- "D:\\studyResults\\phenotypePhebruary"
+folderWithZipFilesToUpload <- "D:\\studyResults\\SkeletonCohortDiagnosticsStudy"
 listOfZipFilesToUpload <-
   list.files(
     path = folderWithZipFilesToUpload,
