@@ -97,6 +97,10 @@ execute <- function(connectionDetails,
     incremental = TRUE
   )
   
+  cohortDefinitionSet <-
+    CohortDiagnostics::loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
+                                              cohortToCreateFile = "settings/CohortsToCreate.csv")
+  
   # Generate the cohort set
   CohortGenerator::generateCohortSet(
     connectionDetails = connectionDetails,
@@ -115,10 +119,6 @@ execute <- function(connectionDetails,
     cohortStatisticsFolder = outputFolder,
     incremental = TRUE
   )
-  
-  cohortDefinitionSet <-
-    CohortDiagnostics::loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
-                                              cohortToCreateFile = "settings/CohortsToCreateForTesting.csv")
 
   
   CohortDiagnostics::executeDiagnostics(
