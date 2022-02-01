@@ -30,13 +30,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.2.1",
+			"Version" : "2.2.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "develop",
+			"RemoteRef" : "v2.2.0",
 			"Remotes" : "ohdsi/Eunomia, ohdsi/FeatureExtraction, ohdsi/ROhdsiWebApi,\n    ohdsi/CirceR, ohdsi/CohortGenerator",
 			"Requirements" : [
 				"Andromeda",
@@ -140,8 +140,12 @@
 		"OhdsiRTools" : {
 			"Package" : "OhdsiRTools",
 			"Version" : "2.0.0",
-			"Source" : "unknown",
-			"Hash" : "04597476eb94c30ec082d314df9e96c2",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "OhdsiSharing",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "2.0.0",
 			"Requirements" : [
 				"RJSONIO",
 				"codetools",

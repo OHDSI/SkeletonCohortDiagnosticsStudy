@@ -25,7 +25,7 @@ shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 
 # Store environment in which the study was executed -----------------------
 OhdsiRTools::createRenvLockFile(rootPackage = "SkeletonCohortDiagnosticsStudy",
-                                ohdsiGitHubPackages = c(OhdsiRTools::getOhdsiGitHubPackages(), "CohortGenerator"),
+                                ohdsiGitHubPackages = unique(c(OhdsiRTools::getOhdsiGitHubPackages(), "CohortGenerator", "OhdsiRTools")),
                                 includeRootPackage = FALSE)
 
 
