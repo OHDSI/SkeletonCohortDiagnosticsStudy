@@ -108,6 +108,7 @@ execute <- function(connectionDetails,
     cohortDatabaseSchema = cohortDatabaseSchema,
     cohortTableNames = cohortTableNames,
     cohortDefinitionSet = cohortDefinitionSet,
+    incrementalFolder = incrementalFolder,
     incremental = TRUE
   )
   
