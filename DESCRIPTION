@@ -11,6 +11,7 @@ Imports:
 	ParallelLogger (>= 2.0.2),
 	DatabaseConnector (>= 4.0.2),
   OhdsiSharing,
+  keyring,
   jsonlite
 Suggests:
     ROhdsiWebApi
