@@ -97,6 +97,7 @@ execute <- function(connectionDetails,
     incremental = TRUE
   )
   
+  # get cohort definitions from study package
   cohortDefinitionSet <-
     CohortDiagnostics::loadCohortsFromPackage(packageName = "SkeletonCohortDiagnosticsStudy",
                                               cohortToCreateFile = "settings/CohortsToCreate.csv")
@@ -112,6 +113,7 @@ execute <- function(connectionDetails,
     incremental = TRUE
   )
   
+  # export stats table to local
   CohortGenerator::exportCohortStatsTables(
     connectionDetails = connectionDetails,
     connection = NULL,
@@ -121,7 +123,7 @@ execute <- function(connectionDetails,
     incremental = TRUE
   )
 
-  
+  # run cohort diagnostics
   CohortDiagnostics::executeDiagnostics(
     cohortDefinitionSet = cohortDefinitionSet,
     exportFolder = outputFolder,
@@ -165,6 +167,7 @@ execute <- function(connectionDetails,
     incrementalFolder = incrementalFolder
   )
   
+  # drop cohort stats table
   CohortGenerator::dropCohortStatsTables(
     connectionDetails = connectionDetails,
     cohortDatabaseSchema = cohortDatabaseSchema,
