@@ -143,7 +143,7 @@
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "OhdsiSharing",
+			"RemoteRepo" : "OhdsiRTools",
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "2.0.0",
 			"Requirements" : [
