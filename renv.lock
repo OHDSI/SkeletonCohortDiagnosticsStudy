@@ -1,110 +1,143 @@
 {
-	"R" : {
-		"Version" : "4.1.1",
-		"Repositories" : [
-			{
-				"Name" : "CRAN",
-				"URL" : "https://cran.rstudio.com"
-			}
-		]
-	},
-	"Packages" : {
-		"CohortDiagnostics" : {
-			"Package" : "CohortDiagnostics",
-			"Version" : "2.2.0",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "CohortDiagnostics",
-			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.2.0",
-			"Remotes" : "ohdsi/Eunomia, ohdsi/FeatureExtraction, ohdsi/ROhdsiWebApi,\n    ohdsi/CirceR, ohdsi/CohortGenerator",
-			"Requirements" : [
-				"CohortGenerator",
-				"FeatureExtraction",
-				"RJSONIO",
-				"ROhdsiWebApi"
-			]
-		},
-		"CohortGenerator" : {
-			"Package" : "CohortGenerator",
-			"Version" : "0.2.0",
-			"Source" : "GitHub",
-			"Remotes" : "ohdsi/CirceR, ohdsi/Eunomia, ohdsi/ROhdsiWebApi",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "CohortGenerator",
-			"RemoteUsername" : "OHDSI",
-			"RemoteRef" : "v0.2.0",
-			"Requirements" : "RJSONIO"
-		},
-		"FeatureExtraction" : {
-			"Package" : "FeatureExtraction",
-			"Version" : "3.2.0",
-			"Source" : "GitHub",
-			"Remotes" : "ohdsi/Eunomia",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "FeatureExtraction",
-			"RemoteUsername" : "OHDSI",
-			"RemoteRef" : "v3.2.0",
-			"Requirements" : []
-		},
-		"OhdsiRTools" : {
-			"Package" : "OhdsiRTools",
-			"Version" : "2.0.0",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "OhdsiRTools",
-			"RemoteUsername" : "OHDSI",
-			"RemoteRef" : "v2.0.0",
-			"Requirements" : [
-				"RJSONIO",
-				"codetools"
-			]
-		},
-		"OhdsiSharing" : {
-			"Package" : "OhdsiSharing",
-			"Version" : "0.2.2",
-			"Source" : "GitHub",
-			"RemoteType" : "github",
-			"RemoteHost" : "api.github.com",
-			"RemoteRepo" : "OhdsiSharing",
-			"RemoteUsername" : "OHDSI",
-			"RemoteRef" : "v0.2.2",
-			"Requirements" : []
-		},
-		"RJSONIO" : {
-			"Package" : "RJSONIO",
-			"Version" : "1.3-1.6",
-			"Source" : "Repository",
-			"Repository" : "CRAN",
-			"Hash" : "0c7658433758cea5bcae50edd02b55b7",
-			"Requirements" : []
-		},
-		"ROhdsiWebApi" : {
-			"Package" : "ROhdsiWebApi",
-			"Version" : "1.3.1",
-			"Source" : "unknown",
-			"Hash" : "207f1f3cfdd989e6fc04451d28d1efed",
-			"Requirements" : "RJSONIO"
-		},
-		"codetools" : {
-			"Package" : "codetools",
-			"Version" : "0.2-18",
-			"Source" : "Repository",
-			"Repository" : "CRAN",
-			"Hash" : "019388fc48e48b3da0d3a76ff94608a8",
-			"Requirements" : []
-		},
-		"renv" : {
-			"Package" : "renv",
-			"Version" : "0.15.2",
-			"Source" : "Repository",
-			"Repository" : "CRAN",
-			"Hash" : "206c4ef8b7ad6fb1060d69aa7b9dfe69",
-			"Requirements" : []
-		}
-	}
+  "R": {
+    "Version": "4.1.1",
+    "Repositories": [
+      {
+        "Name": "CRAN",
+        "URL": "https://cran.rstudio.com"
+      }
+    ]
+  },
+  "Packages": {
+    "CohortDiagnostics": {
+      "Package": "CohortDiagnostics",
+      "Version": "2.2.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "CohortDiagnostics",
+      "RemoteUsername": "ohdsi",
+      "RemoteRef": "v2.2.0",
+      "Remotes": "ohdsi/Eunomia, ohdsi/FeatureExtraction, ohdsi/ROhdsiWebApi,\n    ohdsi/CirceR, ohdsi/CohortGenerator",
+      "Hash": "518ea2e5e3b26da2ebe22b920d6bcdf2",
+      "Requirements": [
+        "CohortGenerator",
+        "FeatureExtraction",
+        "RJSONIO",
+        "ROhdsiWebApi",
+        "tidyr"
+      ]
+    },
+    "CohortGenerator": {
+      "Package": "CohortGenerator",
+      "Version": "0.2.0",
+      "Source": "GitHub",
+      "Remotes": "ohdsi/CirceR, ohdsi/Eunomia, ohdsi/ROhdsiWebApi",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "CohortGenerator",
+      "RemoteUsername": "OHDSI",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "04ac1c7df7f03ab4bad3088bd27db37f70a13af8",
+      "Hash": "a15c489d950c1b0746b5d4d1a9a1f79c",
+      "Requirements": [
+        "RJSONIO"
+      ]
+    },
+    "FeatureExtraction": {
+      "Package": "FeatureExtraction",
+      "Version": "3.2.0",
+      "Source": "GitHub",
+      "Remotes": "ohdsi/Eunomia",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "FeatureExtraction",
+      "RemoteUsername": "OHDSI",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "5363f5f4cdaf8b31ce9f193861169047b11ea41c",
+      "Hash": "6edc92a6e8c1e82fcb6e91af1c0d94f2",
+      "Requirements": [
+        "pillar"
+      ]
+    },
+    "OhdsiRTools": {
+      "Package": "OhdsiRTools",
+      "Version": "2.0.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "OhdsiRTools",
+      "RemoteUsername": "OHDSI",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "4c06e4e80273106a190781694f1fe87d22f569ec",
+      "Hash": "2b35b8a7749c296d7c4004d2f78b7870",
+      "Requirements": [
+        "RJSONIO",
+        "codetools"
+      ]
+    },
+    "OhdsiSharing": {
+      "Package": "OhdsiSharing",
+      "Version": "0.2.2",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "OhdsiSharing",
+      "RemoteUsername": "OHDSI",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "df032336d228364387586ef7a197ea15f00d731c",
+      "Hash": "32ac959408ccee284454df55c2ba1473",
+      "Requirements": []
+    },
+    "RJSONIO": {
+      "Package": "RJSONIO",
+      "Version": "1.3-1.6",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "0c7658433758cea5bcae50edd02b55b7",
+      "Requirements": []
+    },
+    "ROhdsiWebApi": {
+      "Package": "ROhdsiWebApi",
+      "Version": "1.3.1",
+      "Source": "unknown",
+      "Hash": "207f1f3cfdd989e6fc04451d28d1efed",
+      "Requirements": [
+        "RJSONIO",
+        "tidyr"
+      ]
+    },
+    "codetools": {
+      "Package": "codetools",
+      "Version": "0.2-18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "019388fc48e48b3da0d3a76ff94608a8",
+      "Requirements": []
+    },
+    "pillar": {
+      "Package": "pillar",
+      "Version": "1.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "51dfc97e1b7069e9f7e6f83f3589c22e",
+      "Requirements": []
+    },
+    "renv": {
+      "Package": "renv",
+      "Version": "0.15.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "206c4ef8b7ad6fb1060d69aa7b9dfe69",
+      "Requirements": []
+    },
+    "tidyr": {
+      "Package": "tidyr",
+      "Version": "1.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d8b95b7fee945d7da6888cf7eb71a49c",
+      "Requirements": []
+    }
+  }
 }
