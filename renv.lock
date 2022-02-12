@@ -11,7 +11,7 @@
 	"Packages" : {
 		"rlang" : {
 			"Package" : "rlang",
-			"Version" : "1.0.0",
+			"Version" : "1.0.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -221,7 +221,7 @@
 		},
 		"dplyr" : {
 			"Package" : "dplyr",
-			"Version" : "1.0.7",
+			"Version" : "1.0.8",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -389,7 +389,7 @@
 		},
 		"DatabaseConnector" : {
 			"Package" : "DatabaseConnector",
-			"Version" : "5.0.0",
+			"Version" : "5.0.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -515,13 +515,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.2.2",
+			"Version" : "2.2.3",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.2.2"
+			"RemoteRef" : "v2.2.3"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
