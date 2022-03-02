@@ -23,19 +23,19 @@
 		},
 		"glue" : {
 			"Package" : "glue",
-			"Version" : "1.6.1",
+			"Version" : "1.6.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"cli" : {
 			"Package" : "cli",
-			"Version" : "3.1.1",
+			"Version" : "3.2.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"crayon" : {
 			"Package" : "crayon",
-			"Version" : "1.4.2",
+			"Version" : "1.5.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -167,7 +167,7 @@
 		},
 		"tidyselect" : {
 			"Package" : "tidyselect",
-			"Version" : "1.1.1",
+			"Version" : "1.1.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -203,13 +203,13 @@
 		},
 		"clipr" : {
 			"Package" : "clipr",
-			"Version" : "0.7.1",
+			"Version" : "0.8.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"colorspace" : {
 			"Package" : "colorspace",
-			"Version" : "2.0-2",
+			"Version" : "2.0-3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -287,7 +287,7 @@
 		},
 		"jsonlite" : {
 			"Package" : "jsonlite",
-			"Version" : "1.7.3",
+			"Version" : "1.8.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -311,7 +311,7 @@
 		},
 		"openssl" : {
 			"Package" : "openssl",
-			"Version" : "1.4.6",
+			"Version" : "2.0.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -329,7 +329,7 @@
 		},
 		"RSQLite" : {
 			"Package" : "RSQLite",
-			"Version" : "2.2.9",
+			"Version" : "2.2.10",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -341,7 +341,7 @@
 		},
 		"SqlRender" : {
 			"Package" : "SqlRender",
-			"Version" : "1.8.3",
+			"Version" : "1.9.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -467,7 +467,7 @@
 		},
 		"yaml" : {
 			"Package" : "yaml",
-			"Version" : "2.2.2",
+			"Version" : "2.3.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -479,7 +479,7 @@
 		},
 		"renv" : {
 			"Package" : "renv",
-			"Version" : "0.15.2",
+			"Version" : "0.15.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -515,13 +515,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "2.2.3",
+			"Version" : "2.2.4",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v2.2.3"
+			"RemoteRef" : "v2.2.4"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
