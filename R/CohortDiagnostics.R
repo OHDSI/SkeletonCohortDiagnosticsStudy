@@ -99,8 +99,15 @@ execute <- function(connectionDetails,
   
   # get cohort definitions from study package
   cohortDefinitionSet <-
-    dplyr::tibble(CohortGenerator::getCohortDefinitionSet(packageName = "SkeletonCohortDiagnosticsStudy", 
-                                            cohortFileNameValue = "cohortId"))
+    dplyr::tibble(
+      CohortGenerator::getCohortDefinitionSet(
+        settingsFileName = "settings/CohortsToCreate.csv",
+        jsonFolder = "cohorts",
+        sqlFolder = "sql/sql_server",
+        packageName = "SkeletonCohortDiagnosticsStudy",
+        cohortFileNameValue = "cohortId"
+      )
+    )
   
   # Generate the cohort set
   CohortGenerator::generateCohortSet(
