@@ -102,7 +102,7 @@ execute <- function(connectionDetails,
   cohortDefinitionSet <-
     dplyr::tibble(
       CohortGenerator::getCohortDefinitionSet(
-        settingsFileName = "settings/CohortsToCreate.csv",
+        settingsFileName = "settings/Cohorts.csv",
         jsonFolder = "cohorts",
         sqlFolder = "sql/sql_server",
         packageName = "SkeletonCohortDiagnosticsStudy",
