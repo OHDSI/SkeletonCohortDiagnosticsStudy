@@ -69,9 +69,10 @@ execute <- function(connectionDetails,
                     databaseId = "Unknown",
                     databaseName = databaseId,
                     databaseDescription = databaseId) {
-  if (!file.exists(outputFolder))
+  if (!file.exists(outputFolder)) {
     dir.create(outputFolder, recursive = TRUE)
-  
+  }
+
   ParallelLogger::addDefaultFileLogger(file.path(outputFolder, "log.txt"))
   ParallelLogger::addDefaultErrorReportLogger(file.path(outputFolder, "errorReportR.txt"))
   on.exit(ParallelLogger::unregisterLogger("DEFAULT_FILE_LOGGER", silent = TRUE))
@@ -79,16 +80,16 @@ execute <- function(connectionDetails,
     ParallelLogger::unregisterLogger("DEFAULT_ERRORREPORT_LOGGER", silent = TRUE),
     add = TRUE
   )
-  
+
   if (verifyDependencies) {
     ParallelLogger::logInfo("Checking whether correct package versions are installed")
     verifyDependencies()
   }
-  
+
   ParallelLogger::logInfo("Creating cohorts")
-  
+
   cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = cohortTable)
-  
+
   # Next create the tables on the database
   CohortGenerator::createCohortTables(
     connectionDetails = connectionDetails,
@@ -96,7 +97,7 @@ execute <- function(connectionDetails,
     cohortDatabaseSchema = cohortDatabaseSchema,
     incremental = TRUE
   )
-  
+
   # get cohort definitions from study package
   cohortDefinitionSet <-
     dplyr::tibble(
@@ -108,7 +109,7 @@ execute <- function(connectionDetails,
         cohortFileNameValue = "cohortId"
       )
     )
-  
+
   # Generate the cohort set
   CohortGenerator::generateCohortSet(
     connectionDetails = connectionDetails,
@@ -119,7 +120,7 @@ execute <- function(connectionDetails,
     incrementalFolder = incrementalFolder,
     incremental = TRUE
   )
-  
+
   # export stats table to local
   CohortGenerator::exportCohortStatsTables(
     connectionDetails = connectionDetails,
@@ -173,7 +174,7 @@ execute <- function(connectionDetails,
     incremental = TRUE,
     incrementalFolder = incrementalFolder
   )
-  
+
   # drop cohort stats table
   CohortGenerator::dropCohortStatsTables(
     connectionDetails = connectionDetails,
