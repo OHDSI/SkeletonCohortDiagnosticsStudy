@@ -445,7 +445,7 @@
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v3.0.0"
+			"RemoteRef" : "develop"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
