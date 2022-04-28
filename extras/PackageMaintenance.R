@@ -15,7 +15,7 @@
 # limitations under the License.
 
 # Format and check code ---------------------------------------------------
-# OhdsiRTools::formatRFolder()
+styler::style_pkg()
 OhdsiRTools::checkUsagePackage("SkeletonCohortDiagnosticsStudy")
 OhdsiRTools::updateCopyrightYearFolder()
 
