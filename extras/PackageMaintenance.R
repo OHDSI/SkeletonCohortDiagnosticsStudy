@@ -27,7 +27,7 @@ shell("R CMD Rd2pdf ./ --output=extras/UsingSkeletonPackage.pdf")
 OhdsiRTools::createRenvLockFile(rootPackage = "SkeletonCohortDiagnosticsStudy",
                                 mode = "description",
                                 ohdsiGitHubPackages = unique(c(OhdsiRTools::getOhdsiGitHubPackages(),
-                                                               "CohortGenerator")),
+                                                               "CohortGenerator", "ROhdsiWebApi")),
                                 includeRootPackage = FALSE)
 
 
