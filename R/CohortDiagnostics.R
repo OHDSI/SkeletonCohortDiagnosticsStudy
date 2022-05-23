@@ -192,7 +192,7 @@ execute <- function(connectionDetails,
         -365, # long term prior
         -180, # medium term prior
         -30, # short term prior
-
+        
         # components displayed in temporal characterization
         -365, # one year prior to -31
         -30, # 30 day prior not including day 0
@@ -206,7 +206,7 @@ execute <- function(connectionDetails,
         0, # long term prior
         0, # medium term prior
         0, # short term prior
-
+        
         # components displayed in temporal characterization
         -31, # one year prior to -31
         -1, # 30 day prior not including day 0
