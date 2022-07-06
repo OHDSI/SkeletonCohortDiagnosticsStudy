@@ -3,6 +3,7 @@ Type: Package
 Title: A Study Package for Generating Cohort Diagnostics
 Version: 0.0.1
 Author: Gowtham Rao [aut, cre]
+Date: 2022-06-07
 Maintainer: Gowtham Rao <rao@ohdsi.org>
 Description: A package that generates cohort diagnostics for cohort definitions included in the package.
 Imports:
