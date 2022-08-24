@@ -11,18 +11,18 @@ executeOnMultipleDataSources <- function(x) {
   writeLines(
     paste0(
       "Running ",
-      cdmSource$sourceName,
+      x$cdmSource$sourceName,
       " on ",
-      cdmSource$runOn,
+      x$cdmSource$runOn,
       "\n     server: ",
-      cdmSource$runOn,
+      x$cdmSource$runOn,
       " (",
-      cdmSource$serverFinal,
+      x$cdmSource$serverFinal,
       ")",
       "\n     cdmDatabaseSchema: ",
-      cdmSource$cdmDatabaseSchemaFinal,
+      x$cdmSource$cdmDatabaseSchemaFinal,
       "\n     cohortDatabaseSchema: ",
-      cdmSource$cohortDatabaseSchemaFinal
+      x$cdmSource$cohortDatabaseSchemaFinal
     )
   )
   
@@ -44,7 +44,7 @@ executeOnMultipleDataSources <- function(x) {
   databaseName <- x$databaseName
   databaseDescription <- x$databaseDescription
   
-  SkeletonCohortDiagnosticsStudy::executePhenotyeLibraryDiagnostics(
+  SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
     cdmDatabaseSchema = cdmDatabaseSchema,
     cohortDatabaseSchema = cohortDatabaseSchema,
