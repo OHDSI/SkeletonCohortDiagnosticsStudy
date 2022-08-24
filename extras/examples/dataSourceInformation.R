@@ -4,7 +4,7 @@ source(Sys.getenv("startUpScriptLocation"))
 executeOnMultipleDataSources <- function(x) {
   library(magrittr)
   if (x$generateCohortTableName) {
-    cohortTableName <- paste0(stringr::str_squish("pl_"),
+    cohortTableName <- paste0(stringr::str_squish("cd_"),
                               stringr::str_squish(x$databaseId))
   }
   
