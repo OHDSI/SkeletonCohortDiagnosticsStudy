@@ -55,6 +55,7 @@
 #'                                            run; make sure to use forward slashes (/). Do not use a
 #'                                            folder on a network drive since this greatly impacts
 #'                                            performance.
+#' @param extraLog                            Do you want to add anything extra into the log?
 #'
 #' @export
 execute <- function(connectionDetails,
@@ -68,7 +69,8 @@ execute <- function(connectionDetails,
                     incrementalFolder = file.path(outputFolder, "incrementalFolder"),
                     databaseId = "Unknown",
                     databaseName = databaseId,
-                    databaseDescription = databaseId) {
+                    databaseDescription = databaseId,
+                    extraLog = NULL) {
   if (!file.exists(outputFolder)) {
     dir.create(outputFolder, recursive = TRUE)
   }
@@ -86,7 +88,9 @@ execute <- function(connectionDetails,
     verifyDependencies()
   }
 
-  ParallelLogger::logInfo(extraLog)
+  if (!is.null(extraLog)) {
+    ParallelLogger::logInfo(extraLog)
+  }
   
   ParallelLogger::logInfo("Creating cohorts")
 
