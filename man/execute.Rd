@@ -16,7 +16,8 @@ execute(
   incrementalFolder = file.path(outputFolder, "incrementalFolder"),
   databaseId = "Unknown",
   databaseName = databaseId,
-  databaseDescription = databaseId
+  databaseDescription = databaseId,
+  extraLog = NULL
 )
 }
 \arguments{
@@ -67,6 +68,8 @@ performance.}
 Synthetic Public Use Files (SynPUFs)').}
 
 \item{databaseDescription}{A short description (several sentences) of the database.}
+
+\item{extraLog}{Do you want to add anything extra into the log?}
 }
 \description{
 Execute the cohort diagnostics
