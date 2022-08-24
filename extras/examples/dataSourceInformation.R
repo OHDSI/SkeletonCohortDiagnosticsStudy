@@ -8,7 +8,7 @@ executeOnMultipleDataSources <- function(x) {
                               stringr::str_squish(x$databaseId))
   }
   
-  writeLines(
+  extraLog <- (
     paste0(
       "Running ",
       x$cdmSource$sourceName,
@@ -53,6 +53,7 @@ executeOnMultipleDataSources <- function(x) {
     outputFolder = x$outputFolder,
     databaseId = databaseId,
     databaseName = databaseName,
-    databaseDescription = databaseDescription
+    databaseDescription = databaseDescription,
+    extraLog = extraLog
   )
 }

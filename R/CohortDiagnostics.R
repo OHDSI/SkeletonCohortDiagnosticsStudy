@@ -86,6 +86,8 @@ execute <- function(connectionDetails,
     verifyDependencies()
   }
 
+  ParallelLogger::logInfo(extraLog)
+  
   ParallelLogger::logInfo("Creating cohorts")
 
   cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = cohortTable)
