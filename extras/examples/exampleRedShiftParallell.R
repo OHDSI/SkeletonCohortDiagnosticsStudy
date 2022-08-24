@@ -23,8 +23,6 @@ options(andromedaTempFolder = file.path(outputFolder, "andromedaTemp"))
 # lets get meta information for each of these databaseId. This includes connection information.
 source("extras/examples/dataSourceInformation.R")
 
-# cdmSources <- cdmSources2
-# rm("cdmSources2")
 ############## databaseIds to run cohort diagnostics on that source  #################
 databaseIds <-
   c(
@@ -37,7 +35,9 @@ databaseIds <-
     'truven_mdcr',
     'ims_australia_lpd',
     'ims_germany',
-    'ims_france')
+    'ims_france',
+    'iqvia_amb_emr',
+    'iqvia_pharmetrics_plus')
 
 ## service name for keyring for db with cdm
 keyringUserService <- 'OHDSI_USER'
@@ -45,12 +45,11 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 
 
 
-
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
 for (i in (1:length(databaseIds))) {
-  cdmSource <- cdmSources %>%
-    dplyr::filter(.data$sequence == 1) %>%
+  cdmSource <- cdmSources |> 
+    dplyr::filter(.data$sequence == 1) |> 
     dplyr::filter(database == databaseIds[[i]])
   
   x[[i]] <- list(
