@@ -112,7 +112,7 @@ execute <- function(connectionDetails,
       sqlFolder = "sql/sql_server",
       packageName = "SkeletonCohortDiagnosticsStudy",
       cohortFileNameValue = "cohortId"
-    ) |> dplyr::tibble()
+    ) %>% dplyr::tibble()
 
   # Generate the cohort set
   CohortGenerator::generateCohortSet(

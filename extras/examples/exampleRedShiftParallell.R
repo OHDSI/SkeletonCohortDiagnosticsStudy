@@ -48,16 +48,17 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
 for (i in (1:length(databaseIds))) {
-  cdmSource <- cdmSources |> 
-    dplyr::filter(.data$sequence == 1) |> 
+  cdmSource <- cdmSources %>%  
+    dplyr::filter(.data$sequence == 1) %>%  
     dplyr::filter(database == databaseIds[[i]])
   
   x[[i]] <- list(
     cdmSource = cdmSource,
     generateCohortTableName = TRUE,
     verifyDependencies = FALSE,
-    databaseId = databaseIds[[i]],
-    outputFolder = file.path(outputFolder, databaseIds[[i]]),
+    databaseId = cdmSource$sourceKey,
+    databaseName = cdmSource$sourceName,
+    outputFolder = file.path(outputFolder, cdmSource$sourceKey),
     userService = keyringUserService,
     passwordService = keyringPasswordService,
     preMergeDiagnosticsFiles = TRUE

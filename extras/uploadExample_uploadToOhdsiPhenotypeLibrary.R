@@ -31,12 +31,38 @@ if (exists("listOfZipFilesToUpload")) {
 
 # reading the tables in cohort diagnostics results data model
 tablesInResultsDataModel <-
-  CohortDiagnostics::getResultsDataModelSpecifications() |>
-  dplyr::select(.data$tableName) |>
-  dplyr::distinct() |>
-  dplyr::arrange() |>
+  CohortDiagnostics::getResultsDataModelSpecifications() %>%
+  dplyr::select(.data$tableName) %>%
+  dplyr::distinct() %>%
+  dplyr::arrange() %>%
   dplyr::pull()
 tablesInResultsDataModel <- c(tablesInResultsDataModel)
+
+# back up annotation tables
+annotationTables <- tablesInResultsDataModel[stringr::str_detect(string = tablesInResultsDataModel,
+                                                                 pattern = "annotation")]
+
+connection = DatabaseConnector::connect(connectionDetails = connectionDetails)
+for (i in (1:length(annotationTables))) {
+  writeLines(paste0("Backing up ", annotationTables[[i]]))
+  data <- DatabaseConnector::renderTranslateQuerySql(
+    connection = connection,
+    sql = "SELECT * FROM @results_database_schema.@annotation_table;",
+    results_database_schema = resultsSchema, 
+    annotation_table = annotationTables[[i]],
+    snakeCaseToCamelCase = TRUE
+  )  %>% 
+    dplyr::arrange(1) %>% 
+    dplyr::tibble()
+  assign(x = annotationTables[[i]],
+         value = data)
+  readr::write_excel_csv(x = get(annotationTables[[i]]), 
+                         file = file.path(rstudioapi::getActiveDocumentContext()$path %>% dirname(),
+                                          paste0(annotationTables[[i]], ".csv")), 
+                         append = TRUE, col_names = TRUE)
+}
+DatabaseConnector::disconnect(connection = connection)
+
 
 # 
 # # commenting this function as it maybe accidentally run - loosing data.
@@ -120,6 +146,48 @@ for (i in (1:length(listOfZipFilesToUpload))) {
 listOfZipFilesToUpload2 <-
   c(listOfZipFilesToUpload, listOfZipFilesToUpload2) %>% unique() %>% sort()
 
+
+
+# reupload annotation tables
+connection = DatabaseConnector::connect(connectionDetails = connectionDetails)
+for (i in (1:length(annotationTables))) {
+  if (!exists(annotationTables[[i]])) {
+    if (file.exists(file.path(rstudioapi::getActiveDocumentContext()$path %>% dirname(),
+                              paste0(annotationTables[[i]], ".csv")))) {
+      data <-
+        readr::read_csv(
+          file = file.path(
+            rstudioapi::getActiveDocumentContext()$path %>% dirname(),
+            paste0(annotationTables[[i]], ".csv")
+          ),
+          col_types = readr::cols()
+        )
+      assign(x = annotationTables[[i]],
+             value = data)
+    } else {
+      writeLines(paste0("Annotation table not found: ", paste0(annotationTables[[i]], ".csv")))
+    }
+  }
+  
+  if (exists(annotationTables[[i]])) {
+    DatabaseConnector::renderTranslateExecuteSql(connection = connection,
+                                                 sql = "DELETE FROM @results_database_schema.@annotation_table;",
+                                                 results_database_schema = resultsSchema, 
+                                                 annotation_table = annotationTables[[i]])
+    DatabaseConnector::insertTable(
+      connection = connection,
+      databaseSchema = resultsSchema,
+      tableName = annotationTables[[i]],
+      dropTableIfExists = FALSE,
+      createTable = FALSE,
+      data = get(annotationTables[[i]])%>% dplyr::distinct(),
+      tempTable = FALSE,
+      bulkLoad = (Sys.getenv("bulkLoad") == TRUE),
+      camelCaseToSnakeCase = TRUE
+    )
+  }
+}
+DatabaseConnector::disconnect(connection = connection)
 # Maintenance
 connection <-
   DatabaseConnector::connect(connectionDetails = connectionDetails)
