@@ -38,8 +38,10 @@ databaseIds <-
     'ims_australia_lpd',
     'ims_germany',
     'ims_france',
-    'iqvia_amb_emr',
-    'iqvia_pharmetrics_plus')
+    'iqvia_amb_emr'
+    # ,
+    # 'iqvia_pharmetrics_plus'
+  )
 
 ## service name for keyring for db with cdm
 keyringUserService <- 'OHDSI_USER'
@@ -50,19 +52,44 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
 for (i in (1:length(databaseIds))) {
-  cdmSource <- cdmSources %>%  
-    dplyr::filter(.data$sequence == 1) %>%  
+  cdmSource <- cdmSources %>%
+    dplyr::filter(.data$sequence == 1) %>%
     dplyr::filter(database == databaseIds[[i]])
   
-  cdmSource$projectCode <- projectCode
+  databaseId <- as.character(cdmSource$sourceKey)
+  databaseName <- as.character(cdmSource$sourceName)
+  databaseDescription <- as.character(cdmSource$sourceName)
+  
+  sourceId <- as.character(cdmSource$sourceId)
+  runOn <- as.character(cdmSource$runOn)
+  server <- as.character(cdmSource$serverFinal)
+  cdmDatabaseSchema <-
+    as.character(cdmSource$cdmDatabaseSchemaFinal)
+  cohortDatabaseSchema <-
+    as.character(cdmSource$cohortDatabaseSchemaFinal)
+  vocabDatabaseSchema <-
+    as.character(cdmSource$vocabDatabaseSchemaFinal)
+  
+  port <- cdmSource$port
+  
+  dbms <- cdmSource$dbms
   
   x[[i]] <- list(
-    cdmSource = cdmSource,
+    projectCode = projectCode,
+    sourceId = sourceId,
     generateCohortTableName = TRUE,
+    runOn = runOn,
+    dbms = dbms,
+    server = server,
+    port = port,
     verifyDependencies = FALSE,
-    databaseId = cdmSource$sourceKey,
-    databaseName = cdmSource$sourceName,
-    outputFolder = file.path(outputFolder, cdmSource$sourceKey),
+    databaseId = databaseId,
+    databaseName = databaseName,
+    databaseDescription = databaseDescription,
+    cdmDatabaseSchema = cdmDatabaseSchema,
+    cohortDatabaseSchema = cohortDatabaseSchema,
+    vocabDatabaseSchema = vocabDatabaseSchema,
+    outputFolder = file.path(outputFolder, databaseId),
     userService = keyringUserService,
     passwordService = keyringPasswordService,
     preMergeDiagnosticsFiles = TRUE

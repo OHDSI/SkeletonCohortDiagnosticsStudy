@@ -4,47 +4,45 @@ source(Sys.getenv("startUpScriptLocation"))
 executeOnMultipleDataSources <- function(x) {
   library(magrittr)
   if (x$generateCohortTableName) {
-    cohortTableName <- paste0(stringr::str_squish(x$cdmSource$projectCode),
-                              stringr::str_squish(x$cdmSource$sourceId))
+    cohortTableName <- paste0(stringr::str_squish(x$projectCode),
+                              stringr::str_squish(x$sourceId))
   }
   
   extraLog <- (
     paste0(
       "Running ",
-      x$cdmSource$sourceName,
+      x$databaseName,
       " (",
-      cdmSource$sourceId,
+      x$sourceId,
       ") on ",
-      x$cdmSource$runOn,
+      x$sourceId,
       "\n     server: ",
-      x$cdmSource$runOn,
+      x$runOn,
       " (",
-      x$cdmSource$serverFinal,
+      x$serverFinal,
       ")",
       "\n     cdmDatabaseSchema: ",
-      x$cdmSource$cdmDatabaseSchemaFinal,
+      x$cdmDatabaseSchema,
       "\n     cohortDatabaseSchema: ",
-      x$cdmSource$cohortDatabaseSchemaFinal
+      x$cohortDatabaseSchema
     )
   )
   
   # Details for connecting to the server:
   connectionDetails <-
     DatabaseConnector::createConnectionDetails(
-      dbms = x$cdmSource$dbms,
-      server = x$cdmSource$serverFinal,
+      dbms = x$dbms,
+      server = x$server,
       user = keyring::key_get(service = x$userService),
       password =  keyring::key_get(service = x$passwordService),
-      port = x$cdmSource$port
+      port = x$port
     )
   # The name of the database schema where the CDM data can be found:
-  cdmDatabaseSchema <- x$cdmSource$cdmDatabaseSchemaFinal
-  vocabDatabaseSchema <- x$cdmSource$vocabDatabaseSchemaFinal
-  cohortDatabaseSchema <- x$cdmSource$cohortDatabaseSchemaFinal
+  cdmDatabaseSchema <- x$cdmDatabaseSchema
+  vocabDatabaseSchema <- x$vocabDatabaseSchema
+  cohortDatabaseSchema <- x$cohortDatabaseSchema
   
   databaseId <- x$databaseId
-  databaseName <- x$databaseName
-  databaseDescription <- x$databaseDescription
   
   SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
@@ -54,8 +52,6 @@ executeOnMultipleDataSources <- function(x) {
     verifyDependencies = x$verifyDependencies,
     outputFolder = x$outputFolder,
     databaseId = databaseId,
-    databaseName = databaseName,
-    databaseDescription = databaseDescription,
     extraLog = extraLog
   )
 }
