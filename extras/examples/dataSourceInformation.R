@@ -4,15 +4,17 @@ source(Sys.getenv("startUpScriptLocation"))
 executeOnMultipleDataSources <- function(x) {
   library(magrittr)
   if (x$generateCohortTableName) {
-    cohortTableName <- paste0(stringr::str_squish("cd_"),
-                              stringr::str_squish(x$databaseId))
+    cohortTableName <- paste0(stringr::str_squish(x$cdmSource$projectCode),
+                              stringr::str_squish(x$cdmSource$sourceId))
   }
   
   extraLog <- (
     paste0(
       "Running ",
       x$cdmSource$sourceName,
-      " on ",
+      " (",
+      cdmSource$sourceId,
+      ") on ",
       x$cdmSource$runOn,
       "\n     server: ",
       x$cdmSource$runOn,

@@ -9,6 +9,8 @@ library(magrittr)
 ################################################################################
 # VARIABLES - please change
 ################################################################################
+projectCode <- "epi100"
+
 # The folder where the study intermediate and result files will be written:
 outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudy"
 # create output directory if it does not exist
@@ -51,6 +53,8 @@ for (i in (1:length(databaseIds))) {
   cdmSource <- cdmSources %>%  
     dplyr::filter(.data$sequence == 1) %>%  
     dplyr::filter(database == databaseIds[[i]])
+  
+  cdmSource$projectCode <- projectCode
   
   x[[i]] <- list(
     cdmSource = cdmSource,
