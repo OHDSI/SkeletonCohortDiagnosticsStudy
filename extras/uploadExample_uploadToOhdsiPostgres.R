@@ -5,7 +5,7 @@ folderWithZipFilesToUpload <-
 
 # what is the name of the schema you want to upload to?
 resultsSchema <-
-  'SkeletonCohortDiagnosticsStudy' # change to your schema
+  tolower('SkeletonCohortDiagnosticsStudy') # change to your schema - please use lower case
 
 # Postgres server: connection details to OHDSI Phenotype library. Please change to your postgres connection details
 connectionDetails <- DatabaseConnector::createConnectionDetails(
@@ -30,8 +30,9 @@ schemaExists <-
     sql = "SELECT exists(
                          select schema_name
                          FROM information_schema.schemata
-                         WHERE schema_name = 'SkeletonCohortDiagnosticsStudy'
-                         );"
+                         WHERE schema_name = '@results_database_schema'
+                         );",
+    results_database_schema = resultsSchema
   ) %>%
   dplyr::tibble() %>%
   dplyr::mutate(exists = dplyr::case_when(toupper(.data$EXISTS) == 'T' ~ TRUE,
@@ -39,14 +40,18 @@ schemaExists <-
   dplyr::pull(.data$exists)
 
 if (!schemaExists) {
-  DatabaseConnector::renderTranslateExecuteSql(connection = connection,
-                                               sql = "select create_schema('SkeletonCohortDiagnosticsStudy');")
-  CohortDiagnostics::createResultsDataModel(connection = connection, schema = 'SkeletonCohortDiagnosticsStudy')
+  DatabaseConnector::renderTranslateExecuteSql(
+    connection = connection,
+    sql = "select create_schema(@results_database_schema);",
+    results_database_schema = resultsSchema
+  )
+  CohortDiagnostics::createResultsDataModel(connection = connection, schema = resultsSchema)
 } else {
   tablesInResultsDataModel <-
     CohortDiagnostics::getResultsDataModelSpecifications() %>%
     dplyr::select(.data$tableName) %>%
-    dplyr::distinct()
+    dplyr::distinct() %>%
+    dplyr::pull()
   
   # back up annotation tables
   annotationTables <-
@@ -55,26 +60,39 @@ if (!schemaExists) {
   
   for (i in (1:length(annotationTables))) {
     writeLines(paste0("Backing up ", annotationTables[[i]]))
-    data <- DatabaseConnector::renderTranslateQuerySql(
-      connection = connection,
-      sql = "SELECT * FROM @results_database_schema.@annotation_table;",
-      results_database_schema = 'SkeletonCohortDiagnosticsStudy',
-      annotation_table = annotationTables[[i]],
-      snakeCaseToCamelCase = TRUE
-    )  %>%
-      dplyr::arrange(1) %>%
-      dplyr::tibble()
-    assign(x = annotationTables[[i]],
-           value = data)
-    readr::write_excel_csv(
-      x = get(annotationTables[[i]]),
-      file = file.path(
-        folderWithZipFilesToUpload,
-        paste0(annotationTables[[i]], ".csv")
-      ),
-      append = TRUE,
-      col_names = TRUE
-    )
+    
+    tablesInSchema <-
+      DatabaseConnector::renderTranslateQuerySql(
+        connection = connection,
+        sql = "SELECT DISTINCT table_name FROM information_schema.tables where table_schema = '@results_database_schema';",
+        results_database_schema = resultsSchema,
+        snakeCaseToCamelCase = TRUE
+      ) %>%
+      dplyr::pull(.data$tableName) %>%
+      tolower()
+    
+    if (annotationTables[[i]] %in% tablesInSchema) {
+      data <- DatabaseConnector::renderTranslateQuerySql(
+        connection = connection,
+        sql = "SELECT * FROM @results_database_schema.@annotation_table;",
+        results_database_schema = resultsSchema,
+        annotation_table = annotationTables[[i]],
+        snakeCaseToCamelCase = TRUE
+      )  %>%
+        dplyr::arrange(1) %>%
+        dplyr::tibble()
+      assign(x = annotationTables[[i]],
+             value = data)
+      readr::write_excel_csv(
+        x = get(annotationTables[[i]]),
+        file = file.path(
+          folderWithZipFilesToUpload,
+          paste0(annotationTables[[i]], ".csv")
+        ),
+        append = TRUE,
+        col_names = TRUE
+      )
+    }
   }
   
   for (i in (1:length(tablesInResultsDataModel))) {
@@ -82,11 +100,11 @@ if (!schemaExists) {
     DatabaseConnector::renderTranslateExecuteSql(
       connection = connection,
       sql = "DROP TABLE IF EXISTS @database_schema.@table_name CASCADE;",
-      database_schema = 'SkeletonCohortDiagnosticsStudy',
+      database_schema = resultsSchema,
       table_name = tablesInResultsDataModel[[i]]
     )
   }
-  CohortDiagnostics::createResultsDataModel(connectionDetails = connectionDetails, schema = 'SkeletonCohortDiagnosticsStudy')
+  CohortDiagnostics::createResultsDataModel(connectionDetails = connectionDetails, schema = resultsSchema)
 }
 
 # sqlGrant <-
@@ -94,7 +112,7 @@ if (!schemaExists) {
 # DatabaseConnector::renderTranslateExecuteSql(
 #   connection = DatabaseConnector::connect(connectionDetails = connectionDetails),
 #   sql = sqlGrant,
-#   results_database_schema = 'SkeletonCohortDiagnosticsStudy'
+#   results_database_schema = resultsSchema
 # )
 
 # trying to keep track of files that were recently uploaded in current R session
