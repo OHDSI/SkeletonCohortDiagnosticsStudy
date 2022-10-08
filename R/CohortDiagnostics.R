@@ -91,7 +91,7 @@ execute <- function(connectionDetails,
   if (!is.null(extraLog)) {
     ParallelLogger::logInfo(extraLog)
   }
-  
+
   ParallelLogger::logInfo("Creating cohorts")
 
   cohortTableNames <- CohortGenerator::getCohortTableNames(cohortTable = cohortTable)

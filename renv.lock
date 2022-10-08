@@ -23,7 +23,7 @@
 		},
 		"rlang" : {
 			"Package" : "rlang",
-			"Version" : "1.0.4",
+			"Version" : "1.0.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -41,7 +41,7 @@
 		},
 		"lifecycle" : {
 			"Package" : "lifecycle",
-			"Version" : "1.0.1",
+			"Version" : "1.0.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -83,7 +83,7 @@
 		},
 		"crayon" : {
 			"Package" : "crayon",
-			"Version" : "1.5.1",
+			"Version" : "1.5.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -261,6 +261,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"digest" : {
+			"Package" : "digest",
+			"Version" : "0.6.29",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"jsonlite" : {
 			"Package" : "jsonlite",
 			"Version" : "1.8.0",
@@ -317,7 +323,7 @@
 		},
 		"zip" : {
 			"Package" : "zip",
-			"Version" : "2.2.0",
+			"Version" : "2.2.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -335,13 +341,7 @@
 		},
 		"DatabaseConnector" : {
 			"Package" : "DatabaseConnector",
-			"Version" : "5.0.4",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"digest" : {
-			"Package" : "digest",
-			"Version" : "0.6.29",
+			"Version" : "5.1.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -439,13 +439,13 @@
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
-			"Version" : "3.0.3",
+			"Version" : "3.1.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "CohortDiagnostics",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v3.0.3"
+			"RemoteRef" : "v3.1.0"
 		},
 		"OhdsiSharing" : {
 			"Package" : "OhdsiSharing",
