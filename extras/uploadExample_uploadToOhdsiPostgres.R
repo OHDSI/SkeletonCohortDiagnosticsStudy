@@ -42,7 +42,7 @@ schemaExists <-
 if (!schemaExists) {
   DatabaseConnector::renderTranslateExecuteSql(
     connection = connection,
-    sql = "select create_schema(@results_database_schema);",
+    sql = "select create_schema('@results_database_schema');",
     results_database_schema = resultsSchema
   )
   CohortDiagnostics::createResultsDataModel(connection = connection, schema = resultsSchema)
