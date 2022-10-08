@@ -9,7 +9,7 @@ library(magrittr)
 ################################################################################
 # VARIABLES - please change
 ################################################################################
-projectCode <- "epi100"
+projectCode <- "SkeletonCohortDiagnosticsStudy"
 
 # The folder where the study intermediate and result files will be written:
 outputFolder <- "D:/studyResults/SkeletonCohortDiagnosticsStudy"
@@ -38,7 +38,7 @@ databaseIds <-
     'ims_australia_lpd',
     'ims_germany',
     'ims_france',
-    'iqvia_amb_emr'
+    'iqvia_amb_emr',
     'iqvia_pharmetrics_plus'
   )
 
