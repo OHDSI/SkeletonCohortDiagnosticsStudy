@@ -39,6 +39,12 @@ schemaExists <-
                                           TRUE ~ FALSE)) %>%
   dplyr::pull(.data$exists)
 
+tablesInResultsDataModel <-
+  CohortDiagnostics::getResultsDataModelSpecifications() %>%
+  dplyr::select(.data$tableName) %>%
+  dplyr::distinct() %>%
+  dplyr::pull()
+
 if (!schemaExists) {
   DatabaseConnector::renderTranslateExecuteSql(
     connection = connection,
@@ -47,12 +53,6 @@ if (!schemaExists) {
   )
   CohortDiagnostics::createResultsDataModel(connection = connection, schema = resultsSchema)
 } else {
-  tablesInResultsDataModel <-
-    CohortDiagnostics::getResultsDataModelSpecifications() %>%
-    dplyr::select(.data$tableName) %>%
-    dplyr::distinct() %>%
-    dplyr::pull()
-  
   # back up annotation tables
   annotationTables <-
     tablesInResultsDataModel[stringr::str_detect(string = tablesInResultsDataModel,
