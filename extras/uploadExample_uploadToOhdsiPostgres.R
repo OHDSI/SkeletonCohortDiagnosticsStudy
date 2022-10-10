@@ -147,49 +147,51 @@ listOfZipFilesToUpload2 <-
   c(listOfZipFilesToUpload, listOfZipFilesToUpload2) %>% unique() %>% sort()
 
 
-# reupload annotation tables
-for (i in (1:length(annotationTables))) {
-  if (!exists(annotationTables[[i]])) {
-    if (file.exists(file.path(
-      folderWithZipFilesToUpload,
-      paste0(annotationTables[[i]], ".csv")
-    ))) {
-      data <-
-        readr::read_csv(
-          file = file.path(
-            folderWithZipFilesToUpload,
-            paste0(annotationTables[[i]], ".csv")
-          ),
-          col_types = readr::cols()
-        )
-      assign(x = annotationTables[[i]],
-             value = data)
-    } else {
-      writeLines(paste0(
-        "Annotation table not found: ",
+if (all(exists(annotationTables), length(annotationTables) > 0)) {
+  # reupload annotation tables
+  for (i in (1:length(annotationTables))) {
+    if (!exists(annotationTables[[i]])) {
+      if (file.exists(file.path(
+        folderWithZipFilesToUpload,
         paste0(annotationTables[[i]], ".csv")
-      ))
+      ))) {
+        data <-
+          readr::read_csv(
+            file = file.path(
+              folderWithZipFilesToUpload,
+              paste0(annotationTables[[i]], ".csv")
+            ),
+            col_types = readr::cols()
+          )
+        assign(x = annotationTables[[i]],
+               value = data)
+      } else {
+        writeLines(paste0(
+          "Annotation table not found: ",
+          paste0(annotationTables[[i]], ".csv")
+        ))
+      }
     }
-  }
-  
-  if (exists(annotationTables[[i]])) {
-    DatabaseConnector::renderTranslateExecuteSql(
-      connection = connection,
-      sql = "DELETE FROM @results_database_schema.@annotation_table;",
-      results_database_schema = resultsSchema,
-      annotation_table = annotationTables[[i]]
-    )
-    DatabaseConnector::insertTable(
-      connection = connection,
-      databaseSchema = resultsSchema,
-      tableName = annotationTables[[i]],
-      dropTableIfExists = FALSE,
-      createTable = FALSE,
-      data = get(annotationTables[[i]]) %>% dplyr::distinct(),
-      tempTable = FALSE,
-      bulkLoad = (Sys.getenv("bulkLoad") == TRUE),
-      camelCaseToSnakeCase = TRUE
-    )
+    
+    if (exists(annotationTables[[i]])) {
+      DatabaseConnector::renderTranslateExecuteSql(
+        connection = connection,
+        sql = "DELETE FROM @results_database_schema.@annotation_table;",
+        results_database_schema = resultsSchema,
+        annotation_table = annotationTables[[i]]
+      )
+      DatabaseConnector::insertTable(
+        connection = connection,
+        databaseSchema = resultsSchema,
+        tableName = annotationTables[[i]],
+        dropTableIfExists = FALSE,
+        createTable = FALSE,
+        data = get(annotationTables[[i]]) %>% dplyr::distinct(),
+        tempTable = FALSE,
+        bulkLoad = (Sys.getenv("bulkLoad") == TRUE),
+        camelCaseToSnakeCase = TRUE
+      )
+    }
   }
 }
 
