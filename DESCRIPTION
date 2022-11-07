@@ -3,14 +3,14 @@ Type: Package
 Title: A Study Package for Generating Cohort Diagnostics
 Version: 0.0.1
 Author: Gowtham Rao [aut, cre]
-Date: 2022-08-24
+Date: 2022-11-07
 Maintainer: Gowtham Rao <rao@ohdsi.org>
 Description: A package that generates cohort diagnostics for cohort definitions included in the package.
 Depends:
   R (>= 4.1.0)
 Imports:
-	CohortDiagnostics (>= 3.0.2),
-  CohortGenerator (>= 0.6.0),
+	CohortDiagnostics (>= 3.1.0),
+  CohortGenerator (>= 0.7.0),
 	ParallelLogger (>= 3.0.0),
 	DatabaseConnector (>= 5.0.0),
   OhdsiSharing,

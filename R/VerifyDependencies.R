@@ -31,11 +31,12 @@ verifyDependencies <- function() {
         expectedVersions[idx]
       )
     })
-    message <- paste(c(
-      "Mismatch between required and installed package versions. Did you forget to run renv::restore()?",
-      lines
-    ),
-    collapse = "\n"
+    message <- paste(
+      c(
+        "Mismatch between required and installed package versions. Did you forget to run renv::restore()?",
+        lines
+      ),
+      collapse = "\n"
     )
     stop(message)
   }

@@ -1,11 +1,11 @@
 library(magrittr)
 # where are the cohort diagnostics output?
 folderWithZipFilesToUpload <-
-  "D:/studyResults/SkeletonCohortDiagnosticsStudy"
+  "D:\\studyResults\\ohdsiTutorial2022CohortDiagnostics\\iquvia5pct"
 
 # what is the name of the schema you want to upload to?
 resultsSchema <-
-  tolower('SkeletonCohortDiagnosticsStudy') # change to your schema - please use lower case
+  tolower('ohdsi22TutorialCd') # change to your schema - please use lower case
 
 # Postgres server: connection details to OHDSI Phenotype library. Please change to your postgres connection details
 connectionDetails <- DatabaseConnector::createConnectionDetails(
