@@ -9,21 +9,27 @@
 		]
 	},
 	"Packages" : {
+		"cli" : {
+			"Package" : "cli",
+			"Version" : "3.4.1",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"glue" : {
 			"Package" : "glue",
 			"Version" : "1.6.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"cli" : {
-			"Package" : "cli",
-			"Version" : "3.3.0",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
 		"rlang" : {
 			"Package" : "rlang",
 			"Version" : "1.0.6",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
+		"lifecycle" : {
+			"Package" : "lifecycle",
+			"Version" : "1.0.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -35,12 +41,6 @@
 		},
 		"fansi" : {
 			"Package" : "fansi",
-			"Version" : "1.0.3",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"lifecycle" : {
-			"Package" : "lifecycle",
 			"Version" : "1.0.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
@@ -59,13 +59,13 @@
 		},
 		"vctrs" : {
 			"Package" : "vctrs",
-			"Version" : "0.4.1",
+			"Version" : "0.5.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
 		"bit" : {
 			"Package" : "bit",
-			"Version" : "4.0.4",
+			"Version" : "4.0.5",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -209,7 +209,7 @@
 		},
 		"dplyr" : {
 			"Package" : "dplyr",
-			"Version" : "1.0.9",
+			"Version" : "1.0.10",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -261,15 +261,9 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"digest" : {
-			"Package" : "digest",
-			"Version" : "0.6.29",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
 		"jsonlite" : {
 			"Package" : "jsonlite",
-			"Version" : "1.8.0",
+			"Version" : "1.8.3",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -357,6 +351,12 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
+		"digest" : {
+			"Package" : "digest",
+			"Version" : "0.6.30",
+			"Source" : "Repository",
+			"Repository" : "CRAN"
+		},
 		"lubridate" : {
 			"Package" : "lubridate",
 			"Version" : "1.9.0",
@@ -384,18 +384,6 @@
 		"clock" : {
 			"Package" : "clock",
 			"Version" : "0.6.1",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"CohortGenerator" : {
-			"Package" : "CohortGenerator",
-			"Version" : "0.7.0",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"FeatureExtraction" : {
-			"Package" : "FeatureExtraction",
-			"Version" : "3.2.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -435,21 +423,9 @@
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
-		"CohortDiagnostics" : {
-			"Package" : "CohortDiagnostics",
-			"Version" : "3.1.0",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
 		"keyring" : {
 			"Package" : "keyring",
-			"Version" : "1.3.0",
-			"Source" : "Repository",
-			"Repository" : "CRAN"
-		},
-		"OhdsiSharing" : {
-			"Package" : "OhdsiSharing",
-			"Version" : "0.2.2",
+			"Version" : "1.3.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -458,6 +434,26 @@
 			"Version" : "0.16.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
+		},
+		"CohortGenerator" : {
+			"Package" : "CohortGenerator",
+			"Version" : "0.7.0",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "CohortGenerator",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v0.7.0"
+		},
+		"FeatureExtraction" : {
+			"Package" : "FeatureExtraction",
+			"Version" : "3.2.0",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "FeatureExtraction",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v3.2.0"
 		},
 		"ResultModelManager" : {
 			"Package" : "ResultModelManager",
@@ -468,6 +464,26 @@
 			"RemoteRepo" : "ResultModelManager",
 			"RemoteUsername" : "ohdsi",
 			"RemoteRef" : "v0.1.0"
+		},
+		"CohortDiagnostics" : {
+			"Package" : "CohortDiagnostics",
+			"Version" : "3.1.0",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "CohortDiagnostics",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v3.1.0"
+		},
+		"OhdsiSharing" : {
+			"Package" : "OhdsiSharing",
+			"Version" : "0.2.2",
+			"Source" : "GitHub",
+			"RemoteType" : "github",
+			"RemoteHost" : "api.github.com",
+			"RemoteRepo" : "OhdsiSharing",
+			"RemoteUsername" : "ohdsi",
+			"RemoteRef" : "v0.2.2"
 		}
 	}
 }
