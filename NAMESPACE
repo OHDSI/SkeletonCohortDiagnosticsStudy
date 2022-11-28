@@ -2,3 +2,6 @@
 
 export(execute)
 export(uploadResults)
+import(DatabaseConnector)
+import(dplyr)
+importFrom(rlang,.data)
