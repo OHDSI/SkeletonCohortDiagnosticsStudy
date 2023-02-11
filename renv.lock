@@ -457,13 +457,13 @@
 		},
 		"ResultModelManager" : {
 			"Package" : "ResultModelManager",
-			"Version" : "0.1.1",
+			"Version" : "0.2.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "ResultModelManager",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v0.1.1"
+			"RemoteRef" : "v0.2.0"
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
