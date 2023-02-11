@@ -51,8 +51,8 @@ keyringPasswordService <- 'OHDSI_PASSWORD'
 ###### create a list object that contain connection and meta information for each data source
 x <- list()
 for (i in (1:length(databaseIds))) {
-  cdmSource <- cdmSources %>%
-    dplyr::filter(.data$sequence == 1) %>%
+  cdmSource <- cdmSources |>
+    dplyr::filter(.data$sequence == 1) |>
     dplyr::filter(database == databaseIds[[i]])
   
   databaseId <- as.character(cdmSource$sourceKey)
