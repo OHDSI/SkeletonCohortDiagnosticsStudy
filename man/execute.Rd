@@ -15,6 +15,9 @@ execute(
   outputFolder,
   incrementalFolder = file.path(outputFolder, "incrementalFolder"),
   databaseId = "Unknown",
+  packageWithCohortDefinitions = "SkeletonCohortDiagnosticsStudy",
+  cohortIds = NULL,
+  minCellCount = 5,
   databaseName = databaseId,
   databaseDescription = databaseId,
   extraLog = NULL
@@ -63,6 +66,12 @@ performance.}
 
 \item{databaseId}{A short string for identifying the database (e.g.
 'Synpuf').}
+
+\item{packageWithCohortDefinitions}{Name of the package that has the cohort definitions. This needs to be installed.}
+
+\item{cohortIds}{Do you want to limit the execution to only some cohoort ids.}
+
+\item{minCellCount}{The minimum cell count for fields contains person counts or fractions. Default 5.}
 
 \item{databaseName}{The full name of the database (e.g. 'Medicare Claims
 Synthetic Public Use Files (SynPUFs)').}
