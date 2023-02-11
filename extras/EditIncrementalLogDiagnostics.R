@@ -1,7 +1,6 @@
 # this script enables to easily remove log entries in incremental mode.
 # Please use this script, if we want to rerun/overwrite previous data
 
-library(magrittr)
 logFolder <-
   "s:/SkeletonCohortDiagnosticsStudy"
 diagnosticsFileName <- "CreatedDiagnostics.csv"
@@ -28,7 +27,7 @@ for (i in (1:length(listFiles))) {
     file = listFiles[[i]],
     col_types = readr::cols(),
     guess_max = min(1e7)
-  ) %>%
-    dplyr::filter(!.data$task %in% tasksToRemove) %>%
+  ) |>
+    dplyr::filter(!.data$task %in% tasksToRemove) |>
     readr::write_excel_csv(file = listFiles[[i]])
 }

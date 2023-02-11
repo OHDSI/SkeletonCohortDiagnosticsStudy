@@ -4,7 +4,6 @@
 ############### This version of code will run cohort diagnostics in parallel                      ##################
 
 ############### processes to run Cohort Diagnostics ################################################################
-library(magrittr)
 
 ################################################################################
 # VARIABLES - please change
