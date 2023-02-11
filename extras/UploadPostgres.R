@@ -21,7 +21,7 @@ connectionDetails <- DatabaseConnector::createConnectionDetails(
 )
 
 # connectionDetails <- DatabaseConnector::createConnectionDetails(
-#   dbms = Sys.getenv("shinydbDbms", unset = "postgresql"),
+#   dbms = dbms,
 #   server = paste(
 #     Sys.getenv("phenotypeLibraryServer"),
 #     Sys.getenv("phenotypeLibrarydb"),
@@ -65,7 +65,7 @@ if (dbms == 'postgresql') {
 # enumerate tables in Cohort Diagnostics results
 tablesInResultsDataModel <-
   CohortDiagnostics::getResultsDataModelSpecifications() |>
-  dplyr::select(.data$tableName) |>
+  dplyr::select(tableName) |>
   dplyr::distinct() |>
   dplyr::pull()
 annotationTables <-
@@ -78,9 +78,8 @@ tablesInSchema <-
 
 # back up annotation tables
 for (i in (1:length(annotationTables))) {
-  writeLines(paste0("Backing up ", annotationTables[[i]]))
-  
   if (annotationTables[[i]] %in% tablesInSchema) {
+    writeLines(paste0("Backing up ", annotationTables[[i]]))
     data <- DatabaseConnector::renderTranslateQuerySql(
       connection = connection,
       sql = "SELECT * FROM @results_database_schema.@annotation_table;",
