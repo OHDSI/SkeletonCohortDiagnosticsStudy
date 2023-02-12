@@ -8,29 +8,29 @@ resultsSchema <-
 
 dbms <- Sys.getenv("shinydbDbms", unset = "postgresql")
 # Postgres server: Please change to your postgres connection details
-connectionDetails <- DatabaseConnector::createConnectionDetails(
-  dbms = dbms,
-  server = paste(
-    Sys.getenv("shinydbServer"),
-    Sys.getenv("shinydbDatabase"),
-    sep = "/"
-  ),
-  port = Sys.getenv("shinydbPort"),
-  user = Sys.getenv("shinydbUser"),
-  password = Sys.getenv("shinydbPW")
-)
-
 # connectionDetails <- DatabaseConnector::createConnectionDetails(
 #   dbms = dbms,
 #   server = paste(
-#     Sys.getenv("phenotypeLibraryServer"),
-#     Sys.getenv("phenotypeLibrarydb"),
+#     Sys.getenv("shinydbServer"),
+#     Sys.getenv("shinydbDatabase"),
 #     sep = "/"
 #   ),
-#   port = Sys.getenv("phenotypeLibraryDbPort"),
-#   user = Sys.getenv("phenotypeLibrarydbUser"),
-#   password = Sys.getenv("phenotypeLibrarydbPw")
+#   port = Sys.getenv("shinydbPort"),
+#   user = Sys.getenv("shinydbUser"),
+#   password = Sys.getenv("shinydbPW")
 # )
+
+connectionDetails <- DatabaseConnector::createConnectionDetails(
+  dbms = dbms,
+  server = paste(
+    Sys.getenv("phenotypeLibraryServer"),
+    Sys.getenv("phenotypeLibrarydb"),
+    sep = "/"
+  ),
+  port = Sys.getenv("phenotypeLibraryDbPort"),
+  user = Sys.getenv("phenotypeLibrarydbUser"),
+  password = Sys.getenv("phenotypeLibrarydbPw")
+)
 
 connection <-
   DatabaseConnector::connect(connectionDetails = connectionDetails)
@@ -159,7 +159,7 @@ listOfZipFilesToUpload2 <-
   c(listOfZipFilesToUpload, listOfZipFilesToUpload2) |> unique() |> sort()
 
 
-if (all(exists(annotationTables), length(annotationTables) > 0)) {
+if (all(exists("annotationTables"), length(annotationTables) > 0)) {
   # reupload annotation tables
   for (i in (1:length(annotationTables))) {
     if (!exists(annotationTables[[i]])) {
