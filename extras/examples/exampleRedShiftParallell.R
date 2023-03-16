@@ -39,7 +39,7 @@ databaseIds <-
     'ims_france',
     'iqvia_amb_emr',
     'iqvia_pharmetrics_plus',
-	'premier'
+	  'premier'
   )
 
 ## service name for keyring for db with cdm
@@ -120,3 +120,10 @@ ParallelLogger::clusterApply(cluster = cluster,
 
 writeLines(readChar(paste0(loggerName, ".txt"), file.info(paste0(loggerName, ".txt"))$size))
 ParallelLogger::stopCluster(cluster = cluster)
+
+
+#create sqlite db merged file
+rememberWd <- getwd()
+setwd(outputFolder)
+CohortDiagnostics::createMergedResultsFile(dataFolder = outputFolder, overwrite = TRUE)
+setwd(rememberWd)
