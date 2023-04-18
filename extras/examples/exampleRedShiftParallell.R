@@ -127,3 +127,14 @@ rememberWd <- getwd()
 setwd(outputFolder)
 CohortDiagnostics::createMergedResultsFile(dataFolder = outputFolder, overwrite = TRUE)
 setwd(rememberWd)
+
+
+# launch diagnostics explorer
+CohortDiagnostics::launchDiagnosticsExplorer(
+  sqliteDbPath = file.path(outputFolder, "MergedCohortDiagnosticsData.sqlite"),
+  runOverNetwork = TRUE,
+  makePublishable = TRUE,
+  publishDir = file.path(outputFolder, paste0("app_", projectCode)),
+  overwritePublishDir = TRUE,
+  launch.browser = FALSE
+)
