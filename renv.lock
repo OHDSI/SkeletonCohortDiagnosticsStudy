@@ -1,6 +1,6 @@
 {
 	"R" : {
-		"Version" : "4.2.1",
+		"Version" : "4.2.3",
 		"Repositories" : [
 			{
 				"Name" : "CRAN",
@@ -11,7 +11,7 @@
 	"Packages" : {
 		"cli" : {
 			"Package" : "cli",
-			"Version" : "3.6.0",
+			"Version" : "3.6.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -329,7 +329,7 @@
 		},
 		"zip" : {
 			"Package" : "zip",
-			"Version" : "2.2.2",
+			"Version" : "2.3.0",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -523,13 +523,13 @@
 		},
 		"ResultModelManager" : {
 			"Package" : "ResultModelManager",
-			"Version" : "0.3.0",
+			"Version" : "0.4.0",
 			"Source" : "GitHub",
 			"RemoteType" : "github",
 			"RemoteHost" : "api.github.com",
 			"RemoteRepo" : "ResultModelManager",
 			"RemoteUsername" : "ohdsi",
-			"RemoteRef" : "v0.3.0"
+			"RemoteRef" : "v0.4.0"
 		},
 		"CohortDiagnostics" : {
 			"Package" : "CohortDiagnostics",
