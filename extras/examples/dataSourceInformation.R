@@ -42,6 +42,8 @@ executeOnMultipleDataSources <- function(x) {
   cohortDatabaseSchema <- x$cohortDatabaseSchema
   
   databaseId <- x$databaseId
+  databaseName <- x$databaseName
+  databaseDescription <- x$databaseDescription
   
   SkeletonCohortDiagnosticsStudy::execute(
     connectionDetails = connectionDetails,
