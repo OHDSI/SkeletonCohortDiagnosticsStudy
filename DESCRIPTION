@@ -9,9 +9,9 @@ Description: A package that generates cohort diagnostics for cohort definitions 
 Depends:
   R (>= 4.1.0)
 Imports:
-	CohortDiagnostics (>= 3.1.2),
-  CohortGenerator (>= 0.7.0),
-	ParallelLogger (>= 3.1.0),
+	CohortDiagnostics (>= 3.2.3),
+  CohortGenerator (>= 0.8.0),
+	ParallelLogger (>= 3.2.0),
 	DatabaseConnector (>= 6.0.0),
   OhdsiSharing,
   keyring,
