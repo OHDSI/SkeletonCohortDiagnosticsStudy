@@ -137,7 +137,7 @@
 		},
 		"tidyselect" : {
 			"Package" : "tidyselect",
-			"Version" : "1.2.0",
+			"Version" : "1.2.1",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -215,7 +215,7 @@
 		},
 		"DBI" : {
 			"Package" : "DBI",
-			"Version" : "1.2.1",
+			"Version" : "1.2.2",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
@@ -335,7 +335,7 @@
 		},
 		"Andromeda" : {
 			"Package" : "Andromeda",
-			"Version" : "0.6.5",
+			"Version" : "0.6.4",
 			"Source" : "Repository",
 			"Repository" : "CRAN"
 		},
